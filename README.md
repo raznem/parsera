@@ -1,6 +1,9 @@
 # Parsera
 Lightweight library for scraping web-sites with LLMs. 
-You can check how it works on [Parsera website](https://parsera.org).
+You can test it on [Parsera website](https://parsera.org).
+
+## Why Parsera?
+Because it's simple and lightweight, with minimal token use it boosts speed and reduces expenses.
 
 ## Installation
 
@@ -45,3 +48,29 @@ result = scrapper.run(url=url, elements=elements)
     ...
 ]
 ```
+
+## Run with local model
+Install Ollama
+```shell
+pip install langchain-ollama
+```
+
+```python
+from langchain_ollama import ChatOllama
+
+llm = ChatOllama(
+    model="llama3",
+    temperature=0,
+    # other params...
+)
+
+url = "https://news.ycombinator.com/"
+elements = {
+    "Title": "News title",
+    "Points": "Number of points",
+    "Comments": "Number of comments",
+}
+scrapper = Parsera(model=llm)
+result = scrapper.run(url=url, elements=elements)
+```
+
