@@ -49,19 +49,33 @@ result = scrapper.run(url=url, elements=elements)
 ]
 ```
 
-## Run with local model
-Install Ollama
-```shell
-pip install langchain-ollama
+There is also `arun` async method available:
+```python
+result = await scrapper.arun(url=url, elements=elements)
 ```
 
+## Running with Jupyter Notebook:
+Either place this code at the beginning of your notebook:
 ```python
-from langchain_ollama import ChatOllama
+import nest_asyncio
+nest_asyncio.apply()
+```
 
-llm = ChatOllama(
-    model="llama3",
-    temperature=0,
-    # other params...
+Or instead of calling `run` method use async `arun`.
+
+## Run with custom model
+You can instantiate `Parsera` with any chat model supported by LangChain, for example, to run model from Azure:  
+```python
+import os
+from langchain_openai import AzureChatOpenAI
+
+llm = AzureChatOpenAI(
+    azure_endpoint=os.getenv("AZURE_GPT_BASE_URL"),
+    openai_api_version="2023-05-15",
+    deployment_name=os.getenv("AZURE_GPT_DEPLOYMENT_NAME"),
+    openai_api_key=os.getenv("AZURE_GPT_API_KEY"),
+    openai_api_type="azure",
+    temperature=0.0,
 )
 
 url = "https://news.ycombinator.com/"
