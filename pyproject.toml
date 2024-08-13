@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "parsera"
-version = "0.1.0"
+version = "0.1.1"
 description = "Lightweight library for scraping web-sites with LLMs"
 authors = ["Mikhail Zanka <raznem@gmail.com>"]
 license = "GPL-2.0-or-later"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "3.10.* || 3.11.*"
+python = "^3.10.0"
 langchain = "^0.2.6"
 langchain-openai = "^0.1.8"
 playwright = "^1.44.0"
@@ -20,6 +20,7 @@ flake8 = "^6.0.0"
 isort = "^5.12.0"
 pylint = "^2.17.4"
 pytest = "^8.2.2"
+jupyterlab = "^4.2.4"
 
 
 [build-system]

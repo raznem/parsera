@@ -24,3 +24,6 @@ class Parsera:
 
     def run(self, url: str, elements: dict) -> dict:
         return asyncio.run(self._run(url=url, elements=elements))
+
+    async def arun(self, url: str, elements: dict) -> dict:
+        return await self._run(url=url, elements=elements)
