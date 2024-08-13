@@ -1,4 +1,4 @@
-# Parsera
+# 📦 Parsera
 Lightweight library for scraping web-sites with LLMs. 
 You can test it on [Parsera website](https://parsera.org).
 
