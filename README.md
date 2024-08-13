@@ -3,7 +3,7 @@ Lightweight library for scraping web-sites with LLMs.
 You can test it on [Parsera website](https://parsera.org).
 
 ## Why Parsera?
-Because it's simple and lightweight, with minimal token use it boosts speed and reduces expenses.
+Because it's simple and lightweight, with minimal token use which boosts speed and reduces expenses.
 
 ## Installation
 
