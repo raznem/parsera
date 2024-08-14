@@ -1,5 +1,5 @@
 # 📦 Parsera
-Lightweight library for scraping web-sites with LLMs. 
+Lightweight Python library for scraping websites with LLMs. 
 You can test it on [Parsera website](https://parsera.org).
 
 ## Why Parsera?
@@ -22,7 +22,7 @@ import os
 os.environ["OPENAI_API_KEY"] = "YOUR_OPENAI_API_KEY_HERE"
 ```
 
-Next you can run a basic version that uses `gpt-4o-mini`
+Next, you can run a basic version that uses `gpt-4o-mini`
 ```python
 from parsera import Parsera
 
@@ -64,7 +64,7 @@ nest_asyncio.apply()
 Or instead of calling `run` method use async `arun`.
 
 ## Run with custom model
-You can instantiate `Parsera` with any chat model supported by LangChain, for example, to run model from Azure:  
+You can instantiate `Parsera` with any chat model supported by LangChain, for example, to run the model from Azure:  
 ```python
 import os
 from langchain_openai import AzureChatOpenAI
