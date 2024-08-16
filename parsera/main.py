@@ -14,16 +14,27 @@ class Parsera:
         else:
             self.model = model
 
-    async def _run(self, url: str, elements: dict) -> dict:
-        content = await fetch_page_content(url=url)
+    async def _run(
+        self, url: str, elements: dict, proxy_settings: dict | None = None
+    ) -> dict:
+        if proxy_settings:
+            content = await fetch_page_content(url=url, proxy_settings=proxy_settings)
+        else:
+            content = await fetch_page_content(url=url)
         extractor = TabularExtractor(
             elements=elements, model=self.model, content=content
         )
         result = await extractor.run()
         return result
 
-    def run(self, url: str, elements: dict) -> dict:
-        return asyncio.run(self._run(url=url, elements=elements))
+    def run(self, url: str, elements: dict, proxy_settings: dict | None = None) -> dict:
+        return asyncio.run(
+            self._run(url=url, elements=elements, proxy_settings=proxy_settings)
+        )
 
-    async def arun(self, url: str, elements: dict) -> dict:
-        return await self._run(url=url, elements=elements)
+    async def arun(
+        self, url: str, elements: dict, proxy_settings: dict | None = None
+    ) -> dict:
+        return await self._run(
+            url=url, elements=elements, proxy_settings=proxy_settings
+        )
