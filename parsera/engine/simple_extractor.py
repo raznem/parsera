@@ -122,7 +122,7 @@ Output json:
 ```json
 {
     "name": ["name1", "name2", "name3"],
-    "price": "100", "150", "300"]
+    "price": ["100", "150", "300"]
 }
 ```
 
