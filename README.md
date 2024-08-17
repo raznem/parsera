@@ -38,8 +38,8 @@ elements = {
     "Comments": "Number of comments",
 }
 
-scrapper = Parsera()
-result = scrapper.run(url=url, elements=elements)
+scraper = Parsera()
+result = scraper.run(url=url, elements=elements)
 ```
 
 `result` variable will contain a json with a list of records:
