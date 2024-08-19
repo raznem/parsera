@@ -50,10 +50,7 @@ class HuggingFaceModel(BaseChatModel):
     from having to install necessary dependencies 
     for this model.
     """
-    from transformers import pipeline
-    from transformers import Pipeline
-
-    pipeline: Pipeline
+    model: Any
 
     def _generate(
     self,
@@ -75,7 +72,7 @@ class HuggingFaceModel(BaseChatModel):
     run_manager: Optional[CallbackManagerForLLMRun] = None,
     **kwargs: Any,
     ) -> str:
-        pipe = self.pipeline
+        pipe = self.model
         prompt = " ".join([message.content for message in messages])
         # Define the messages
         messages = [
