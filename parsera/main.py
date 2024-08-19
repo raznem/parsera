@@ -2,10 +2,10 @@ import asyncio
 
 from langchain_core.language_models import BaseChatModel
 
-from parsera.engine.model import GPT4oMiniModel, HuggingFaceModel
+from parsera.engine.model import GPT4oMiniModel
 from parsera.engine.simple_extractor import TabularExtractor
 from parsera.page import fetch_page_content
-from transformers import Pipeline
+from typing import Any
 
 class Parsera:
     def __init__(self, model: BaseChatModel | None = None):
@@ -40,11 +40,15 @@ class Parsera:
         )
 
 class ParseraHuggingFace:
-    def __init__(self, model: Pipeline | None = None):
+    def __init__(self, model: Any | None = None):
+        from transformers import Pipeline
+        from parsera.engine.model import HuggingFaceModel
+
+        if not isinstance(model, Pipeline):
+            raise ValueError("model must be an instance of transformers.Pipeline")
+
         if model:
-            self.model = HuggingFaceModel(pipeline=model)
-        else:
-            raise ValueError("Model is required")
+            self.model = HuggingFaceModel(model=model)
 
     async def _run(
         self, url: str, elements: dict, proxy_settings: dict | None = None
