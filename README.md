@@ -93,3 +93,33 @@ scrapper = Parsera(model=llm)
 result = scrapper.run(url=url, elements=elements)
 ```
 
+You can also use `Parsera` with HuggingFace `Transformers` .
+
+> You should install `Transformers` with either `pytorch` or `TensorFlow 2.0`
+
+[Transformers Installation Guide](https://huggingface.co/docs/transformers/en/installation)
+
+example:
+```python
+from  transformers  import  pipeline, AutoTokenizer, AutoModelForCausalLM
+from  langchain.base_language  import  BaseLanguageModel
+from  parsera  import ParseraHuggingFace
+
+# Define the URL and elements to scrape
+url  =  "https://news.ycombinator.com/"
+elements  = {
+"Title": "News title",
+"Points": "Number of points",
+"Comments": "Number of comments",
+}
+
+# Initialize model with transformers pipeline
+tokenizer  = AutoTokenizer.from_pretrained("google/gemma-2-2b-it")
+model  = AutoModelForCausalLM.from_pretrained("google/gemma-2-2b-it")
+pipe  =  pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=5000, device='mps')
+
+
+# Scrapper with HuggingFace model
+scrapper  = ParseraHuggingFace(model=pipe)
+result  =  scrapper.run(url=url, elements=elements)
+```
