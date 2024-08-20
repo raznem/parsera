@@ -94,32 +94,35 @@ result = scrapper.run(url=url, elements=elements)
 ```
 
 You can also use `Parsera` with HuggingFace `Transformers` .
+Currently, we only support models that include a `system` token
 
-> You should install `Transformers` with either `pytorch` or `TensorFlow 2.0`
+> You should install `Transformers` with either `pytorch` (recommended) or `TensorFlow 2.0`
 
 [Transformers Installation Guide](https://huggingface.co/docs/transformers/en/installation)
 
 example:
 ```python
-from  transformers  import  pipeline, AutoTokenizer, AutoModelForCausalLM
-from  langchain.base_language  import  BaseLanguageModel
-from  parsera  import ParseraHuggingFace
+from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
+from parsera.engine.model import HuggingFaceModel
+from parsera import Parsera
 
 # Define the URL and elements to scrape
-url  =  "https://news.ycombinator.com/"
-elements  = {
+url = "https://news.ycombinator.com/"
+elements = {
 "Title": "News title",
 "Points": "Number of points",
 "Comments": "Number of comments",
 }
 
 # Initialize model with transformers pipeline
-tokenizer  = AutoTokenizer.from_pretrained("google/gemma-2-2b-it")
-model  = AutoModelForCausalLM.from_pretrained("google/gemma-2-2b-it")
-pipe  =  pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=5000, device='mps')
+tokenizer = AutoTokenizer.from_pretrained("microsoft/Phi-3-mini-128k-instruct", trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained("microsoft/Phi-3-mini-128k-instruct", trust_remote_code=True)
+pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=5000)
 
+# Initialize HuggingFaceModel
+llm = HuggingFaceModel(pipeline=pipe)
 
 # Scrapper with HuggingFace model
-scrapper  = ParseraHuggingFace(model=pipe)
-result  =  scrapper.run(url=url, elements=elements)
+scrapper = Parsera(model=llm)
+result = scrapper.run(url=url, elements=elements)
 ```
