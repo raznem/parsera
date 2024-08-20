@@ -5,7 +5,6 @@ from langchain_core.language_models import BaseChatModel
 from parsera.engine.model import GPT4oMiniModel
 from parsera.engine.simple_extractor import TabularExtractor
 from parsera.page import fetch_page_content
-from typing import Any
 
 class Parsera:
     def __init__(self, model: BaseChatModel | None = None):
