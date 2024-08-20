@@ -38,39 +38,3 @@ class Parsera:
         return await self._run(
             url=url, elements=elements, proxy_settings=proxy_settings
         )
-
-class ParseraHuggingFace:
-    def __init__(self, model: Any | None = None):
-        from transformers import Pipeline
-        from parsera.engine.model import HuggingFaceModel
-
-        if not isinstance(model, Pipeline):
-            raise ValueError("model must be an instance of transformers.Pipeline")
-
-        if model:
-            self.model = HuggingFaceModel(model=model)
-
-    async def _run(
-        self, url: str, elements: dict, proxy_settings: dict | None = None
-    ) -> dict:
-        if proxy_settings:
-            content = await fetch_page_content(url=url, proxy_settings=proxy_settings)
-        else:
-            content = await fetch_page_content(url=url)
-        extractor = TabularExtractor(
-            elements=elements, model=self.model, content=content
-        )
-        result = await extractor.run()
-        return result
-
-    def run(self, url: str, elements: dict, proxy_settings: dict | None = None) -> dict:
-        return asyncio.run(
-            self._run(url=url, elements=elements, proxy_settings=proxy_settings)
-        )
-
-    async def arun(
-        self, url: str, elements: dict, proxy_settings: dict | None = None
-    ) -> dict:
-        return await self._run(
-            url=url, elements=elements, proxy_settings=proxy_settings
-        )
