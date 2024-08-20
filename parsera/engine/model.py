@@ -50,7 +50,9 @@ class HuggingFaceModel(BaseChatModel):
     from having to install necessary dependencies 
     for this model.
     """
-    model: Any
+
+    pipeline: Any
+    """HuggingFace Transformers Pipeline"""
 
     def _generate(
     self,
@@ -72,14 +74,21 @@ class HuggingFaceModel(BaseChatModel):
     run_manager: Optional[CallbackManagerForLLMRun] = None,
     **kwargs: Any,
     ) -> str:
-        pipe = self.model
-        prompt = " ".join([message.content for message in messages])
-        # Define the messages
+        from transformers import Pipeline
+
+        if not isinstance(self.pipeline, Pipeline):
+            raise ValueError("pipeline must be a HuggingFace Pipeline")
+        
+        pipe = self.pipeline
+
         messages = [
-            {"role": "user", "content": prompt}
+            {"role": "system", "content": messages[0].content},
+            {"role": "user", "content": messages[1].content}
         ]
+
         response = pipe(messages)
         generated_text = response[0]['generated_text'][-1]['content']
+        
         return generated_text
     
     async def _agenerate(
