@@ -38,8 +38,8 @@ elements = {
     "Comments": "Number of comments",
 }
 
-scrapper = Parsera()
-result = scrapper.run(url=url, elements=elements)
+scraper = Parsera()
+result = scraper.run(url=url, elements=elements)
 ```
 
 `result` variable will contain a json with a list of records:
@@ -93,3 +93,37 @@ scrapper = Parsera(model=llm)
 result = scrapper.run(url=url, elements=elements)
 ```
 
+## Using different extractor types
+By default a tabular extractor is used, but you can also use the list or item extractors:
+```python
+from parsera import Parsera
+
+scraper = Parsera(extractor=Parsera.ExtractorType.LIST)
+# or
+scraper = Parsera(extractor=Parsera.ExtractorType.ITEM)
+```
+
+The tabular extractor is used to find rows of tabular data and has output of the form:
+```json
+[
+    {"name": "name1", "price": "100"},
+    {"name": "name2", "price": "150"},
+    {"name": "name3", "price": "300"},
+]
+```
+
+The list extractor is used to find lists of different values and has output of the form:
+```json
+{
+    "name": ["name1", "name2", "name3"],
+    "price": ["100", "150", "300"]
+}
+```
+
+The item extractor is used to get singular items from a page like a title or price and has output of the form:
+```json
+{
+    "name": "name1",
+    "price": "100"
+}
+```
