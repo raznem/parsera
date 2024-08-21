@@ -93,6 +93,40 @@ scrapper = Parsera(model=llm)
 result = scrapper.run(url=url, elements=elements)
 ```
 
+## Run local model with HuggingFace `Trasformers`
+Currently, we only support models that include a `system` token
+
+> You should install `Transformers` with either `pytorch` (recommended) or `TensorFlow 2.0`
+
+[Transformers Installation Guide](https://huggingface.co/docs/transformers/en/installation)
+
+example:
+```python
+from transformers import pipeline, AutoTokenizer, AutoModelForCausalLM
+from parsera.engine.model import HuggingFaceModel
+from parsera import Parsera
+
+# Define the URL and elements to scrape
+url = "https://news.ycombinator.com/"
+elements = {
+"Title": "News title",
+"Points": "Number of points",
+"Comments": "Number of comments",
+}
+
+# Initialize model with transformers pipeline
+tokenizer = AutoTokenizer.from_pretrained("microsoft/Phi-3-mini-128k-instruct", trust_remote_code=True)
+model = AutoModelForCausalLM.from_pretrained("microsoft/Phi-3-mini-128k-instruct", trust_remote_code=True)
+pipe = pipeline("text-generation", model=model, tokenizer=tokenizer, max_new_tokens=5000)
+
+# Initialize HuggingFaceModel
+llm = HuggingFaceModel(pipeline=pipe)
+
+# Scrapper with HuggingFace model
+scrapper = Parsera(model=llm)
+result = scrapper.run(url=url, elements=elements)
+```
+
 ## Using different extractor types
 By default a tabular extractor is used, but you can also use the list or item extractors:
 ```python

@@ -5,7 +5,6 @@ from parsera.engine.model import GPT4oMiniModel
 from parsera.engine.simple_extractor import TabularExtractor, ListExtractor, ItemExtractor
 from parsera.page import fetch_page_content
 
-
 class Parsera:
     class ExtractorType(enum.Enum):
         LIST = ListExtractor
