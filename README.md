@@ -59,14 +59,16 @@ There is also `arun` async method available:
 result = await scrapper.arun(url=url, elements=elements)
 ```
 
-## Running with Jupyter Notebook:
-Either place this code at the beginning of your notebook:
+## Using proxy
+You can use serve the traffic via proxy server when calling `run` method:
 ```python
-import nest_asyncio
-nest_asyncio.apply()
+proxy_settings = {
+    "server": "https://1.2.3.4:5678",
+    "username": <PROXY_USERNAME>,
+    "password": <PROXY_PASSWORD>,
+}
+result = scrapper.run(url=url, elements=elements, proxy_settings=proxy_settings)
 ```
-
-Or instead of calling `run` method use async `arun`.
 
 ## Run with custom model
 You can instantiate `Parsera` with any chat model supported by LangChain, for example, to run the model from Azure:  
@@ -161,3 +163,12 @@ The item extractor is used to get singular items from a page like a title or pri
     "price": "100"
 }
 ```
+
+## Running with Jupyter Notebook:
+Either place this code at the beginning of your notebook:
+```python
+import nest_asyncio
+nest_asyncio.apply()
+```
+
+Or instead of calling `run` method use async `arun`.
