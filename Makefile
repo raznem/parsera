@@ -1,0 +1,3 @@
+release:
+	poetry publish --build
+
