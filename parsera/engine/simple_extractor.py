@@ -1,10 +1,10 @@
 import json
+from typing import Optional
+
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.output_parsers import JsonOutputParser
 from markdownify import markdownify
-from typing import Optional
-
 
 SIMPLE_EXTRACTOR_PROMPT_TEMPLATE = """
 Having following page content:
@@ -24,11 +24,11 @@ Output json:
 class Extractor:
     system_prompt: Optional[str] = None
     prompt_template: Optional[str] = None
+
     def __init__(self, elements: dict, model: BaseChatModel, content: str):
         self.elements = elements
         self.model = model
         self.content = content
-
 
     async def run(self) -> dict:
         if self.system_prompt is None:
@@ -89,9 +89,11 @@ Output json:
 
 """
 
+
 class TabularExtractor(Extractor):
     system_prompt = TABULAR_EXTRACTOR_SYSTEM_PROMPT
     prompt_template = SIMPLE_EXTRACTOR_PROMPT_TEMPLATE
+
 
 LIST_EXTRACTOR_SYSTEM_PROMPT = """
 Your goal is to find the elements from the webpage content and return them in json format.
@@ -129,9 +131,11 @@ Output json:
 
 """
 
+
 class ListExtractor(Extractor):
     system_prompt = LIST_EXTRACTOR_SYSTEM_PROMPT
     prompt_template = SIMPLE_EXTRACTOR_PROMPT_TEMPLATE
+
 
 ITEM_EXTRACTOR_SYSTEM_PROMPT = """
 Your goal is to find the elements from the webpage content and return them in json format.
@@ -168,6 +172,8 @@ Output json:
 ```
 
 """
+
+
 class ItemExtractor(Extractor):
     system_prompt = ITEM_EXTRACTOR_SYSTEM_PROMPT
     prompt_template = SIMPLE_EXTRACTOR_PROMPT_TEMPLATE
