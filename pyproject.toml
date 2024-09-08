@@ -13,6 +13,9 @@ langchain-openai = "^0.1.8"
 playwright = "^1.44.0"
 playwright-stealth = "^1.0.6"
 markdownify = "^0.12.1"
+python-dotenv = "^1.0.1"
+argparse = "^1.4.0"
+colorama = "^0.4.6"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"

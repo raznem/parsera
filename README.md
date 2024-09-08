@@ -71,3 +71,16 @@ nest_asyncio.apply()
 ```
 
 Or instead of calling `run` method use async `arun`.
+
+## Running as standalone command line tool
+
+Before you run `Parsera` as CLI tool don't forget to put your `OPENAI_API_KEY` to env variables or `.env` file
+
+### Usage
+
+You can configure elemements to parse using `JSON string` or `FILE`.
+Optionally, you can provide `FILE` to write output.
+
+```sh
+python -m parsera.main URL {--scheme '{"title":"h1"}' | --file FILENAME} [--output FILENAME]
+```
