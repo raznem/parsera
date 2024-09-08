@@ -59,3 +59,4 @@ Check out further documentation to explore more features:
 - [Running custom models](features/custom-models.md)
 - [Using proxy](features/proxy.md)
 - [Run custom playwright](features/custom-playwright.md)
+- [Extractors](features/extractors.md)

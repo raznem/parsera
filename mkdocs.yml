@@ -30,6 +30,7 @@ nav:
     - Custom models: features/custom-models.md
     - Proxy: features/proxy.md
     - Custom playwright: features/custom-playwright.md
+    - Extractors: features/extractors.md
   - API:
     - Getting started: api/getting-started.md
     - Proxy: api/proxy.md
