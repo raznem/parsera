@@ -10,6 +10,19 @@ You can test it on [Parsera website](https://parsera.org).
 ## Why Parsera?
 Because it's simple and lightweight, with minimal token use which boosts speed and reduces expenses.
 
+## Table of Contents
+- [Installation](#Installation)
+- [Documentation](#Documentation)
+- [Basic usage](#Basic-usage)
+- [Running with Jupyter Notebook](#Running-with-Jupyter-Notebook)
+- [Running as standalone command line tool](#Running-as-standalone-command-line-tool)
+- [Running in Docker](#Running-in-Docker)
+    - [Prerequisites](#Prerequisites)
+    - [Prepare Your Environment](#Prepare-Your-Environment)
+    - [Defining scheme for parsing](#Defining-scheme-for-parsing)
+    - [Accessing the Output](#Accessing-the-Output)
+    - [Make Targets](#Make-Targets)
+
 ## Installation
 
 ```shell
