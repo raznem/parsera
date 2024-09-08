@@ -84,3 +84,46 @@ Optionally, you can provide `FILE` to write output.
 ```sh
 python -m parsera.main URL {--scheme '{"title":"h1"}' | --file FILENAME} [--output FILENAME]
 ```
+
+## Running in Docker
+
+You can get access to the CLI or development environment using Docker.
+
+### Prerequisites
+
+- Docker: [Install Docker](https://docs.docker.com/get-docker/)
+- Docker Compose: [Install Docker Compose](https://docs.docker.com/compose/install/)
+
+### Prepare Your Environment
+
+Create a .env file in the project root directory with the following content:
+
+```env
+URL=https://parsera.org
+FILE=/app/scheme.json
+OUTPUT=/app/output/result.json
+```
+
+### Defining scheme for parsing
+Parsing scheme should be defined in the file `scheme.json`, which would be mounted as volume to the container to the `/app/scheme.json`
+
+### Accessing the Output
+The results will be saved in the output directory on your local machine, which is mapped to `/app/output` inside the container. You can find the output file at `./output/result.json` on your host machine.
+
+### Make Targets
+
+```sh
+make build # Build Docker image
+
+make up # Start containers using Docker Compose
+
+make down # Stop and remove containers using Docker Compose
+
+make restart # Restart containers using Docker Compose
+
+make logs # View logs of the containers
+
+make shell # Open a shell in the running container
+
+make clean # Remove all stopped containers, unused networks, and dangling images
+```
