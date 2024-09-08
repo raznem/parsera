@@ -1,0 +1,44 @@
+site_name: Parsera
+site_description: Web-scraping without actually writing a scraper
+site_url: https://docs.parsera.org/
+
+theme:
+  name: material
+  logo: icon.svg
+  favicon: icon.svg
+  palette:
+    - media: "(prefers-color-scheme: light)"
+      primary: amber
+      scheme: default
+      toggle:
+        icon: material/weather-night
+        name: Switch to dark mode
+    - media: "(prefers-color-scheme: dark)"
+      primary: amber
+      scheme: slate
+      toggle:
+        icon: material/weather-sunny
+        name: Switch to light mode
+
+repo_name: raznem/parsera
+repo_url: https://github.com/raznem/parsera
+
+nav:
+  - Home: index.md
+  - Getting started: getting-started.md
+  - Features:
+    - Custom models: features/custom-models.md
+    - Proxy: features/proxy.md
+    - Custom playwright: features/custom-playwright.md
+  # - API:
+  #   - Getting started: api/getting-started.md
+  - Contributing: contributing.md
+
+markdown_extensions:
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.snippets
+  - pymdownx.superfences
