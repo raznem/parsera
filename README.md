@@ -19,7 +19,7 @@ playwright install
 
 ## Documentation
 
-Check out [documentation](docs.parsera.org) to learn more about other features, like running custom models and playwright scripts.
+Check out [documentation](https://docs.parsera.org) to learn more about other features, like running custom models and playwright scripts.
 
 ## Basic usage
 
