@@ -30,8 +30,9 @@ nav:
     - Custom models: features/custom-models.md
     - Proxy: features/proxy.md
     - Custom playwright: features/custom-playwright.md
-  # - API:
-  #   - Getting started: api/getting-started.md
+  - API:
+    - Getting started: api/getting-started.md
+    - Proxy: api/proxy.md
   - Contributing: contributing.md
 
 markdown_extensions:
