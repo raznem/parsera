@@ -4,3 +4,6 @@ release:
 format:
 	black .
 	isort .
+
+doc-deploy:
+	mkdocs gh-deploy
