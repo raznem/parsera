@@ -25,6 +25,10 @@ curl https://api.parsera.org/v1/extract \
 
 ## List of proxy countries
 
+Send a `GET` request to this URL [https://api.parsera.org/v1/proxy-countries](https://api.parsera.org/v1/proxy-countries), to get the list of countries programmatically.
+
+Here is the list of countries available:
+
 - Random Country - `random`
 - Afghanistan - `Afghanistan`
 - Albania - `Albania`

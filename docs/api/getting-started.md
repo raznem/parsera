@@ -23,5 +23,6 @@ curl https://api.parsera.org/v1/extract \
 }'
 ```
 
-By default, `proxy_country` is random, it's recommended to set `proxy_country` parameter to a specific country in the request since a page could not be available from all locations.  
-[Here](proxy.md) you can find a full list of proxy countries available.
+By default, `proxy_country` is random, it's recommended to set `proxy_country` parameter to a specific country in the request since a page could not be available from all locations. [Here](proxy.md) you can find a full list of proxy countries available.
+
+You can also explore Swagger doc of the API following this link: [https://api.parsera.org/docs#/](https://api.parsera.org/docs#/).
