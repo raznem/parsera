@@ -163,3 +163,8 @@ cython_debug/
 
 .DS_Store
 raw_notebooks
+
+#I/O
+result.json
+output/
+scheme.json

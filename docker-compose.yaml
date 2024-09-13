@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  parsera:
+    build: .
+    image: parsera
+    container_name: parsera
+    env_file:
+      - .env
+    volumes:
+      - ./scheme.json:/app/scheme.json
+      - ./output:/app/output
+    command: ["$URL", "--file", "$FILE", "--output", "$OUTPUT"]

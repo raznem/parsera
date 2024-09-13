@@ -1,144 +1,162 @@
+import argparse
 import asyncio
-import enum
-from typing import Awaitable, Callable
+import json
+import os
 
-from langchain_core.language_models import BaseChatModel
+import colorama
+from colorama import Fore, Style
+from dotenv import load_dotenv
 from playwright.async_api import Page
 
+from parsera import ParseraScript
 from parsera.engine.model import GPT4oMiniModel
-from parsera.engine.simple_extractor import (
-    ItemExtractor,
-    ListExtractor,
-    TabularExtractor,
-)
-from parsera.page import PageLoader
 
 
-class ExtractorType(enum.Enum):
-    LIST = ListExtractor
-    TABULAR = TabularExtractor
-    ITEM = ItemExtractor
+def validate_file(file_path):
+    """Validate if the file exists and contains a valid JSON scheme."""
+    # Check if the file exists
+    if not os.path.isfile(file_path):
+        raise argparse.ArgumentTypeError(f"The file {file_path} does not exist.")
+
+    # Try to open and parse the file content as JSON
+    try:
+        with open(file_path, "r") as f:
+            scheme = json.load(f)
+
+            # Ensure the scheme is a dictionary
+            if not isinstance(scheme, dict):
+                raise argparse.ArgumentTypeError(
+                    "The scheme in the file must be a valid JSON object (dict)."
+                )
+
+            return scheme
+    except json.JSONDecodeError:
+        raise argparse.ArgumentTypeError(f"Invalid JSON format in {file_path}.")
 
 
-class Parsera:
-    def __init__(
-        self,
-        model: BaseChatModel | None = None,
-        extractor: ExtractorType = ExtractorType.TABULAR,
-    ):
-        if model is None:
-            self.model = GPT4oMiniModel()
-        else:
-            self.model = model
-        self.extractor = extractor
-        self.loader = PageLoader()
-
-    async def _run(
-        self, url: str, elements: dict, proxy_settings: dict | None = None
-    ) -> dict:
-        content = await self.loader.load_content(url=url, proxy_settings=proxy_settings)
-        extractor_instance = self.extractor.value(
-            elements=elements, model=self.model, content=content
-        )
-        result = await extractor_instance.run()
-        return result
-
-    def run(self, url: str, elements: dict, proxy_settings: dict | None = None) -> dict:
-        return asyncio.run(
-            self._run(url=url, elements=elements, proxy_settings=proxy_settings)
-        )
-
-    async def arun(
-        self, url: str, elements: dict, proxy_settings: dict | None = None
-    ) -> dict:
-        return await self._run(
-            url=url, elements=elements, proxy_settings=proxy_settings
+def validate_scheme(scheme_string):
+    """Validate and parse the scheme dictionary (passed as a JSON string)."""
+    try:
+        return json.loads(scheme_string)
+    except json.JSONDecodeError:
+        raise argparse.ArgumentTypeError(
+            "Invalid scheme format. Must be a valid JSON string."
         )
 
 
-class ParseraScript(Parsera):
-    def __init__(
-        self,
-        model: BaseChatModel | None = None,
-        extractor: ExtractorType = ExtractorType.TABULAR,
-        initial_script: Callable[[Page], Awaitable[Page]] | None = None,
-        stealth: bool = True,
-    ):
-        super().__init__(model=model, extractor=extractor)
-        self.initial_script = initial_script
-        self.stealth = stealth
-
-    async def new_session(
-        self,
-        proxy_settings: dict | None = None,
-        initial_script: Callable[[Page], Awaitable[Page]] | None = None,
-        stealth: bool = True,
-    ) -> None:
-        await self.loader.create_session(
-            proxy_settings=proxy_settings,
-            playwright_script=initial_script,
-            stealth=stealth,
+def validate_args(args):
+    """Custom validation to ensure either scheme or file is provided."""
+    if args.scheme is None and args.file is None:
+        raise argparse.ArgumentError(
+            None, "You must provide either --scheme or --file."
         )
+    return args
 
-    async def extract_page(
-        self,
-        url: str,
-        elements: dict,
-        playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
-    ):
-        content = await self.loader.fetch_page(
-            url=url, playwright_script=playwright_script
+
+def fancy_parser():
+    parser = argparse.ArgumentParser(
+        description=Fore.CYAN
+        + "🎯 Welcome to the Parsera CLI!"
+        + Style.RESET_ALL
+        + "\n"
+        + "This tool allows you to parse a website using a provided URL and either a scheme or a file.\n"
+        + "Follow the options below to get started.",
+        epilog=Fore.YELLOW
+        + "Example usage:\n"
+        + Style.RESET_ALL
+        + '  python -m parsera.main https://example.com --scheme \'{"title":"h1"}\'\n'
+        + "  python -m parsera.main https://example.com --file path/to/elements.json",
+    )
+
+    # URL argument
+    parser.add_argument(
+        "url",
+        type=str,
+        help=Fore.GREEN + "The URL of the website to parse." + Style.RESET_ALL,
+    )
+
+    # Scheme argument (parsed as a dictionary)
+    parser.add_argument(
+        "--scheme",
+        type=validate_scheme,
+        help=Fore.GREEN
+        + 'Provide a JSON string as the scheme definition (e.g., \'{"key": "value"}\').'
+        + Style.RESET_ALL,
+        required=False,
+    )
+
+    # File argument (with validation for file)
+    parser.add_argument(
+        "--file",
+        type=validate_file,
+        help=Fore.GREEN
+        + "Path to the file with parsing elements (used if --scheme is not provided)."
+        + Style.RESET_ALL,
+        required=False,
+    )
+
+    # Output file argument
+    parser.add_argument(
+        "--output",
+        type=str,
+        help="Path to output the parsed results as a JSON file.",
+        required=False,
+        default="output.json",
+    )
+
+    return parser.parse_args()
+
+
+async def get_url_data(url, scheme):
+    model = GPT4oMiniModel()
+
+    # This script is executed after the url is opened
+    async def repeating_script(page: Page) -> Page:
+        await page.wait_for_timeout(1000)  # Wait one second for page to load
+        return page
+
+    parsera = ParseraScript(model=model)
+    return await parsera.arun(
+        url=url, elements=scheme, playwright_script=repeating_script
+    )
+
+
+if __name__ == "__main__":
+    # To load API_KEY from environment
+    load_dotenv()
+
+    colorama.init(autoreset=True)
+    # Parse arguments
+    args = fancy_parser()
+
+    # Validate that either scheme or file is provided
+    args = validate_args(args)
+
+    # Now you can proceed with the rest of the script
+    print(Fore.CYAN + "Parsing the website:" + Style.RESET_ALL, args.url)
+
+    if args.scheme:
+        print(
+            Fore.CYAN + "Scheme (from command-line argument):" + Style.RESET_ALL,
+            args.scheme,
         )
+    if args.file:
+        print(Fore.CYAN + "Scheme (from file):" + Style.RESET_ALL, args.file)
 
-        extractor_instance = self.extractor.value(
-            elements=elements, model=self.model, content=content
-        )
-        result = await extractor_instance.run()
-        return result
+    # Determine the scheme to use (from scheme argument or file)
+    scheme = args.scheme if args.scheme else args.file
 
-    async def _run(
-        self,
-        url: str,
-        elements: dict,
-        proxy_settings: dict | None = None,
-        playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
-    ):
-        if self.loader.context is None:
-            await self.new_session(
-                proxy_settings=proxy_settings,
-                initial_script=self.initial_script,
-                stealth=self.stealth,
-            )
-        return await self.extract_page(
-            url=url, elements=elements, playwright_script=playwright_script
-        )
+    result = asyncio.run(get_url_data(args.url, scheme))
 
-    def run(
-        self,
-        url: str,
-        elements: dict,
-        proxy_settings: dict | None = None,
-        playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
-    ) -> dict:
-        return asyncio.run(
-            self._run(
-                url=url,
-                elements=elements,
-                proxy_settings=proxy_settings,
-                playwright_script=playwright_script,
-            )
-        )
+    # Print the result to the console
+    print(Fore.GREEN + "Parsed result:" + Style.RESET_ALL, result)
 
-    async def arun(
-        self,
-        url: str,
-        elements: dict,
-        proxy_settings: dict | None = None,
-        playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
-    ) -> dict:
-        return await self._run(
-            url=url,
-            elements=elements,
-            proxy_settings=proxy_settings,
-            playwright_script=playwright_script,
+    # Write the result to a JSON file
+    output_file = args.output
+    with open(output_file, "w") as f:
+        json.dump(result, f, indent=4)
+        print(
+            Fore.YELLOW
+            + f"Result successfully written to {output_file}"
+            + Style.RESET_ALL
         )
