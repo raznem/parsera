@@ -52,9 +52,9 @@ There is also `arun` async method available:
 result = await scrapper.arun(url=url, elements=elements)
 ```
 
-## Running as a standalone command line tool
+## Running with CLI
 
-Before you run `Parsera` as CLI tool don't forget to put your `OPENAI_API_KEY` to env variables or `.env` file
+Before you run `Parsera` as command line tool don't forget to put your `OPENAI_API_KEY` to env variables or `.env` file
 
 ### Usage
 

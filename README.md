@@ -15,7 +15,7 @@ Because it's simple and lightweight, with minimal token use which boosts speed a
 - [Documentation](#Documentation)
 - [Basic usage](#Basic-usage)
 - [Running with Jupyter Notebook](#Running-with-Jupyter-Notebook)
-- [Running as standalone command line tool](#Running-as-standalone-command-line-tool)
+- [Running with CLI](#Running-with-CLI)
 - [Running in Docker](#Running-in-Docker)
 
 ## Installation
@@ -80,9 +80,9 @@ nest_asyncio.apply()
 
 Or instead of calling `run` method use async `arun`.
 
-## Running as a standalone command line tool
+## Running with CLI
 
-Before you run `Parsera` as CLI tool don't forget to put your `OPENAI_API_KEY` to env variables or `.env` file
+Before you run `Parsera` as command line tool don't forget to put your `OPENAI_API_KEY` to env variables or `.env` file
 
 ### Usage
 
