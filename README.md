@@ -95,4 +95,4 @@ python -m parsera.main URL {--scheme '{"title":"h1"}' | --file FILENAME} [--outp
 
 ## Running in Docker
 
-In case of issues with your local environment you can run Parsera with Docker, [see documentation](docs.parsera.org/features/docker/).
+In case of issues with your local environment you can run Parsera with Docker, [see documentation](https://docs.parsera.org/features/docker/).
