@@ -52,6 +52,19 @@ There is also `arun` async method available:
 result = await scrapper.arun(url=url, elements=elements)
 ```
 
+## Running as a standalone command line tool
+
+Before you run `Parsera` as CLI tool don't forget to put your `OPENAI_API_KEY` to env variables or `.env` file
+
+### Usage
+
+You can configure elements to parse using `JSON string` or `FILE`.
+Optionally, you can provide `FILE` to write output.
+
+```sh
+python -m parsera.main URL {--scheme '{"title":"h1"}' | --file FILENAME} [--output FILENAME]
+```
+
 ## More features
 
 Check out further documentation to explore more features:
@@ -60,3 +73,4 @@ Check out further documentation to explore more features:
 - [Using proxy](features/proxy.md)
 - [Run custom playwright](features/custom-playwright.md)
 - [Extractors](features/extractors.md)
+- [Docker](features/docker.md)

@@ -31,6 +31,7 @@ nav:
     - Proxy: features/proxy.md
     - Custom playwright: features/custom-playwright.md
     - Extractors: features/extractors.md
+    - Docker: features/docker.md
   - API:
     - Getting started: api/getting-started.md
     - Proxy: api/proxy.md
