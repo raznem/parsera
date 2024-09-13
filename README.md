@@ -85,13 +85,13 @@ nest_asyncio.apply()
 
 Or instead of calling `run` method use async `arun`.
 
-## Running as standalone command line tool
+## Running as a standalone command line tool
 
 Before you run `Parsera` as CLI tool don't forget to put your `OPENAI_API_KEY` to env variables or `.env` file
 
 ### Usage
 
-You can configure elemements to parse using `JSON string` or `FILE`.
+You can configure elements to parse using `JSON string` or `FILE`.
 Optionally, you can provide `FILE` to write output.
 
 ```sh
@@ -107,9 +107,9 @@ You can get access to the CLI or development environment using Docker.
 - Docker: [Install Docker](https://docs.docker.com/get-docker/)
 - Docker Compose: [Install Docker Compose](https://docs.docker.com/compose/install/)
 
-### Prepare Your Environment
+### Quickstart
 
-Create a .env file in the project root directory with the following content:
+1. Create a .env file in the project root directory with the following content:
 
 ```env
 URL=https://parsera.org
@@ -117,13 +117,13 @@ FILE=/app/scheme.json
 OUTPUT=/app/output/result.json
 ```
 
-### Defining scheme for parsing
-Parsing scheme should be defined in the file `scheme.json`, which would be mounted as volume to the container to the `/app/scheme.json`
+2. Create `scheme.json` file with the parsing scheme in the repository root directory.
 
-### Accessing the Output
-The results will be saved in the output directory on your local machine, which is mapped to `/app/output` inside the container. You can find the output file at `./output/result.json` on your host machine.
+3. Run `make up` in this directory.
 
-### Make Targets
+4. The output will be saved as `output/results.json` file.
+
+### Docker Make Targets
 
 ```sh
 make build # Build Docker image
