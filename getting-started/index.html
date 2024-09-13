@@ -337,6 +337,30 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#running-as-a-standalone-command-line-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running as a standalone command line tool
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running as a standalone command line tool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#more-features" class="md-nav__link">
     <span class="md-ellipsis">
       More features
@@ -463,6 +487,27 @@
   
   <span class="md-ellipsis">
     Extractors
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/docker/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Docker
   </span>
   
 
@@ -628,6 +673,30 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#running-as-a-standalone-command-line-tool" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running as a standalone command line tool
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running as a standalone command line tool">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#usage" class="md-nav__link">
+    <span class="md-ellipsis">
+      Usage
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#more-features" class="md-nav__link">
     <span class="md-ellipsis">
       More features
@@ -694,6 +763,13 @@ You can do this from python with:
 <p>There is also <code>arun</code> async method available:
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">scrapper</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">elements</span><span class="o">=</span><span class="n">elements</span><span class="p">)</span>
 </span></code></pre></div></p>
+<h2 id="running-as-a-standalone-command-line-tool">Running as a standalone command line tool</h2>
+<p>Before you run <code>Parsera</code> as CLI tool don't forget to put your <code>OPENAI_API_KEY</code> to env variables or <code>.env</code> file</p>
+<h3 id="usage">Usage</h3>
+<p>You can configure elements to parse using <code>JSON string</code> or <code>FILE</code>.
+Optionally, you can provide <code>FILE</code> to write output.</p>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>-m<span class="w"> </span>parsera.main<span class="w"> </span>URL<span class="w"> </span><span class="o">{</span>--scheme<span class="w"> </span><span class="s1">&#39;{&quot;title&quot;:&quot;h1&quot;}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>--file<span class="w"> </span>FILENAME<span class="o">}</span><span class="w"> </span><span class="o">[</span>--output<span class="w"> </span>FILENAME<span class="o">]</span>
+</span></code></pre></div>
 <h2 id="more-features">More features</h2>
 <p>Check out further documentation to explore more features:</p>
 <ul>
@@ -701,6 +777,7 @@ You can do this from python with:
 <li><a href="../features/proxy/">Using proxy</a></li>
 <li><a href="../features/custom-playwright/">Run custom playwright</a></li>
 <li><a href="../features/extractors/">Extractors</a></li>
+<li><a href="../features/docker/">Docker</a></li>
 </ul>
 
 

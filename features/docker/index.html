@@ -10,26 +10,28 @@
       
       
       
-        <link rel="canonical" href="https://docs.parsera.org/">
+        <link rel="canonical" href="https://docs.parsera.org/features/docker/">
       
       
+        <link rel="prev" href="../extractors/">
       
-        <link rel="next" href="getting-started/">
+      
+        <link rel="next" href="../../api/getting-started/">
       
       
-      <link rel="icon" href="icon.svg">
+      <link rel="icon" href="../../icon.svg">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.34">
     
     
       
-        <title>Parsera</title>
+        <title>Docker - Parsera</title>
       
     
     
-      <link rel="stylesheet" href="assets/stylesheets/main.35f28582.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.35f28582.min.css">
       
         
-        <link rel="stylesheet" href="assets/stylesheets/palette.06af60db.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.06af60db.min.css">
       
       
 
@@ -48,7 +50,7 @@
       
     
     
-    <script>__md_scope=new URL(".",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    <script>__md_scope=new URL("../..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
     
       
 
@@ -74,7 +76,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#welcome-to-parsera" class="md-skip">
+        <a href="#running-in-docker" class="md-skip">
           Skip to content
         </a>
       
@@ -90,9 +92,9 @@
 
 <header class="md-header md-header--shadow" data-md-component="header">
   <nav class="md-header__inner md-grid" aria-label="Header">
-    <a href="." title="Parsera" class="md-header__button md-logo" aria-label="Parsera" data-md-component="logo">
+    <a href="../.." title="Parsera" class="md-header__button md-logo" aria-label="Parsera" data-md-component="logo">
       
-  <img src="icon.svg" alt="logo">
+  <img src="../../icon.svg" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -109,7 +111,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Home
+              Docker
             
           </span>
         </div>
@@ -222,9 +224,9 @@
 
 <nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
   <label class="md-nav__title" for="__drawer">
-    <a href="." title="Parsera" class="md-nav__button md-logo" aria-label="Parsera" data-md-component="logo">
+    <a href="../.." title="Parsera" class="md-nav__button md-logo" aria-label="Parsera" data-md-component="logo">
       
-  <img src="icon.svg" alt="logo">
+  <img src="../../icon.svg" alt="logo">
 
     </a>
     Parsera
@@ -248,30 +250,10 @@
       
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-        
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Home
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="." class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../.." class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -280,44 +262,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-    
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#community" class="md-nav__link">
-    <span class="md-ellipsis">
-      Community
-    </span>
-  </a>
-  
-</li>
-      
-        <li class="md-nav__item">
-  <a href="#contributors" class="md-nav__link">
-    <span class="md-ellipsis">
-      Contributors
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -329,7 +273,7 @@
   
   
     <li class="md-nav__item">
-      <a href="getting-started/" class="md-nav__link">
+      <a href="../../getting-started/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -346,17 +290,19 @@
       
   
   
+    
   
   
+  
     
     
     
     
-    <li class="md-nav__item md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -370,7 +316,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Features
@@ -384,7 +330,7 @@
   
   
     <li class="md-nav__item">
-      <a href="features/custom-models/" class="md-nav__link">
+      <a href="../custom-models/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -405,7 +351,7 @@
   
   
     <li class="md-nav__item">
-      <a href="features/proxy/" class="md-nav__link">
+      <a href="../proxy/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -426,7 +372,7 @@
   
   
     <li class="md-nav__item">
-      <a href="features/custom-playwright/" class="md-nav__link">
+      <a href="../custom-playwright/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -447,7 +393,7 @@
   
   
     <li class="md-nav__item">
-      <a href="features/extractors/" class="md-nav__link">
+      <a href="../extractors/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -465,10 +411,28 @@
                 
   
   
+    
   
   
-    <li class="md-nav__item">
-      <a href="features/docker/" class="md-nav__link">
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  <span class="md-ellipsis">
+    Docker
+  </span>
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
         
   
   <span class="md-ellipsis">
@@ -477,6 +441,66 @@
   
 
       </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#running-in-docker" class="md-nav__link">
+    <span class="md-ellipsis">
+      Running in Docker
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running in Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#quickstart" class="md-nav__link">
+    <span class="md-ellipsis">
+      Quickstart
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-make-targets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker Make Targets
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
     </li>
   
 
@@ -531,7 +555,7 @@
   
   
     <li class="md-nav__item">
-      <a href="api/getting-started/" class="md-nav__link">
+      <a href="../../api/getting-started/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -552,7 +576,7 @@
   
   
     <li class="md-nav__item">
-      <a href="api/proxy/" class="md-nav__link">
+      <a href="../../api/proxy/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -580,7 +604,7 @@
   
   
     <li class="md-nav__item">
-      <a href="contributing/" class="md-nav__link">
+      <a href="../../contributing/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -610,8 +634,6 @@
   
   
   
-    
-  
   
     <label class="md-nav__title" for="__toc">
       <span class="md-nav__icon md-icon"></span>
@@ -620,20 +642,44 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#community" class="md-nav__link">
+  <a href="#running-in-docker" class="md-nav__link">
     <span class="md-ellipsis">
-      Community
+      Running in Docker
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Running in Docker">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#prerequisites" class="md-nav__link">
+    <span class="md-ellipsis">
+      Prerequisites
     </span>
   </a>
   
 </li>
-      
-        <li class="md-nav__item">
-  <a href="#contributors" class="md-nav__link">
+        
+          <li class="md-nav__item">
+  <a href="#quickstart" class="md-nav__link">
     <span class="md-ellipsis">
-      Contributors
+      Quickstart
     </span>
   </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#docker-make-targets" class="md-nav__link">
+    <span class="md-ellipsis">
+      Docker Make Targets
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -655,17 +701,49 @@
   
 
 
-<h1 id="welcome-to-parsera">Welcome to Parsera</h1>
-<p>Parsera is a lightweight Python library for scraping websites with LLMs. </p>
-<p>There are 2 ways of using Parsera:  </p>
+  <h1>Docker</h1>
+
+<h2 id="running-in-docker">Running in Docker</h2>
+<p>You can get access to the CLI or development environment using Docker.</p>
+<h3 id="prerequisites">Prerequisites</h3>
 <ul>
-<li><a href="getting-started/">Install the library</a> and run it locally, it is great for smaller-scale extraction and experiments.</li>
-<li><a href="api/getting-started/">Use an API</a> that provides a more scalable way of data extraction out of the box. Also, it contains some extra features like a built-in proxy. </li>
+<li>Docker: <a href="https://docs.docker.com/get-docker/">Install Docker</a></li>
+<li>Docker Compose: <a href="https://docs.docker.com/compose/install/">Install Docker Compose</a></li>
 </ul>
-<h3 id="community">Community</h3>
-<p>If you like this project star it on <a href="https://github.com/raznem/parsera">GitHub</a> and join our discussions on <a href="https://discord.gg/gYXwgQaT7p">Discord server</a>.</p>
-<h3 id="contributors">Contributors</h3>
-<p>If you are considering contributing to Parsera, check out <a href="contributing/">the guidelines</a> to get started.</p>
+<h3 id="quickstart">Quickstart</h3>
+<ol>
+<li>Create a .env file in the project root directory with the following content:</li>
+</ol>
+<div class="language-text highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>URL=https://parsera.org
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>FILE=/app/scheme.json
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>OUTPUT=/app/output/result.json
+</span></code></pre></div>
+<ol>
+<li>
+<p>Create <code>scheme.json</code> file with the parsing scheme in the repository root directory.</p>
+</li>
+<li>
+<p>Run <code>make up</code> in this directory.</p>
+</li>
+<li>
+<p>The output will be saved as <code>output/results.json</code> file.</p>
+</li>
+</ol>
+<h3 id="docker-make-targets">Docker Make Targets</h3>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>make<span class="w"> </span>build<span class="w"> </span><span class="c1"># Build Docker image</span>
+</span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a>
+</span><span id="__span-1-3"><a id="__codelineno-1-3" name="__codelineno-1-3" href="#__codelineno-1-3"></a>make<span class="w"> </span>up<span class="w"> </span><span class="c1"># Start containers using Docker Compose</span>
+</span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a>
+</span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a>make<span class="w"> </span>down<span class="w"> </span><span class="c1"># Stop and remove containers using Docker Compose</span>
+</span><span id="__span-1-6"><a id="__codelineno-1-6" name="__codelineno-1-6" href="#__codelineno-1-6"></a>
+</span><span id="__span-1-7"><a id="__codelineno-1-7" name="__codelineno-1-7" href="#__codelineno-1-7"></a>make<span class="w"> </span>restart<span class="w"> </span><span class="c1"># Restart containers using Docker Compose</span>
+</span><span id="__span-1-8"><a id="__codelineno-1-8" name="__codelineno-1-8" href="#__codelineno-1-8"></a>
+</span><span id="__span-1-9"><a id="__codelineno-1-9" name="__codelineno-1-9" href="#__codelineno-1-9"></a>make<span class="w"> </span>logs<span class="w"> </span><span class="c1"># View logs of the containers</span>
+</span><span id="__span-1-10"><a id="__codelineno-1-10" name="__codelineno-1-10" href="#__codelineno-1-10"></a>
+</span><span id="__span-1-11"><a id="__codelineno-1-11" name="__codelineno-1-11" href="#__codelineno-1-11"></a>make<span class="w"> </span>shell<span class="w"> </span><span class="c1"># Open a shell in the running container</span>
+</span><span id="__span-1-12"><a id="__codelineno-1-12" name="__codelineno-1-12" href="#__codelineno-1-12"></a>
+</span><span id="__span-1-13"><a id="__codelineno-1-13" name="__codelineno-1-13" href="#__codelineno-1-13"></a>make<span class="w"> </span>clean<span class="w"> </span><span class="c1"># Remove all stopped containers, unused networks, and dangling images</span>
+</span></code></pre></div>
 
 
 
@@ -712,10 +790,10 @@
     </div>
     
     
-    <script id="__config" type="application/json">{"base": ".", "features": [], "search": "assets/javascripts/workers/search.07f07601.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
+    <script id="__config" type="application/json">{"base": "../..", "features": [], "search": "../../assets/javascripts/workers/search.07f07601.min.js", "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}}</script>
     
     
-      <script src="assets/javascripts/bundle.56dfad97.min.js"></script>
+      <script src="../../assets/javascripts/bundle.56dfad97.min.js"></script>
       
     
   </body>
