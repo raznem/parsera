@@ -8,6 +8,9 @@ format:
 doc-deploy:
 	mkdocs gh-deploy
 
+doc-run:
+	mkdocs serve
+
 # Define variables
 IMAGE_NAME = parsera
 CONTAINER_NAME = parsera
