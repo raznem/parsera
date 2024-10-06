@@ -1,3 +1,4 @@
+import asyncio
 import warnings
 from typing import Awaitable, Callable, Literal, TypedDict
 
@@ -22,7 +23,7 @@ class PageLoader:
     def __init__(
         self,
         browser_name: Literal["firefox", "chromium"] = "firefox",
-        browser: Browser | None = None
+        browser: Browser | None = None,
     ):
         self._browser_id = browser_name
         self.browser: Browser | None = browser
@@ -71,6 +72,7 @@ class PageLoader:
     async def fetch_page(
         self,
         url: str,
+        scrolls_limit: int = 0,
         load_state: Literal[
             "domcontentloaded", "load", "networkidle"
         ] = "domcontentloaded",
@@ -83,11 +85,33 @@ class PageLoader:
         if playwright_script:
             self.page = await playwright_script(self.page)
 
+        # Function to perform the scrolling
+        scrolls = 0
+        last_height = 0
+
+        while scrolls < scrolls_limit:
+            # Scroll down to the bottom of the page
+            await self.page.evaluate("window.scrollTo(0, document.body.scrollHeight);")
+
+            # Wait for page to load, useage of 'networkidle' doesn't work properly
+            await asyncio.sleep(2)
+
+            # Check current scroll height
+            new_height = await self.page.evaluate("document.body.scrollHeight")
+
+            # Break if no new content is loaded
+            if new_height == last_height:
+                break
+
+            last_height = new_height
+            scrolls += 1
+
         return await self.page.content()
 
     async def load_content(
         self,
         url: str,
+        scrolls_limit: int = 0,
         proxy_settings: ProxySettings | None = None,
         load_state: Literal[
             "domcontentloaded", "load", "networkidle"
@@ -96,11 +120,13 @@ class PageLoader:
     ):
         await self.create_session(proxy_settings=proxy_settings)
         return await self.fetch_page(
-            url=url, load_state=load_state, playwright_script=playwright_script
+            url=url,
+            scrolls_limit=scrolls_limit,
+            load_state=load_state,
+            playwright_script=playwright_script,
         )
 
     async def close(self) -> None:
         if self.playwright:
             await self.browser.close()
             self.playwright.stop()
-
