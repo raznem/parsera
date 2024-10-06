@@ -21,11 +21,12 @@ class ProxySettings(TypedDict, total=False):
 class PageLoader:
     def __init__(
         self,
-        browser: Literal["firefox", "chromium"] = "firefox",
+        browser_name: Literal["firefox", "chromium"] = "firefox",
+        browser: Browser | None = None
     ):
-        self._browser_id = browser
+        self._browser_id = browser_name
+        self.browser: Browser | None = browser
         self.playwright: Playwright | None = None
-        self.browser: Browser | None = None
         self.context: BrowserContext | None = None
         self.page: Page | None = None
 
