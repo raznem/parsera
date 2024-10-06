@@ -21,11 +21,10 @@ class ProxySettings(TypedDict, total=False):
 class PageLoader:
     def __init__(
         self,
-        browser: Literal["firefox", "chromium"] = "firefox",
+        browser: Browser | None = None
     ):
-        self._browser_id = browser
         self.playwright: Playwright | None = None
-        self.browser: Browser | None = None
+        self.browser: Browser | None = browser
         self.context: BrowserContext | None = None
         self.page: Page | None = None
 
@@ -36,10 +35,7 @@ class PageLoader:
         if self.browser:
             await self.browser.close()
 
-        if self._browser_id == "firefox":
-            self.browser = await self.playwright.firefox.launch(headless=True)
-        else:
-            self.browser = await self.playwright.chromium.launch(headless=True)
+        self.browser = await self.playwright.firefox.launch(headless=True)
 
     async def stealth(self, page: Page) -> Page:
         user_agent = await self.page.evaluate("navigator.userAgent")
