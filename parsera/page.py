@@ -103,38 +103,3 @@ class PageLoader:
             await self.browser.close()
             self.playwright.stop()
 
-
-async def fetch_page_content(
-    url: str,
-    proxy_settings: ProxySettings | None = None,
-    browser: str = "firefox",
-) -> str:
-    warnings.warn(
-        "fetch_page_content is deprecated and will be removed",
-        DeprecationWarning,
-    )
-    async with async_playwright() as p:
-        # Launch the browser
-        if browser == "firefox":
-            browser = await p.firefox.launch(headless=True)
-        else:
-            browser = await p.chromium.launch(headless=True)
-        # Open a new browser context
-        context = await browser.new_context(proxy=proxy_settings)
-        # Open a new page
-        page = await context.new_page()
-        await stealth_async(page)
-
-        # Navigate to the URL
-        # await page.route("**/*.{png,jpg,jpeg}", lambda route: route.abort()) # Can speed up requests
-        await page.goto(url)
-
-        # Wait for the content to be dynamically loaded
-        await page.wait_for_load_state("domcontentloaded")
-        # Get the page content
-        content = await page.content()
-
-        # Close the browser
-        await browser.close()
-
-        return content
