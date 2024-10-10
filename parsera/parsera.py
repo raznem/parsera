@@ -84,10 +84,11 @@ class ParseraScript(Parsera):
         self,
         url: str,
         elements: dict,
+        scrolls_limit: int,
         playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
     ):
         content = await self.loader.fetch_page(
-            url=url, playwright_script=playwright_script
+            url=url, scrolls_limit=scrolls_limit, playwright_script=playwright_script
         )
 
         extractor_instance = self.extractor.value(
@@ -100,6 +101,7 @@ class ParseraScript(Parsera):
         self,
         url: str,
         elements: dict,
+        scrolls_limit: int,
         proxy_settings: dict | None = None,
         playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
     ):
@@ -110,7 +112,10 @@ class ParseraScript(Parsera):
                 stealth=self.stealth,
             )
         return await self.extract_page(
-            url=url, elements=elements, playwright_script=playwright_script
+            url=url,
+            elements=elements,
+            scrolls_limit=scrolls_limit,
+            playwright_script=playwright_script,
         )
 
     def run(
@@ -133,12 +138,14 @@ class ParseraScript(Parsera):
         self,
         url: str,
         elements: dict,
+        scrolls_limit: int,
         proxy_settings: dict | None = None,
         playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
     ) -> dict:
         return await self._run(
             url=url,
             elements=elements,
+            scrolls_limit=scrolls_limit,
             proxy_settings=proxy_settings,
             playwright_script=playwright_script,
         )
