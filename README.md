@@ -87,10 +87,10 @@ Before you run `Parsera` as command line tool don't forget to put your `OPENAI_A
 ### Usage
 
 You can configure elements to parse using `JSON string` or `FILE`.
-Optionally, you can provide `FILE` to write output.
+Optionally, you can provide `FILE` to write output and amount of `SCROLLS`, that you want to do on the page
 
 ```sh
-python -m parsera.main URL {--scheme '{"title":"h1"}' | --file FILENAME} [--output FILENAME]
+python -m parsera.main URL {--scheme '{"title":"h1"}' | --file FILENAME} [--scrolls SCROLLS] [--output FILENAME]
 ```
 
 ## Running in Docker

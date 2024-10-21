@@ -64,8 +64,8 @@ def fancy_parser():
         epilog=Fore.YELLOW
         + "Example usage:\n"
         + Style.RESET_ALL
-        + '  python -m parsera.main https://example.com --scheme \'{"title":"h1"}\'\n'
-        + "  python -m parsera.main https://example.com --file path/to/elements.json",
+        + '  python -m parsera.main https://example.com --scrolls 5 --scheme \'{"title":"h1"}\'\n '
+        + "  python -m parsera.main https://example.com --scrolls 5 --file path/to/elements.json",
     )
 
     # URL argument
@@ -83,6 +83,17 @@ def fancy_parser():
         + 'Provide a JSON string as the scheme definition (e.g., \'{"key": "value"}\').'
         + Style.RESET_ALL,
         required=False,
+    )
+
+    # Scrolls argument
+    parser.add_argument(
+        "--scrolls",
+        type=int,
+        help=Fore.GREEN
+        + "Add amount of scrolls for the page on the url."
+        + Style.RESET_ALL,
+        required=False,
+        default=0
     )
 
     # File argument (with validation for file)
@@ -107,7 +118,7 @@ def fancy_parser():
     return parser.parse_args()
 
 
-async def get_url_data(url, scheme):
+async def get_url_data(url, scheme, scrolls):
     model = GPT4oMiniModel()
 
     # This script is executed after the url is opened
@@ -117,7 +128,7 @@ async def get_url_data(url, scheme):
 
     parsera = ParseraScript(model=model)
     return await parsera.arun(
-        url=url, elements=scheme, playwright_script=repeating_script
+        url=url, elements=scheme, playwright_script=repeating_script, scrolls_limit=scrolls
     )
 
 
@@ -142,11 +153,13 @@ if __name__ == "__main__":
         )
     if args.file:
         print(Fore.CYAN + "Scheme (from file):" + Style.RESET_ALL, args.file)
+    if args.scrolls:
+        print(Fore.CYAN + "Amount of scrolls on the page:" + Style.RESET_ALL, args.scrolls)
 
     # Determine the scheme to use (from scheme argument or file)
     scheme = args.scheme if args.scheme else args.file
 
-    result = asyncio.run(get_url_data(args.url, scheme))
+    result = asyncio.run(get_url_data(args.url, scheme, args.scrolls))
 
     # Print the result to the console
     print(Fore.GREEN + "Parsed result:" + Style.RESET_ALL, result)
