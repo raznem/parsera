@@ -34,25 +34,49 @@ class Parsera:
         self.loader = PageLoader()
 
     async def _run(
-        self, url: str, elements: dict, proxy_settings: dict | None = None
+        self,
+        url: str,
+        elements: dict,
+        proxy_settings: dict | None = None,
+        scrolls_limit: int = 0,
     ) -> dict:
-        content = await self.loader.load_content(url=url, proxy_settings=proxy_settings)
+        content = await self.loader.load_content(
+            url=url, proxy_settings=proxy_settings, scrolls_limit=scrolls_limit
+        )
         extractor_instance = self.extractor.value(
             elements=elements, model=self.model, content=content
         )
         result = await extractor_instance.run()
         return result
 
-    def run(self, url: str, elements: dict, proxy_settings: dict | None = None) -> dict:
+    def run(
+        self,
+        url: str,
+        elements: dict,
+        proxy_settings: dict | None = None,
+        scrolls_limit: int = 0,
+    ) -> dict:
         return asyncio.run(
-            self._run(url=url, elements=elements, proxy_settings=proxy_settings)
+            self._run(
+                url=url,
+                elements=elements,
+                proxy_settings=proxy_settings,
+                scrolls_limit=scrolls_limit,
+            )
         )
 
     async def arun(
-        self, url: str, elements: dict, proxy_settings: dict | None = None
+        self,
+        url: str,
+        elements: dict,
+        proxy_settings: dict | None = None,
+        scrolls_limit: int = 0,
     ) -> dict:
         return await self._run(
-            url=url, elements=elements, proxy_settings=proxy_settings
+            url=url,
+            elements=elements,
+            proxy_settings=proxy_settings,
+            scrolls_limit=scrolls_limit,
         )
 
 
@@ -84,10 +108,11 @@ class ParseraScript(Parsera):
         self,
         url: str,
         elements: dict,
+        scrolls_limit: int = 0,
         playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
     ):
         content = await self.loader.fetch_page(
-            url=url, playwright_script=playwright_script
+            url=url, scrolls_limit=scrolls_limit, playwright_script=playwright_script
         )
 
         extractor_instance = self.extractor.value(
@@ -100,6 +125,7 @@ class ParseraScript(Parsera):
         self,
         url: str,
         elements: dict,
+        scrolls_limit: int = 0,
         proxy_settings: dict | None = None,
         playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
     ):
@@ -110,13 +136,17 @@ class ParseraScript(Parsera):
                 stealth=self.stealth,
             )
         return await self.extract_page(
-            url=url, elements=elements, playwright_script=playwright_script
+            url=url,
+            elements=elements,
+            scrolls_limit=scrolls_limit,
+            playwright_script=playwright_script,
         )
 
     def run(
         self,
         url: str,
         elements: dict,
+        scrolls_limit: int = 0,
         proxy_settings: dict | None = None,
         playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
     ) -> dict:
@@ -124,6 +154,7 @@ class ParseraScript(Parsera):
             self._run(
                 url=url,
                 elements=elements,
+                scrolls_limit=scrolls_limit,
                 proxy_settings=proxy_settings,
                 playwright_script=playwright_script,
             )
@@ -133,12 +164,14 @@ class ParseraScript(Parsera):
         self,
         url: str,
         elements: dict,
+        scrolls_limit: int = 0,
         proxy_settings: dict | None = None,
         playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
     ) -> dict:
         return await self._run(
             url=url,
             elements=elements,
+            scrolls_limit=scrolls_limit,
             proxy_settings=proxy_settings,
             playwright_script=playwright_script,
         )
