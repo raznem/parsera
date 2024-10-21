@@ -1,5 +1,5 @@
 ## Setting proxy country
-You can use the `proxy_country` parameter to set a proxy country. The default is `random`, and it's recommended to change it since your page could not be available from all locations.
+You can use the `proxy_country` parameter to set a proxy country. The default is `UnitedStates`, and it's recommended to change it since your page could not be available from all locations.
 
 To scrape the page from the United States you have to set `proxy_country` to `UnitedStates`:
 ```bash
