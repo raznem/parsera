@@ -1,3 +1,4 @@
+import asyncio
 import warnings
 from typing import Awaitable, Callable, Literal, TypedDict
 
@@ -21,11 +22,10 @@ class ProxySettings(TypedDict, total=False):
 class PageLoader:
     def __init__(
         self,
-        browser: Literal["firefox", "chromium"] = "firefox",
+        browser: Browser | None = None
     ):
-        self._browser_id = browser
         self.playwright: Playwright | None = None
-        self.browser: Browser | None = None
+        self.browser: Browser | None = browser
         self.context: BrowserContext | None = None
         self.page: Page | None = None
 
@@ -36,10 +36,7 @@ class PageLoader:
         if self.browser:
             await self.browser.close()
 
-        if self._browser_id == "firefox":
-            self.browser = await self.playwright.firefox.launch(headless=True)
-        else:
-            self.browser = await self.playwright.chromium.launch(headless=True)
+        self.browser = await self.playwright.firefox.launch(headless=True)
 
     async def stealth(self, page: Page) -> Page:
         user_agent = await self.page.evaluate("navigator.userAgent")
@@ -70,23 +67,76 @@ class PageLoader:
     async def fetch_page(
         self,
         url: str,
+        scrolls_limit: int = 0,
         load_state: Literal[
             "domcontentloaded", "load", "networkidle"
         ] = "domcontentloaded",
         playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
     ) -> None:
         # Navigate to the URL
-        # await page.route("**/*.{png,jpg,jpeg}", lambda route: route.abort()) # Can speed up requests
         await self.page.goto(url)
         await self.page.wait_for_load_state(load_state)
+
         if playwright_script:
             self.page = await playwright_script(self.page)
 
-        return await self.page.content()
+        # Start tracking removed content with MutationObserver
+        await self.page.evaluate(
+            """
+            window.removedContent = [];
+            const observer = new MutationObserver((mutations) => {
+                mutations.forEach(mutation => {
+                    if (mutation.removedNodes.length > 0) {
+                        mutation.removedNodes.forEach(node => {
+                            if (node.nodeType === 1) { // Only store element nodes
+                                window.removedContent.push(node.outerHTML);
+                            }
+                        });
+                    }
+                });
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        """
+        )
+
+        # Function to perform the scrolling
+        scrolls = 0
+        last_height = 0
+        captured_content = []
+
+        while scrolls < scrolls_limit:
+            # Scroll down to the bottom of the page
+            await self.page.evaluate("window.scrollTo(0, document.body.scrollHeight);")
+
+            # Wait for page to load
+            await asyncio.sleep(2)
+
+            # Capture current visible content and append to the list
+            current_content = await self.page.content()
+            captured_content.append(current_content)
+
+            # Check current scroll height
+            new_height = await self.page.evaluate("document.body.scrollHeight")
+
+            # Break if no new content is loaded (based on scroll height)
+            if new_height == last_height:
+                break
+
+            last_height = new_height
+            scrolls += 1
+
+        # Fetch removed content if any
+        removed_content = await self.page.evaluate("window.removedContent.join('')")
+
+        # Combine all the captured content, including removed elements
+        final_content = "".join(captured_content) + removed_content
+
+        return final_content
 
     async def load_content(
         self,
         url: str,
+        scrolls_limit: int = 0,
         proxy_settings: ProxySettings | None = None,
         load_state: Literal[
             "domcontentloaded", "load", "networkidle"
@@ -95,46 +145,13 @@ class PageLoader:
     ):
         await self.create_session(proxy_settings=proxy_settings)
         return await self.fetch_page(
-            url=url, load_state=load_state, playwright_script=playwright_script
+            url=url,
+            scrolls_limit=scrolls_limit,
+            load_state=load_state,
+            playwright_script=playwright_script,
         )
 
     async def close(self) -> None:
         if self.playwright:
             await self.browser.close()
             self.playwright.stop()
-
-
-async def fetch_page_content(
-    url: str,
-    proxy_settings: ProxySettings | None = None,
-    browser: str = "firefox",
-) -> str:
-    warnings.warn(
-        "fetch_page_content is deprecated and will be removed",
-        DeprecationWarning,
-    )
-    async with async_playwright() as p:
-        # Launch the browser
-        if browser == "firefox":
-            browser = await p.firefox.launch(headless=True)
-        else:
-            browser = await p.chromium.launch(headless=True)
-        # Open a new browser context
-        context = await browser.new_context(proxy=proxy_settings)
-        # Open a new page
-        page = await context.new_page()
-        await stealth_async(page)
-
-        # Navigate to the URL
-        # await page.route("**/*.{png,jpg,jpeg}", lambda route: route.abort()) # Can speed up requests
-        await page.goto(url)
-
-        # Wait for the content to be dynamically loaded
-        await page.wait_for_load_state("domcontentloaded")
-        # Get the page content
-        content = await page.content()
-
-        # Close the browser
-        await browser.close()
-
-        return content

@@ -15,6 +15,7 @@ You can get access to the CLI or development environment using Docker.
 URL=https://parsera.org
 FILE=/app/scheme.json
 OUTPUT=/app/output/result.json
+SCROLLS=5
 ```
 
 2. Create `scheme.json` file with the parsing scheme in the repository root directory.

@@ -30,6 +30,8 @@ nav:
     - Custom models: features/custom-models.md
     - Proxy: features/proxy.md
     - Custom playwright: features/custom-playwright.md
+    - Custom browser: features/custom-browser.md
+    - Scrolling: features/scrolling.md
     - Extractors: features/extractors.md
     - Docker: features/docker.md
   - API:

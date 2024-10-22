@@ -10,4 +10,4 @@ services:
     volumes:
       - ./scheme.json:/app/scheme.json
       - ./output:/app/output
-    command: ["$URL", "--file", "$FILE", "--output", "$OUTPUT"]
+    command: ["$URL", "--file", "$FILE", "--output", "$OUTPUT", --scrolls "$SCROLLS"]
