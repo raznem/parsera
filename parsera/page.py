@@ -20,10 +20,7 @@ class ProxySettings(TypedDict, total=False):
 
 
 class PageLoader:
-    def __init__(
-        self,
-        browser: Browser | None = None
-    ):
+    def __init__(self, browser: Browser | None = None):
         self.playwright: Playwright | None = None
         self.browser: Browser | None = browser
         self.context: BrowserContext | None = None
@@ -38,12 +35,18 @@ class PageLoader:
 
         self.browser = await self.playwright.firefox.launch(headless=True)
 
-    async def stealth(self, page: Page) -> Page:
+    async def stealth(
+        self,
+        page: Page,
+        proxy_settings: ProxySettings | None,
+    ) -> Page:
         user_agent = await self.page.evaluate("navigator.userAgent")
         user_agent = user_agent.replace("HeadlessChrome/", "Chrome/")
         await self.context.close()
 
-        self.context = await self.browser.new_context(user_agent=user_agent)
+        self.context = await self.browser.new_context(
+            user_agent=user_agent, proxy=proxy_settings
+        )
         page = await self.context.new_page()
         await stealth_async(page, config=StealthConfig(navigator_user_agent=False))
         return page
@@ -59,7 +62,9 @@ class PageLoader:
         self.context = await self.browser.new_context(proxy=proxy_settings)
         self.page = await self.context.new_page()
         if stealth:
-            self.page = await self.stealth(page=self.page)
+            self.page = await self.stealth(
+                page=self.page, proxy_settings=proxy_settings
+            )
 
         if playwright_script:
             self.page = await playwright_script(self.page)
