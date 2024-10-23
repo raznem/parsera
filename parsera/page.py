@@ -109,7 +109,7 @@ class PageLoader:
         last_height = 0
         captured_content = []
 
-        while scrolls < scrolls_limit:
+        while scrolls <= scrolls_limit:
             # Scroll down to the bottom of the page
             await self.page.evaluate("window.scrollTo(0, document.body.scrollHeight);")
 
