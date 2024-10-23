@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "parsera"
-version = "0.1.9"
+version = "0.1.10"
 description = "Lightweight library for scraping web-sites with LLMs"
 authors = ["Mikhail Zanka <raznem@gmail.com>"]
 license = "GPL-2.0-or-later"
