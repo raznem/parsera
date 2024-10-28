@@ -16,6 +16,8 @@ markdownify = "^0.13.1"
 python-dotenv = "^1.0.1"
 argparse = "^1.4.0"
 colorama = "^0.4.6"
+tiktoken = "^0.8.0"
+langchain-text-splitters = "0.2.4"
 
 [tool.poetry.group.dev.dependencies]
 black = "^23.3.0"
