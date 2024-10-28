@@ -249,6 +249,24 @@ class ChunksTabularExtractor(Extractor):
         output_dict = parser.parse(output.content)
         return output_dict
 
+    async def merge_all_data(self, all_data):
+        elements = json.dumps(self.elements)
+        json_list = ""
+        for data in all_data:
+            json_list += "``` \n" + json.dumps(data) + "\n ```\n"
+
+        human_msg = self.prompt_merge_template.format(
+            elements=elements, jsons_list=json_list
+        )
+        messages = [
+            SystemMessage(self.system_merge_prompt),
+            HumanMessage(human_msg),
+        ]
+        output = await self.model.ainvoke(messages)
+        parser = JsonOutputParser()
+        output_dict = parser.parse(output.content)
+        return output_dict
+
     async def run(
         self,
     ) -> dict:
