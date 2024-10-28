@@ -24,7 +24,9 @@ class Extractor:
     system_prompt = None
     prompt_template = SIMPLE_EXTRACTOR_PROMPT_TEMPLATE
 
-    def __init__(self, elements: dict, model: BaseChatModel, content: str):
+    def __init__(
+        self, elements: dict, model: BaseChatModel, content: str, *args, **kwargs
+    ):
         self.elements = elements
         self.model = model
         self.content = content

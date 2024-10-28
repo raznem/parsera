@@ -66,10 +66,10 @@ If no data is found return empty json:
 
 SYSTEM_MERGE_PROMPT_TEMPLATE = """
 Your goal is to merge data extracted from different parts of the page into one json.
-Keep the original structure, but make sure to correctly merge data to not have duplicates.
+Keep the original structure, but make sure to correctly merge data to not have duplicates, prefer rows with more data.
 
 In case of conflicting values, take the data that is further from the boarder between the files.
-For example if merging the following jsons:
+## Example: merging conflicting values
 ```
 [
     {"name": "zero element", "price": "123"},
@@ -91,12 +91,47 @@ and
 In the case above the "second element"'s price should be taken from the first json, cause it's further from the boarder
 between the files, while "third element"'s price should be taken from the second json. The final output should be:
 
+Merged json:
 ```
 [
     {"name": "zero element", "price": "123"},
     {"name": "first element", "price": "100"},
     {"name": "second element", "price": "200"},
     {"name": "third element", "price": "400"},
+]
+```
+
+## Example: merging missing values
+```
+[
+    {"name": "zero element", "price": "123"},
+    {"name": "first element", "price": "100"},
+    {"name": "second element", "price": "200"},
+    {"name": "third", "price": null},
+]
+```
+
+and 
+
+```
+[
+    {"name": "second element", "price": "123"},
+    {"name": "third element", "price": "400"},
+    {"name": "fourth element", "price": "350"},
+]
+```
+
+In this case the "third element" should be taken from the second json, because it contains missing value for the "price"
+and fixed truncated name "third". The final output should be:
+
+Merged json:
+```
+[
+    {"name": "zero element", "price": "123"},
+    {"name": "first element", "price": "100"},
+    {"name": "second element", "price": "200"},
+    {"name": "third element", "price": "400"},
+    {"name": "fourth element", "price": "350"},
 ]
 ```
 
@@ -117,11 +152,11 @@ Merged json:
 APPEND_TABULAR_EXTRACTOR_SYSTEM_PROMPT = """
 Your goal is to continue the sequence extracted from the previous chunk of the page by adding elements from the new page
 chunk. Note, that chunks are overlapping, so the data extracted from the previous chunk can appear in the content again,
-in this case always prefer the data from the truncated page chunk. 
+in this case always try to find values for the rows based on the content of the truncated page chunk provided by user. 
 Output json should contain all records you observe on the page.
 
 ## Example: continue truncated json
-Fix and continue this sequence:
+Fill missing values, fix truncated values and continue this sequence:
 ```json
 [
     {"name": "zero product", "price": "25"},
@@ -140,7 +175,7 @@ Return the following elements from the truncated page chunk:
 
 Make sure to fill mussing and truncated values in the previous sequence, while using `null` in the records where data
 was not found. Like in example below, where price for the "fourth product" was not found.
-Output json:
+Output json with fixed previous sequence and new rows:
 ```json
 [
     {"name": "zero product", "price": "25"},
@@ -160,7 +195,7 @@ User requesting the following elements from the truncated page chunk:
 }
 ```
 Make sure to return json with only this field
-Output json:
+Output json with fixed previous sequence and new rows:
 ```json
 [
     {"link": "https://example.com/link1"},
@@ -179,7 +214,7 @@ If no data is found return empty json:
 """
 
 APPEND_EXTRACTOR_PROMPT_TEMPLATE = """
-Fix and continue this sequence:
+Fill missing values, fix truncated values and continue this sequence:
 ```
 {previous_data}
 ```
@@ -194,7 +229,7 @@ You are looking for the following elements from the truncated page chunk:
 {elements}
 ```
 
-Output json with all elements from the previous sequence where new data was found:
+Output json with fixed previous sequence and new rows:
 """
 
 
