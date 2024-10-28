@@ -28,6 +28,7 @@ pytest = "^8.2.2"
 jupyterlab = "^4.2.4"
 mkdocs = "^1.6.1"
 mkdocs-material = "^9.5.34"
+pytest-asyncio = "^0.24.0"
 
 [tool.poetry.group.transformers]
 optional = true
