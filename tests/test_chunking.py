@@ -53,3 +53,18 @@ async def test_chunking_hackernews():
         url, elements, small_chunk_size=1500
     )
     assert result_no_chunks == result_chunks
+
+
+@pytest.mark.asyncio
+async def test_chunking_egen_ai():
+    url = "https://egen.ai/people/careers/"
+    elements = {
+        "Title": "Title of job",
+        "Location": "Location of job",
+        "Type": "If the job is Remote or Not-Remote",
+        "Link": "Link to the post",
+    }
+    result_no_chunks, result_chunks = await run_chunks_and_no_chunks(
+        url, elements, small_chunk_size=1500
+    )
+    assert result_no_chunks != result_chunks
