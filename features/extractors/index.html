@@ -488,7 +488,16 @@
         <li class="md-nav__item">
   <a href="#tabular-extractor" class="md-nav__link">
     <span class="md-ellipsis">
-      Tabular extractor
+      Tabular Extractor
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chunks-tabular-extractor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chunks Tabular Extractor
     </span>
   </a>
   
@@ -497,7 +506,7 @@
         <li class="md-nav__item">
   <a href="#list-extractor" class="md-nav__link">
     <span class="md-ellipsis">
-      List extractor
+      List Extractor
     </span>
   </a>
   
@@ -506,7 +515,7 @@
         <li class="md-nav__item">
   <a href="#item-extractor" class="md-nav__link">
     <span class="md-ellipsis">
-      Item extractor
+      Item Extractor
     </span>
   </a>
   
@@ -689,7 +698,16 @@
         <li class="md-nav__item">
   <a href="#tabular-extractor" class="md-nav__link">
     <span class="md-ellipsis">
-      Tabular extractor
+      Tabular Extractor
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#chunks-tabular-extractor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Chunks Tabular Extractor
     </span>
   </a>
   
@@ -698,7 +716,7 @@
         <li class="md-nav__item">
   <a href="#list-extractor" class="md-nav__link">
     <span class="md-ellipsis">
-      List extractor
+      List Extractor
     </span>
   </a>
   
@@ -707,7 +725,7 @@
         <li class="md-nav__item">
   <a href="#item-extractor" class="md-nav__link">
     <span class="md-ellipsis">
-      Item extractor
+      Item Extractor
     </span>
   </a>
   
@@ -736,15 +754,19 @@
 <h2 id="different-extractor-types">Different extractor types</h2>
 <p>There are different types of extractors, that provide output in different formats:</p>
 <ul>
-<li><code>TabularExtractor</code> for tables.</li>
+<li>For tables.<ul>
+<li><code>ChunksTabularExtractor</code> - for tables, capable of processing larger pages with chunking</li>
+<li><code>TabularExtractor</code> - for tables</li>
+</ul>
+</li>
 <li><code>ListExtractor</code> for separate lists of values.</li>
 <li><code>ItemExtractor</code> for specific values.</li>
 </ul>
-<p>By default a tabular extractor is used.</p>
-<h2 id="tabular-extractor">Tabular extractor</h2>
-<p><div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">parsera</span> <span class="kn">import</span> <span class="n">Parsera</span>
+<p>By default a <a href="#chunks-tabular-extractor"><code>ChunksTabularExtractor</code></a> is used.</p>
+<h2 id="tabular-extractor">Tabular Extractor</h2>
+<p><div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">parsera</span> <span class="kn">import</span> <span class="n">Parsera</span><span class="p">,</span> <span class="n">ExtractorType</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">scraper</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">(</span><span class="n">extractor</span><span class="o">=</span><span class="n">Parsera</span><span class="o">.</span><span class="n">ExtractorType</span><span class="o">.</span><span class="n">TABULAR</span><span class="p">)</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">scraper</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">(</span><span class="n">extractor</span><span class="o">=</span><span class="n">ExtractorType</span><span class="o">.</span><span class="n">TABULAR</span><span class="p">)</span>
 </span></code></pre></div>
 The tabular extractor is used to find rows of tabular data and has output of the form:
 <div class="language-json highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="p">[</span>
@@ -753,27 +775,48 @@ The tabular extractor is used to find rows of tabular data and has output of the
 </span><span id="__span-1-4"><a id="__codelineno-1-4" name="__codelineno-1-4" href="#__codelineno-1-4"></a><span class="w">    </span><span class="p">{</span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;name3&quot;</span><span class="p">,</span><span class="w"> </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;300&quot;</span><span class="p">},</span>
 </span><span id="__span-1-5"><a id="__codelineno-1-5" name="__codelineno-1-5" href="#__codelineno-1-5"></a><span class="p">]</span>
 </span></code></pre></div></p>
-<h2 id="list-extractor">List extractor</h2>
-<p><div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">parsera</span> <span class="kn">import</span> <span class="n">Parsera</span>
+<h2 id="chunks-tabular-extractor">Chunks Tabular Extractor</h2>
+<p>Provides the same output format as <code>TabularExtractor</code>, but capable of processing larger pages due to page chunking.
+For example, if your model has 16k context size, you can set chunks to be not larger than 12k:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="kn">from</span> <span class="nn">parsera</span> <span class="kn">import</span> <span class="n">Parsera</span><span class="p">,</span> <span class="n">ExtractorType</span>
 </span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">scraper</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">(</span><span class="n">extractor</span><span class="o">=</span><span class="n">Parsera</span><span class="o">.</span><span class="n">ExtractorType</span><span class="o">.</span><span class="n">LIST</span><span class="p">)</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="n">scraper</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">(</span><span class="n">extractor</span><span class="o">=</span><span class="n">ExtractorType</span><span class="o">.</span><span class="n">CHUNKS_TABULAR</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">12000</span><span class="p">)</span>
+</span></code></pre></div></p>
+<p>By default number of tokens is counted based on the OpenAI tokenizer for <code>gpt-4o</code> model, but you can provide custom
+function for counting tokens:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">import</span> <span class="nn">tiktoken</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="k">def</span> <span class="nf">count_tokens</span><span class="p">(</span><span class="n">text</span><span class="p">):</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a>    <span class="c1"># Initialize the tokenizer for GPT-4o-mini</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>    <span class="n">encoding</span> <span class="o">=</span> <span class="n">tiktoken</span><span class="o">.</span><span class="n">get_encoding</span><span class="p">(</span><span class="s2">&quot;cl100k_base&quot;</span><span class="p">)</span>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a>    <span class="c1"># Count tokens</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a>    <span class="n">tokens</span> <span class="o">=</span> <span class="n">encoding</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">text</span><span class="p">)</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a>    <span class="k">return</span> <span class="nb">len</span><span class="p">(</span><span class="n">tokens</span><span class="p">)</span>
+</span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
+</span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="n">scraper</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">(</span><span class="n">extractor</span><span class="o">=</span><span class="n">ExtractorType</span><span class="o">.</span><span class="n">CHUNKS_TABULAR</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">12000</span><span class="p">,</span> <span class="n">token_counter</span><span class="o">=</span><span class="n">count_tokens</span><span class="p">)</span>
+</span></code></pre></div>
+<h2 id="list-extractor">List Extractor</h2>
+<p><div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">parsera</span> <span class="kn">import</span> <span class="n">Parsera</span><span class="p">,</span> <span class="n">ExtractorType</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">scraper</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">(</span><span class="n">extractor</span><span class="o">=</span><span class="n">ExtractorType</span><span class="o">.</span><span class="n">LIST</span><span class="p">)</span>
 </span></code></pre></div>
 The list extractor is used to find lists of different values and has output of the form:
-<div class="language-json highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="p">{</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;name1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;name2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;name3&quot;</span><span class="p">],</span>
-</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="w">    </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;100&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;150&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;300&quot;</span><span class="p">]</span>
-</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;name1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;name2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;name3&quot;</span><span class="p">],</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;100&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;150&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;300&quot;</span><span class="p">]</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="p">}</span>
 </span></code></pre></div></p>
-<h2 id="item-extractor">Item extractor</h2>
-<p><div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span> <span class="nn">parsera</span> <span class="kn">import</span> <span class="n">Parsera</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a>
-</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="n">scraper</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">(</span><span class="n">extractor</span><span class="o">=</span><span class="n">Parsera</span><span class="o">.</span><span class="n">ExtractorType</span><span class="o">.</span><span class="n">ITEM</span><span class="p">)</span>
+<h2 id="item-extractor">Item Extractor</h2>
+<p><div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span> <span class="nn">parsera</span> <span class="kn">import</span> <span class="n">Parsera</span><span class="p">,</span> <span class="n">ExtractorType</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="n">scraper</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">(</span><span class="n">extractor</span><span class="o">=</span><span class="n">ExtractorType</span><span class="o">.</span><span class="n">ITEM</span><span class="p">)</span>
 </span></code></pre></div>
 The item extractor is used to get singular items from a page like a title or price and has output of the form:
-<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;name1&quot;</span><span class="p">,</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100&quot;</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;name1&quot;</span><span class="p">,</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100&quot;</span>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="p">}</span>
 </span></code></pre></div></p>
 
 
