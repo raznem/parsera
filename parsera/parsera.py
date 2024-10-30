@@ -27,7 +27,7 @@ class Parsera:
     def __init__(
         self,
         model: BaseChatModel | None = None,
-        extractor: ExtractorType = ExtractorType.TABULAR,
+        extractor: ExtractorType = ExtractorType.CHUNKS_TABULAR,
         chunk_size: int = 120000,
         token_counter: Callable[[str], int] | None = None,
     ):

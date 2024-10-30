@@ -9,6 +9,7 @@ from playwright.async_api import (
     Playwright,
     async_playwright,
 )
+from playwright.async_api import TimeoutError as PlaywrightTimeoutError
 from playwright_stealth import StealthConfig, stealth_async
 
 
@@ -80,7 +81,10 @@ class PageLoader:
     ) -> None:
         # Navigate to the URL
         await self.page.goto(url)
-        await self.page.wait_for_load_state(load_state)
+        try:
+            await self.page.wait_for_load_state(load_state)
+        except PlaywrightTimeoutError:
+            pass
 
         if playwright_script:
             self.page = await playwright_script(self.page)
