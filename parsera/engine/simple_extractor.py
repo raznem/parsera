@@ -1,5 +1,4 @@
 import json
-from typing import Optional
 
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import HumanMessage, SystemMessage
@@ -22,15 +21,17 @@ Output json:
 
 
 class Extractor:
-    system_prompt: Optional[str] = None
-    prompt_template: Optional[str] = None
+    system_prompt = None
+    prompt_template = SIMPLE_EXTRACTOR_PROMPT_TEMPLATE
 
-    def __init__(self, elements: dict, model: BaseChatModel, content: str):
+    def __init__(
+        self, elements: dict, model: BaseChatModel, content: str, *args, **kwargs
+    ):
         self.elements = elements
         self.model = model
         self.content = content
 
-    async def run(self) -> dict:
+    async def run(self) -> list[dict]:
         if self.system_prompt is None:
             raise ValueError("system_prompt is not defined for this extractor")
         if self.prompt_template is None:
@@ -87,12 +88,25 @@ Output json:
 ]
 ```
 
+If value for the field is not found use `null` in the json:
+```json
+[
+    {"name": "name1", "price": "100"},
+    {"name": "name2", "price": null},
+    {"name": "name3", "price": "300"},
+]
+```
+
+If no data is found return empty json:
+```json
+[]
+```
+
 """
 
 
 class TabularExtractor(Extractor):
     system_prompt = TABULAR_EXTRACTOR_SYSTEM_PROMPT
-    prompt_template = SIMPLE_EXTRACTOR_PROMPT_TEMPLATE
 
 
 LIST_EXTRACTOR_SYSTEM_PROMPT = """
@@ -129,12 +143,16 @@ Output json:
 }
 ```
 
+If no data is found return empty json:
+```json
+[]
+```
+
 """
 
 
 class ListExtractor(Extractor):
     system_prompt = LIST_EXTRACTOR_SYSTEM_PROMPT
-    prompt_template = SIMPLE_EXTRACTOR_PROMPT_TEMPLATE
 
 
 ITEM_EXTRACTOR_SYSTEM_PROMPT = """
@@ -171,9 +189,13 @@ Output json:
 }
 ```
 
+If no data is found return empty json:
+```json
+[]
+```
+
 """
 
 
 class ItemExtractor(Extractor):
     system_prompt = ITEM_EXTRACTOR_SYSTEM_PROMPT
-    prompt_template = SIMPLE_EXTRACTOR_PROMPT_TEMPLATE

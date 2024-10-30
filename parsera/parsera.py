@@ -2,9 +2,11 @@ import asyncio
 import enum
 from typing import Awaitable, Callable
 
+import tiktoken
 from langchain_core.language_models import BaseChatModel
 from playwright.async_api import Page
 
+from parsera.engine.chunks_extractor import ChunksTabularExtractor
 from parsera.engine.model import GPT4oMiniModel
 from parsera.engine.simple_extractor import (
     ItemExtractor,
@@ -18,20 +20,49 @@ class ExtractorType(enum.Enum):
     LIST = ListExtractor
     TABULAR = TabularExtractor
     ITEM = ItemExtractor
+    CHUNKS_TABULAR = ChunksTabularExtractor
 
 
 class Parsera:
     def __init__(
         self,
         model: BaseChatModel | None = None,
-        extractor: ExtractorType = ExtractorType.TABULAR,
+        extractor: ExtractorType = ExtractorType.CHUNKS_TABULAR,
+        chunk_size: int = 120000,
+        token_counter: Callable[[str], int] | None = None,
     ):
+        """Initialize Parsera
+
+        Args:
+            model (BaseChatModel | None, optional): LangChain Chat Model. Defaults to None which invokes usage of
+                GPT4oMiniModel.
+            extractor (ExtractorType, optional): Extractor type from the ExtractorType enum. Defaults to ExtractorType.TABULAR.
+            chunk_size (int, optional): Number of tokens per chunk, should be below context size of the model used. Defaults to 120000.
+            token_counter (Callable[[str], int] | None, optional): Function used to estimate number of tokens in chunks.
+                If None will use OpenAI tokenizer for gpt-4o model. Defaults to None.
+        """
         if model is None:
             self.model = GPT4oMiniModel()
         else:
             self.model = model
+        if token_counter is None:
+
+            def count_tokens(text):
+                # Initialize the tokenizer for GPT-4o-mini
+                encoding = tiktoken.get_encoding("o200k_base")
+
+                # Count tokens
+                tokens = encoding.encode(text)
+                return len(tokens)
+
+            self._token_counter = count_tokens
+        else:
+            self._token_counter = token_counter
         self.extractor = extractor
+        self.chunk_size = chunk_size
+
         self.loader = PageLoader()
+        self.extractor_instance = None
 
     async def _run(
         self,
@@ -43,10 +74,14 @@ class Parsera:
         content = await self.loader.load_content(
             url=url, proxy_settings=proxy_settings, scrolls_limit=scrolls_limit
         )
-        extractor_instance = self.extractor.value(
-            elements=elements, model=self.model, content=content
+        self.extractor_instance = self.extractor.value(
+            elements=elements,
+            model=self.model,
+            content=content,
+            chunk_size=self.chunk_size,
+            token_counter=self._token_counter,
         )
-        result = await extractor_instance.run()
+        result = await self.extractor_instance.run()
         return result
 
     def run(
@@ -85,10 +120,17 @@ class ParseraScript(Parsera):
         self,
         model: BaseChatModel | None = None,
         extractor: ExtractorType = ExtractorType.TABULAR,
+        chunk_size: int = 120000,
+        token_counter: Callable[[str], int] | None = None,
         initial_script: Callable[[Page], Awaitable[Page]] | None = None,
         stealth: bool = True,
     ):
-        super().__init__(model=model, extractor=extractor)
+        super().__init__(
+            model=model,
+            extractor=extractor,
+            chunk_size=chunk_size,
+            token_counter=token_counter,
+        )
         self.initial_script = initial_script
         self.stealth = stealth
 
@@ -115,18 +157,22 @@ class ParseraScript(Parsera):
             url=url, scrolls_limit=scrolls_limit, playwright_script=playwright_script
         )
 
-        extractor_instance = self.extractor.value(
-            elements=elements, model=self.model, content=content
+        self.extractor_instance = self.extractor.value(
+            elements=elements,
+            model=self.model,
+            content=content,
+            chunk_size=self.chunk_size,
+            token_counter=self._token_counter,
         )
-        result = await extractor_instance.run()
+        result = await self.extractor_instance.run()
         return result
 
     async def _run(
         self,
         url: str,
         elements: dict,
-        scrolls_limit: int = 0,
         proxy_settings: dict | None = None,
+        scrolls_limit: int = 0,
         playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
     ):
         if self.loader.context is None:
@@ -146,8 +192,8 @@ class ParseraScript(Parsera):
         self,
         url: str,
         elements: dict,
-        scrolls_limit: int = 0,
         proxy_settings: dict | None = None,
+        scrolls_limit: int = 0,
         playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
     ) -> dict:
         return asyncio.run(
@@ -164,8 +210,8 @@ class ParseraScript(Parsera):
         self,
         url: str,
         elements: dict,
-        scrolls_limit: int = 0,
         proxy_settings: dict | None = None,
+        scrolls_limit: int = 0,
         playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
     ) -> dict:
         return await self._run(
