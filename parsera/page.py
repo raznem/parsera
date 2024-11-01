@@ -13,6 +13,10 @@ from playwright.async_api import TimeoutError as PlaywrightTimeoutError
 from playwright_stealth import StealthConfig, stealth_async
 
 
+class PageGotoError(Exception):
+    pass
+
+
 class ProxySettings(TypedDict, total=False):
     server: str
     bypass: str | None = None
@@ -80,7 +84,10 @@ class PageLoader:
         playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
     ) -> None:
         # Navigate to the URL
-        await self.page.goto(url)
+        try:
+            await self.page.goto(url, timeout=10000)
+        except Exception as exc:
+            raise PageGotoError(str(exc)) from exc
         try:
             await self.page.wait_for_load_state(load_state)
         except PlaywrightTimeoutError:
