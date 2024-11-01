@@ -85,7 +85,7 @@ class PageLoader:
     ) -> None:
         # Navigate to the URL
         try:
-            await self.page.goto(url, timeout=10000)
+            await self.page.goto(url)
         except Exception as exc:
             raise PageGotoError(str(exc)) from exc
         try:
