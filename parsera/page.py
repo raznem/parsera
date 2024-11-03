@@ -19,9 +19,12 @@ class ProxySettings(TypedDict, total=False):
 
 
 class PageLoader:
-    def __init__(self, browser: Browser | None = None):
+    def __init__(
+        self, browser: Browser | None = None, custom_cookies: list[dict] | None = None
+    ):
         self.playwright: Playwright | None = None
         self.browser: Browser | None = browser
+        self.custom_cookies: list[dict] | None = custom_cookies
         self.context: BrowserContext | None = None
         self.page: Page | None = None
 
@@ -39,13 +42,14 @@ class PageLoader:
         page: Page,
         proxy_settings: ProxySettings | None,
     ) -> Page:
-        user_agent = await self.page.evaluate("navigator.userAgent")
+        user_agent = await page.evaluate("navigator.userAgent")
         user_agent = user_agent.replace("HeadlessChrome/", "Chrome/")
         await self.context.close()
 
         self.context = await self.browser.new_context(
             user_agent=user_agent, proxy=proxy_settings
         )
+        await self.context.add_cookies(self.custom_cookies)
         page = await self.context.new_page()
         await stealth_async(page, config=StealthConfig(navigator_user_agent=False))
         return page
@@ -59,6 +63,9 @@ class PageLoader:
         if not self.browser:
             await self.new_browser()
         self.context = await self.browser.new_context(proxy=proxy_settings)
+
+        if self.custom_cookies is not None:
+            await self.context.add_cookies(self.custom_cookies)
         self.page = await self.context.new_page()
         if stealth:
             self.page = await self.stealth(
