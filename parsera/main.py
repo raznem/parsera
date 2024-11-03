@@ -8,7 +8,7 @@ from colorama import Fore, Style
 from dotenv import load_dotenv
 from playwright.async_api import Page
 
-from parsera import ParseraScript
+from parsera import Parsera
 from parsera.engine.model import GPT4oMiniModel
 
 
@@ -93,7 +93,7 @@ def fancy_parser():
         + "Add amount of scrolls for the page on the url."
         + Style.RESET_ALL,
         required=False,
-        default=0
+        default=0,
     )
 
     # File argument (with validation for file)
@@ -126,9 +126,12 @@ async def get_url_data(url, scheme, scrolls):
         await page.wait_for_timeout(1000)  # Wait one second for page to load
         return page
 
-    parsera = ParseraScript(model=model)
+    parsera = Parsera(model=model)
     return await parsera.arun(
-        url=url, elements=scheme, playwright_script=repeating_script, scrolls_limit=scrolls
+        url=url,
+        elements=scheme,
+        playwright_script=repeating_script,
+        scrolls_limit=scrolls,
     )
 
 
@@ -154,7 +157,9 @@ if __name__ == "__main__":
     if args.file:
         print(Fore.CYAN + "Scheme (from file):" + Style.RESET_ALL, args.file)
     if args.scrolls:
-        print(Fore.CYAN + "Amount of scrolls on the page:" + Style.RESET_ALL, args.scrolls)
+        print(
+            Fore.CYAN + "Amount of scrolls on the page:" + Style.RESET_ALL, args.scrolls
+        )
 
     # Determine the scheme to use (from scheme argument or file)
     scheme = args.scheme if args.scheme else args.file

@@ -2,14 +2,9 @@ import asyncio
 import warnings
 from typing import Awaitable, Callable, Literal, TypedDict
 
-from playwright.async_api import (
-    Browser,
-    BrowserContext,
-    Page,
-    Playwright,
-    async_playwright,
-)
+from playwright.async_api import Browser, BrowserContext, Page, Playwright
 from playwright.async_api import TimeoutError as PlaywrightTimeoutError
+from playwright.async_api import async_playwright
 from playwright_stealth import StealthConfig, stealth_async
 
 
@@ -148,24 +143,6 @@ class PageLoader:
         final_content = "".join(captured_content) + removed_content
 
         return final_content
-
-    async def load_content(
-        self,
-        url: str,
-        scrolls_limit: int = 0,
-        proxy_settings: ProxySettings | None = None,
-        load_state: Literal[
-            "domcontentloaded", "load", "networkidle"
-        ] = "domcontentloaded",
-        playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
-    ):
-        await self.create_session(proxy_settings=proxy_settings)
-        return await self.fetch_page(
-            url=url,
-            scrolls_limit=scrolls_limit,
-            load_state=load_state,
-            playwright_script=playwright_script,
-        )
 
     async def close(self) -> None:
         if self.playwright:
