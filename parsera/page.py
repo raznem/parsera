@@ -68,28 +68,7 @@ class PageLoader:
         if playwright_script:
             self.page = await playwright_script(self.page)
 
-    async def fetch_page(
-        self,
-        url: str,
-        scrolls_limit: int = 0,
-        load_state: Literal[
-            "domcontentloaded", "load", "networkidle"
-        ] = "domcontentloaded",
-        playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
-    ) -> None:
-        # Navigate to the URL
-        try:
-            await self.page.goto(url)
-        except Exception as exc:
-            raise PageGotoError(str(exc)) from exc
-        try:
-            await self.page.wait_for_load_state(load_state)
-        except PlaywrightTimeoutError:
-            pass
-
-        if playwright_script:
-            self.page = await playwright_script(self.page)
-
+    async def scroll_page(self, scrolls_limit: int = 0):
         # Start tracking removed content with MutationObserver
         await self.page.evaluate(
             """
@@ -114,7 +93,7 @@ class PageLoader:
         last_height = 0
         captured_content = []
 
-        while scrolls <= scrolls_limit:
+        while scrolls < scrolls_limit:
             # Scroll down to the bottom of the page
             await self.page.evaluate("window.scrollTo(0, document.body.scrollHeight);")
 
@@ -142,6 +121,36 @@ class PageLoader:
         final_content = "".join(captured_content) + removed_content
 
         return final_content
+
+    async def fetch_page(
+        self,
+        url: str,
+        scrolls_limit: int = 0,
+        load_state: Literal[
+            "domcontentloaded", "load", "networkidle"
+        ] = "domcontentloaded",
+        playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
+    ) -> None:
+        # Navigate to the URL
+        try:
+            await self.page.goto(url)
+        except Exception as exc:
+            raise PageGotoError(str(exc)) from exc
+        try:
+            await self.page.wait_for_load_state(load_state)
+        except PlaywrightTimeoutError:
+            pass
+
+        if playwright_script:
+            self.page = await playwright_script(self.page)
+
+        # peform scrolling
+        if scrolls_limit > 0:
+            result = await self.scroll_page(scrolls_limit)
+        else:
+            result = await self.page.content()
+
+        return result
 
     async def close(self) -> None:
         if self.playwright:
