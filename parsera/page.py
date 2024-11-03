@@ -49,7 +49,8 @@ class PageLoader:
         self.context = await self.browser.new_context(
             user_agent=user_agent, proxy=proxy_settings
         )
-        await self.context.add_cookies(self.custom_cookies)
+        if self.custom_cookies is not None:
+            await self.context.add_cookies(self.custom_cookies)
         page = await self.context.new_page()
         await stealth_async(page, config=StealthConfig(navigator_user_agent=False))
         return page
