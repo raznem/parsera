@@ -2,7 +2,7 @@ import asyncio
 
 from playwright.async_api import Page
 
-from parsera import ParseraScript
+from parsera import Parsera
 from parsera.engine.model import GPT4oMiniModel
 
 EMAIL = "<YOUR-EMAIL>"
@@ -27,7 +27,7 @@ async def get_parsera_credits():
         await page.wait_for_timeout(1000)  # Wait one second for page to load
         return page
 
-    parsera = ParseraScript(model=model, initial_script=initial_script)
+    parsera = Parsera(model=model, initial_script=initial_script)
     return await parsera.arun(
         url="https://parsera.org/app",
         elements={

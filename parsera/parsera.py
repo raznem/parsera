@@ -30,6 +30,8 @@ class Parsera:
         extractor: ExtractorType = ExtractorType.CHUNKS_TABULAR,
         chunk_size: int = 120000,
         token_counter: Callable[[str], int] | None = None,
+        initial_script: Callable[[Page], Awaitable[Page]] | None = None,
+        stealth: bool = True,
     ):
         """Initialize Parsera
 
@@ -63,6 +65,8 @@ class Parsera:
 
         self.loader = PageLoader()
         self.extractor_instance = None
+        self.initial_script = initial_script
+        self.stealth = stealth
 
     async def _run(
         self,
@@ -70,89 +74,15 @@ class Parsera:
         elements: dict,
         proxy_settings: dict | None = None,
         scrolls_limit: int = 0,
-    ) -> dict:
-        content = await self.loader.load_content(
-            url=url, proxy_settings=proxy_settings, scrolls_limit=scrolls_limit
-        )
-        self.extractor_instance = self.extractor.value(
-            elements=elements,
-            model=self.model,
-            content=content,
-            chunk_size=self.chunk_size,
-            token_counter=self._token_counter,
-        )
-        result = await self.extractor_instance.run()
-        return result
-
-    def run(
-        self,
-        url: str,
-        elements: dict,
-        proxy_settings: dict | None = None,
-        scrolls_limit: int = 0,
-    ) -> dict:
-        return asyncio.run(
-            self._run(
-                url=url,
-                elements=elements,
-                proxy_settings=proxy_settings,
-                scrolls_limit=scrolls_limit,
-            )
-        )
-
-    async def arun(
-        self,
-        url: str,
-        elements: dict,
-        proxy_settings: dict | None = None,
-        scrolls_limit: int = 0,
-    ) -> dict:
-        return await self._run(
-            url=url,
-            elements=elements,
-            proxy_settings=proxy_settings,
-            scrolls_limit=scrolls_limit,
-        )
-
-
-class ParseraScript(Parsera):
-    def __init__(
-        self,
-        model: BaseChatModel | None = None,
-        extractor: ExtractorType = ExtractorType.TABULAR,
-        chunk_size: int = 120000,
-        token_counter: Callable[[str], int] | None = None,
-        initial_script: Callable[[Page], Awaitable[Page]] | None = None,
-        stealth: bool = True,
-    ):
-        super().__init__(
-            model=model,
-            extractor=extractor,
-            chunk_size=chunk_size,
-            token_counter=token_counter,
-        )
-        self.initial_script = initial_script
-        self.stealth = stealth
-
-    async def new_session(
-        self,
-        proxy_settings: dict | None = None,
-        initial_script: Callable[[Page], Awaitable[Page]] | None = None,
-        stealth: bool = True,
-    ) -> None:
-        await self.loader.create_session(
-            proxy_settings=proxy_settings,
-            playwright_script=initial_script,
-            stealth=stealth,
-        )
-
-    async def extract_page(
-        self,
-        url: str,
-        elements: dict,
-        scrolls_limit: int = 0,
         playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
-    ):
+    ) -> dict:
+        if self.loader.context is None:
+            await self.loader.create_session(
+                proxy_settings=proxy_settings,
+                playwright_script=self.initial_script,
+                stealth=self.stealth,
+            )
+
         content = await self.loader.fetch_page(
             url=url, scrolls_limit=scrolls_limit, playwright_script=playwright_script
         )
@@ -166,27 +96,6 @@ class ParseraScript(Parsera):
         )
         result = await self.extractor_instance.run()
         return result
-
-    async def _run(
-        self,
-        url: str,
-        elements: dict,
-        proxy_settings: dict | None = None,
-        scrolls_limit: int = 0,
-        playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
-    ):
-        if self.loader.context is None:
-            await self.new_session(
-                proxy_settings=proxy_settings,
-                initial_script=self.initial_script,
-                stealth=self.stealth,
-            )
-        return await self.extract_page(
-            url=url,
-            elements=elements,
-            scrolls_limit=scrolls_limit,
-            playwright_script=playwright_script,
-        )
 
     def run(
         self,
