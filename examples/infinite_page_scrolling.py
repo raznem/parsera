@@ -13,7 +13,8 @@ async def main(url):
     async with async_playwright() as p:
         browser = await p.firefox.launch(headless=False, slow_mo=100)
         loader = PageLoader(browser=browser)
-        content = await loader.load_content(url=url, scrolls_limit=10)
+        await loader.create_session()
+        content = await loader.fetch_page(url=url, scrolls_limit=10)
         return content
 
 
