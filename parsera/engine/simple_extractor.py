@@ -3,7 +3,7 @@ import json
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.output_parsers import JsonOutputParser
-from markdownify import markdownify
+from markdownify import MarkdownConverter
 
 SIMPLE_EXTRACTOR_PROMPT_TEMPLATE = """
 Having following page content:
@@ -25,11 +25,19 @@ class Extractor:
     prompt_template = SIMPLE_EXTRACTOR_PROMPT_TEMPLATE
 
     def __init__(
-        self, elements: dict, model: BaseChatModel, content: str, *args, **kwargs
+        self,
+        elements: dict,
+        model: BaseChatModel,
+        content: str,
+        converter: MarkdownConverter | None = None,
     ):
         self.elements = elements
         self.model = model
         self.content = content
+        if converter is None:
+            self.converter = MarkdownConverter()
+        else:
+            self.converter = converter
 
     async def run(self) -> list[dict]:
         if self.system_prompt is None:
@@ -37,7 +45,7 @@ class Extractor:
         if self.prompt_template is None:
             raise ValueError("prompt_template is not defined for this extractor")
 
-        markdown = markdownify(self.content)
+        markdown = self.converter.convert(self.content)
         elements = json.dumps(self.elements)
         human_msg = self.prompt_template.format(markdown=markdown, elements=elements)
         messages = [
