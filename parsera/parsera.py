@@ -32,6 +32,7 @@ class Parsera:
         token_counter: Callable[[str], int] | None = None,
         initial_script: Callable[[Page], Awaitable[Page]] | None = None,
         stealth: bool = True,
+        custom_cookies: list[dict] | None = None,
     ):
         """Initialize Parsera
 
@@ -63,7 +64,7 @@ class Parsera:
         self.extractor = extractor
         self.chunk_size = chunk_size
 
-        self.loader = PageLoader()
+        self.loader = PageLoader(custom_cookies=custom_cookies)
         self.extractor_instance = None
         self.initial_script = initial_script
         self.stealth = stealth
