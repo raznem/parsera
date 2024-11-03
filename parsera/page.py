@@ -1,5 +1,4 @@
 import asyncio
-import warnings
 from typing import Awaitable, Callable, Literal, TypedDict
 
 from playwright.async_api import Browser, BrowserContext, Page, Playwright

@@ -6,7 +6,7 @@ from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from markdownify import markdownify
+from markdownify import MarkdownConverter
 
 from parsera.engine.simple_extractor import TabularExtractor
 
@@ -193,12 +193,14 @@ class ChunksTabularExtractor(TabularExtractor):
         content: str,
         chunk_size: int,
         token_counter: Callable[[str], int],
+        converter: MarkdownConverter | None = None,
     ):
-        self.elements = elements
-        self.model = model
-        self.content = content
-        # self.token_counter = token_counter
-        self.chunk_size = chunk_size
+        super().__init__(
+            elements=elements,
+            model=model,
+            content=content,
+            converter=converter,
+        )
         self.text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=chunk_size,
             chunk_overlap=chunk_size // self.overlap_factor,
@@ -255,13 +257,7 @@ class ChunksTabularExtractor(TabularExtractor):
         if self.prompt_template is None:
             raise ValueError("prompt_template is not defined for this extractor")
 
-        markdown = markdownify(self.content)
-        # chunks = chunk(
-        #     text=markdown,
-        #     chunk_size=self.chunk_size,
-        #     token_counter=self.token_counter,
-        #     memoize=False,
-        # )
+        markdown = self.converter.convert(self.content)
         chunks = self.text_splitter.create_documents([markdown])
         if len(chunks) > 1:
             self.chunks_data = []

@@ -87,13 +87,20 @@ class Parsera:
             url=url, scrolls_limit=scrolls_limit, playwright_script=playwright_script
         )
 
-        self.extractor_instance = self.extractor.value(
-            elements=elements,
-            model=self.model,
-            content=content,
-            chunk_size=self.chunk_size,
-            token_counter=self._token_counter,
-        )
+        if self.extractor == ExtractorType.CHUNKS_TABULAR:
+            self.extractor_instance = self.extractor.value(
+                elements=elements,
+                model=self.model,
+                content=content,
+                chunk_size=self.chunk_size,
+                token_counter=self._token_counter,
+            )
+        else:
+            self.extractor_instance = self.extractor.value(
+                elements=elements,
+                model=self.model,
+                content=content,
+            )
         result = await self.extractor_instance.run()
         return result
 
