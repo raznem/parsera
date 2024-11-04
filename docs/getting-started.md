@@ -1,7 +1,7 @@
 # Welcome to Parsera
 
 Parsera is a lightweight Python library for scraping websites with LLMs.  
-You can run clone and run it locally or [use an API](api/getting-started.md), which provides more scalable way and some extra features like built-in proxy.
+You can clone and run it locally or [use an API](api/getting-started.md), which provides more scalable way and some extra features like built-in proxy.
 
 ## Installation
 
