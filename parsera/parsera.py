@@ -1,35 +1,20 @@
 import asyncio
-import enum
 from typing import Awaitable, Callable
 
-import tiktoken
 from langchain_core.language_models import BaseChatModel
 from playwright.async_api import Page
 
 from parsera.engine.chunks_extractor import ChunksTabularExtractor
 from parsera.engine.model import GPT4oMiniModel
-from parsera.engine.simple_extractor import (
-    ItemExtractor,
-    ListExtractor,
-    TabularExtractor,
-)
+from parsera.engine.simple_extractor import Extractor
 from parsera.page import PageLoader
-
-
-class ExtractorType(enum.Enum):
-    LIST = ListExtractor
-    TABULAR = TabularExtractor
-    ITEM = ItemExtractor
-    CHUNKS_TABULAR = ChunksTabularExtractor
 
 
 class Parsera:
     def __init__(
         self,
         model: BaseChatModel | None = None,
-        extractor: ExtractorType = ExtractorType.CHUNKS_TABULAR,
-        chunk_size: int = 120000,
-        token_counter: Callable[[str], int] | None = None,
+        extractor: Extractor | None = None,
         initial_script: Callable[[Page], Awaitable[Page]] | None = None,
         stealth: bool = True,
         custom_cookies: list[dict] | None = None,
@@ -37,37 +22,28 @@ class Parsera:
         """Initialize Parsera
 
         Args:
-            model (BaseChatModel | None, optional): LangChain Chat Model. Defaults to None which invokes usage of
-                GPT4oMiniModel.
-            extractor (ExtractorType, optional): Extractor type from the ExtractorType enum. Defaults to ExtractorType.TABULAR.
-            chunk_size (int, optional): Number of tokens per chunk, should be below context size of the model used. Defaults to 120000.
-            token_counter (Callable[[str], int] | None, optional): Function used to estimate number of tokens in chunks.
-                If None will use OpenAI tokenizer for gpt-4o model. Defaults to None.
+            model (BaseChatModel | None, optional): LangChain Chat Model. Defaults to None which
+                invokes usage of GPT4oMiniModel.
+            extractor (ExtractorType, optional): Extractor type from the ExtractorType enum.
+                Defaults to ExtractorType.TABULAR.
+            initial_script (Callable[[Page], Awaitable[Page]] | None, optional): Playwright script
+                to execute before the extraction. Defaults to None.
+            stealth (bool, optional): Whether to use stealth mode. Defaults to True.
+            custom_cookies (list[dict] | None, optional): List of custom cookies to be added to the
+                browser context. Defaults to None.
         """
         if model is None:
             self.model = GPT4oMiniModel()
         else:
             self.model = model
-        if token_counter is None:
 
-            def count_tokens(text):
-                # Initialize the tokenizer for GPT-4o-mini
-                encoding = tiktoken.get_encoding("o200k_base")
-
-                # Count tokens
-                tokens = encoding.encode(text)
-                return len(tokens)
-
-            self._token_counter = count_tokens
+        if extractor is None:
+            self.extractor = ChunksTabularExtractor(model=self.model)
         else:
-            self._token_counter = token_counter
-        self.extractor = extractor
-        self.chunk_size = chunk_size
-
-        self.loader = PageLoader(custom_cookies=custom_cookies)
-        self.extractor_instance = None
+            self.extractor = extractor
         self.initial_script = initial_script
         self.stealth = stealth
+        self.loader = PageLoader(custom_cookies=custom_cookies)
 
     async def _run(
         self,
@@ -88,21 +64,7 @@ class Parsera:
             url=url, scrolls_limit=scrolls_limit, playwright_script=playwright_script
         )
 
-        if self.extractor == ExtractorType.CHUNKS_TABULAR:
-            self.extractor_instance = self.extractor.value(
-                elements=elements,
-                model=self.model,
-                content=content,
-                chunk_size=self.chunk_size,
-                token_counter=self._token_counter,
-            )
-        else:
-            self.extractor_instance = self.extractor.value(
-                elements=elements,
-                model=self.model,
-                content=content,
-            )
-        result = await self.extractor_instance.run()
+        result = await self.extractor.run(content=content, attributes=elements)
         return result
 
     def run(

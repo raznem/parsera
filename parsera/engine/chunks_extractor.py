@@ -2,6 +2,7 @@ import json
 import math
 from typing import Callable
 
+import tiktoken
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.output_parsers import JsonOutputParser
@@ -188,19 +189,40 @@ class ChunksTabularExtractor(TabularExtractor):
 
     def __init__(
         self,
-        elements: dict,
         model: BaseChatModel,
-        content: str,
-        chunk_size: int,
-        token_counter: Callable[[str], int],
+        chunk_size: int = 100000,
+        token_counter: Callable[[str], int] | None = None,
         converter: MarkdownConverter | None = None,
     ):
+        """Initialize ChunksTabularExtractor
+
+        Args:
+            model (BaseChatModel | None, optional): LangChain Chat Model. Defaults to None which
+            invokes usage of GPT4oMiniModel.
+            chunk_size (int, optional): Number of tokens per chunk, should be below context size of
+            the model used. Defaults to 100000.
+            token_counter (Callable[[str], int] | None, optional): Function used to estimate number
+                of tokens in chunks. If None will use OpenAI tokenizer for gpt-4o model.
+                Defaults to None.
+            converter (MarkdownConverter | None, optional): converter of HTML, before it goes to
+                the model. Defaults to None.
+        """
         super().__init__(
-            elements=elements,
             model=model,
-            content=content,
             converter=converter,
         )
+        if token_counter is None:
+
+            def count_tokens(text):
+                # Initialize the tokenizer for GPT-4o-mini
+                encoding = tiktoken.get_encoding("o200k_base")
+
+                # Count tokens
+                tokens = encoding.encode(text)
+                return len(tokens)
+
+            token_counter = count_tokens
+
         self.text_splitter = RecursiveCharacterTextSplitter(
             chunk_size=chunk_size,
             chunk_overlap=chunk_size // self.overlap_factor,
@@ -209,9 +231,12 @@ class ChunksTabularExtractor(TabularExtractor):
         self.chunks_data = None
 
     async def extract(
-        self, markdown: str, previous_data: list[dict] | None = None
+        self,
+        markdown: str,
+        attributes: dict[str, str],
+        previous_data: list[dict] | None = None,
     ) -> list[dict]:
-        elements = json.dumps(self.elements)
+        elements = json.dumps(attributes)
         if not previous_data:
             human_msg = self.prompt_template.format(
                 markdown=markdown, elements=elements
@@ -231,8 +256,10 @@ class ChunksTabularExtractor(TabularExtractor):
         output_dict = parser.parse(output.content)
         return output_dict
 
-    async def merge_all_data(self, all_data):
-        elements = json.dumps(self.elements)
+    async def merge_all_data(
+        self, all_data: list[list[dict]], attributes: dict[str, str]
+    ) -> dict:
+        elements = json.dumps(attributes)
         json_list = ""
         for data in all_data:
             json_list += "``` \n" + json.dumps(data) + "\n ```\n"
@@ -251,25 +278,29 @@ class ChunksTabularExtractor(TabularExtractor):
 
     async def run(
         self,
+        content: str,
+        attributes: dict[str, str],
     ) -> dict:
         if self.system_prompt is None:
             raise ValueError("system_prompt is not defined for this extractor")
         if self.prompt_template is None:
             raise ValueError("prompt_template is not defined for this extractor")
 
-        markdown = self.converter.convert(self.content)
+        markdown = self.converter.convert(content)
         chunks = self.text_splitter.create_documents([markdown])
         if len(chunks) > 1:
             self.chunks_data = []
             chunk_data = None
-            for i, element in enumerate(chunks):
+            for _, element in enumerate(chunks):
                 chunk_data = await self.extract(
-                    markdown=element, previous_data=chunk_data
+                    markdown=element, previous_data=chunk_data, attributes=attributes
                 )
                 self.chunks_data.append(chunk_data)
 
-            output_dict = await self.merge_all_data(self.chunks_data)
+            output_dict = await self.merge_all_data(
+                all_data=self.chunks_data, attributes=attributes
+            )
         else:
-            output_dict = await self.extract(markdown=chunks[0])
+            output_dict = await self.extract(markdown=chunks[0], attributes=attributes)
 
         return output_dict
