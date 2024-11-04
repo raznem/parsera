@@ -19,7 +19,7 @@
         <link rel="next" href="../scrolling/">
       
       
-      <link rel="icon" href="../../icon.svg">
+      <link rel="icon" href="../../icon.ico">
       <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.5.36">
     
     
@@ -94,7 +94,7 @@
   <nav class="md-header__inner md-grid" aria-label="Header">
     <a href="../.." title="Parsera" class="md-header__button md-logo" aria-label="Parsera" data-md-component="logo">
       
-  <img src="../../icon.svg" alt="logo">
+  <img src="../../parsera_open_logo_v2.png" alt="logo">
 
     </a>
     <label class="md-header__button md-icon" for="__drawer">
@@ -226,7 +226,7 @@
   <label class="md-nav__title" for="__drawer">
     <a href="../.." title="Parsera" class="md-nav__button md-logo" aria-label="Parsera" data-md-component="logo">
       
-  <img src="../../icon.svg" alt="logo">
+  <img src="../../parsera_open_logo_v2.png" alt="logo">
 
     </a>
     Parsera
@@ -702,12 +702,15 @@
 
 <h2 id="using-proxy">Using proxy</h2>
 <p>You can use serve the traffic via proxy server when calling <code>run</code> method:
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="n">proxy_settings</span> <span class="o">=</span> <span class="p">{</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="s2">&quot;server&quot;</span><span class="p">:</span> <span class="s2">&quot;https://1.2.3.4:5678&quot;</span><span class="p">,</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>    <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">PROXY_USERNAME</span><span class="o">&gt;</span><span class="p">,</span>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">PROXY_PASSWORD</span><span class="o">&gt;</span><span class="p">,</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a><span class="p">}</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="n">result</span> <span class="o">=</span> <span class="n">scrapper</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">elements</span><span class="o">=</span><span class="n">elements</span><span class="p">,</span> <span class="n">proxy_settings</span><span class="o">=</span><span class="n">proxy_settings</span><span class="p">)</span>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span> <span class="nn">parsera</span> <span class="kn">import</span> <span class="n">Parsera</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="n">scraper</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">()</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">proxy_settings</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="s2">&quot;server&quot;</span><span class="p">:</span> <span class="s2">&quot;https://1.2.3.4:5678&quot;</span><span class="p">,</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="s2">&quot;username&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">PROXY_USERNAME</span><span class="o">&gt;</span><span class="p">,</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>    <span class="s2">&quot;password&quot;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">PROXY_PASSWORD</span><span class="o">&gt;</span><span class="p">,</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="p">}</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">result</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">elements</span><span class="o">=</span><span class="n">elements</span><span class="p">,</span> <span class="n">proxy_settings</span><span class="o">=</span><span class="n">proxy_settings</span><span class="p">)</span>
 </span></code></pre></div></p>
 <p>Where <code>proxy_settings</code> contains your proxy credentials.</p>
 
