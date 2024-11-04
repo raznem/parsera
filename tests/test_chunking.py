@@ -3,7 +3,8 @@ import os
 import pytest
 from langchain_openai import AzureChatOpenAI
 
-from parsera import ExtractorType, Parsera
+from parsera import Parsera
+from parsera.engine.chunks_extractor import ChunksTabularExtractor
 
 llm = AzureChatOpenAI(
     azure_endpoint=os.getenv("AZURE_GPT_BASE_URL"),
@@ -23,16 +24,16 @@ def values_to_strings(dicts_list: list[dict]):
 
 
 async def run_chunks_and_no_chunks(url: str, elements: dict, small_chunk_size: int):
-    scraper_long_chunk = Parsera(
-        model=llm, chunk_size=100000, extractor=ExtractorType.CHUNKS_TABULAR
-    )
+    extractor = ChunksTabularExtractor(model=llm, chunk_size=100000)
+    scraper_long_chunk = Parsera(model=llm, extractor=extractor)
     result_no_chunks = await scraper_long_chunk.arun(
         url=url, elements=elements, proxy_settings=None
     )
 
-    scraper_small_chunk = Parsera(
-        model=llm, chunk_size=small_chunk_size, extractor=ExtractorType.CHUNKS_TABULAR
+    extractor_small_chunk = ChunksTabularExtractor(
+        model=llm, chunk_size=small_chunk_size
     )
+    scraper_small_chunk = Parsera(model=llm, extractor=extractor_small_chunk)
     result_chunks = await scraper_small_chunk.arun(
         url=url, elements=elements, proxy_settings=None
     )

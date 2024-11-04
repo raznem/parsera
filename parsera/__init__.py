@@ -1,3 +1,3 @@
-from parsera.parsera import ExtractorType, Parsera
+from parsera.parsera import Parsera
 
-__all__ = ["ExtractorType", "Parsera"]
+__all__ = ["Parsera"]
