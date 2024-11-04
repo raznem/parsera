@@ -38,6 +38,7 @@ nav:
   - API:
     - Getting started: api/getting-started.md
     - Proxy: api/proxy.md
+    - Cookies: api/cookies.md
   - Contributing: contributing.md
 
 markdown_extensions:
