@@ -39,7 +39,7 @@ result = await parsera.arun(
 ## Access Playwright instance
 The page is fetched via the `Parsera.loader`, which contains the playwright instance.
 ```python
-from parsera import ParseraScript
+from parsera import Parsera
 
 parsera = Parsera(model=model)
 

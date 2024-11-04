@@ -3,7 +3,7 @@ There are different types of extractors, that provide output in different format
 
 - For tables.
     - `ChunksTabularExtractor` - for tables, capable of processing larger pages with chunking
-    - `TabularExtractor` - for tables
+    - `TabularExtractor` - for tables, without chunking (fails when page doesn't fit into the model's context)
 - `ListExtractor` for separate lists of values.
 - `ItemExtractor` for specific values.
 
@@ -11,9 +11,11 @@ By default a [`ChunksTabularExtractor`](#chunks-tabular-extractor) is used.
 
 ## Tabular Extractor
 ```python
-from parsera import Parsera, ExtractorType
+from parsera import Parsera
+from parsera.engine.simple_extractor import TabularExtractor
 
-scraper = Parsera(extractor=ExtractorType.TABULAR)
+extractor = TabularExtractor()
+scraper = Parsera(extractor=extractor)
 ```
 The tabular extractor is used to find rows of tabular data and has output of the form:
 ```json
@@ -26,11 +28,13 @@ The tabular extractor is used to find rows of tabular data and has output of the
 
 ## Chunks Tabular Extractor
 Provides the same output format as `TabularExtractor`, but capable of processing larger pages due to page chunking.
-For example, if your model has 16k context size, you can set chunks to be not larger than 12k:
+For example, if your model has 16k context size, you can set chunks to be not larger than 12k (keeping 4k buffer for other parts of the prompt):
 ```python
-from parsera import Parsera, ExtractorType
+from parsera import Parsera
+from parsera.engine.chunks_extractor import ChunksTabularExtractor
 
-scraper = Parsera(extractor=ExtractorType.CHUNKS_TABULAR, chunk_size=12000)
+extractor = ChunksTabularExtractor(chunk_size=12000)
+scraper = Parsera(extractor=extractor)
 ```
 
 By default number of tokens is counted based on the OpenAI tokenizer for `gpt-4o` model, but you can provide custom
@@ -53,9 +57,11 @@ scraper = Parsera(extractor=ExtractorType.CHUNKS_TABULAR, chunk_size=12000, toke
 
 ## List Extractor
 ```python
-from parsera import Parsera, ExtractorType
+from parsera import Parsera
+from parsera.engine.simple_extractor import ListExtractor
 
-scraper = Parsera(extractor=ExtractorType.LIST)
+extractor = ListExtractor()
+scraper = Parsera(extractor=extractor)
 ```
 The list extractor is used to find lists of different values and has output of the form:
 ```json
@@ -67,9 +73,11 @@ The list extractor is used to find lists of different values and has output of t
 
 ## Item Extractor
 ```python
-from parsera import Parsera, ExtractorType
+from parsera import Parsera
+from parsera.engine.simple_extractor import ItemExtractor
 
-scraper = Parsera(extractor=ExtractorType.ITEM)
+extractor = ItemExtractor()
+scraper = Parsera(extractor=extractor)
 ```
 The item extractor is used to get singular items from a page like a title or price and has output of the form:
 ```json
