@@ -10,13 +10,9 @@
       
       
       
-        <link rel="canonical" href="https://docs.parsera.org/features/scrolling/">
+        <link rel="canonical" href="https://docs.parsera.org/features/custom-cookies/">
       
       
-        <link rel="prev" href="../custom-browser/">
-      
-      
-        <link rel="next" href="../extractors/">
       
       
       <link rel="icon" href="../../icon.svg">
@@ -24,7 +20,7 @@
     
     
       
-        <title>Scrolling - Parsera</title>
+        <title>Custom cookies - Parsera</title>
       
     
     
@@ -76,7 +72,7 @@
     <div data-md-component="skip">
       
         
-        <a href="#page-scrolling" class="md-skip">
+        <a href="#custom-cookies-usage" class="md-skip">
           Skip to content
         </a>
       
@@ -111,7 +107,7 @@
         <div class="md-header__topic" data-md-component="header-topic">
           <span class="md-ellipsis">
             
-              Scrolling
+              Custom cookies
             
           </span>
         </div>
@@ -290,19 +286,17 @@
       
   
   
-    
   
   
-  
     
     
     
     
-    <li class="md-nav__item md-nav__item--active md-nav__item--nested">
+    <li class="md-nav__item md-nav__item--nested">
       
         
         
-        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" checked>
+        <input class="md-nav__toggle md-toggle " type="checkbox" id="__nav_3" >
         
           
           <label class="md-nav__link" for="__nav_3" id="__nav_3_label" tabindex="0">
@@ -316,7 +310,7 @@
             <span class="md-nav__icon md-icon"></span>
           </label>
         
-        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="true">
+        <nav class="md-nav" data-md-level="1" aria-labelledby="__nav_3_label" aria-expanded="false">
           <label class="md-nav__title" for="__nav_3">
             <span class="md-nav__icon md-icon"></span>
             Features
@@ -411,28 +405,10 @@
                 
   
   
-    
   
   
-  
-    <li class="md-nav__item md-nav__item--active">
-      
-      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
-      
-      
-      
-        <label class="md-nav__link md-nav__link--active" for="__toc">
-          
-  
-  <span class="md-ellipsis">
-    Scrolling
-  </span>
-  
-
-          <span class="md-nav__icon md-icon"></span>
-        </label>
-      
-      <a href="./" class="md-nav__link md-nav__link--active">
+    <li class="md-nav__item">
+      <a href="../scrolling/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
@@ -441,33 +417,6 @@
   
 
       </a>
-      
-        
-
-<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
-  
-  
-  
-  
-    <label class="md-nav__title" for="__toc">
-      <span class="md-nav__icon md-icon"></span>
-      Table of contents
-    </label>
-    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
-      
-        <li class="md-nav__item">
-  <a href="#page-scrolling" class="md-nav__link">
-    <span class="md-ellipsis">
-      Page scrolling
-    </span>
-  </a>
-  
-</li>
-      
-    </ul>
-  
-</nav>
-      
     </li>
   
 
@@ -651,11 +600,26 @@
     <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
       
         <li class="md-nav__item">
-  <a href="#page-scrolling" class="md-nav__link">
+  <a href="#custom-cookies-usage" class="md-nav__link">
     <span class="md-ellipsis">
-      Page scrolling
+      Custom cookies usage
     </span>
   </a>
+  
+    <nav class="md-nav" aria-label="Custom cookies usage">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#cookies-format-and-known-issues" class="md-nav__link">
+    <span class="md-ellipsis">
+      Cookies format and known issues
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
   
 </li>
       
@@ -677,24 +641,28 @@
   
 
 
-  <h1>Scrolling</h1>
+  <h1>Custom cookies</h1>
 
-<h2 id="page-scrolling">Page scrolling</h2>
-<p><a href="https://github.com/raznem/parsera">Parsera library</a> can scroll pages now!. To do this you simply should set parameter <code>scrolls_limit</code>.</p>
-<p>This parameters is available for the <code>run</code> and <code>arun</code> methods in the <code>Parsera</code> class instance.</p>
-<p>Check out the example below!:
-<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="k">async</span> <span class="k">def</span> <span class="nf">get_reddit_info</span><span class="p">():</span>
-</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="n">model</span> <span class="o">=</span> <span class="n">GPT4oMiniModel</span><span class="p">()</span>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>
-</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>    <span class="n">parsera</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">)</span>
-</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="k">return</span> <span class="k">await</span> <span class="n">parsera</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>        <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://www.reddit.com/&quot;</span><span class="p">,</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="n">elements</span><span class="o">=</span><span class="p">{</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>            <span class="s2">&quot;post name&quot;</span><span class="p">:</span> <span class="s2">&quot;post description&quot;</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>        <span class="p">},</span>
-</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="n">scrolls_limit</span> <span class="o">=</span> <span class="mi">10</span>
+<h2 id="custom-cookies-usage">Custom cookies usage</h2>
+<p>To manage sessions more effectively, you can supply your session cookies directly to Parsera.</p>
+<h3 id="cookies-format-and-known-issues">Cookies format and known issues</h3>
+<p>Please provide cookies to Parsera in JSON format, as shown in the example below.</p>
+<p>To retrieve session cookies from your browser, you can use various browser plugins. However, be aware that some plugins may export cookies in an incorrect format, which can lead to issues.</p>
+<p><strong>Note:</strong> Pay special attention to the SameSite attribute. Valid values for SameSite are Strict, Lax, or None. Some plugins may incorrectly set this attribute to other values, which could cause parsing issues in Parsera.</p>
+<p>Example:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>    <span class="n">file_with_cookeis</span> <span class="o">=</span> <span class="s2">&quot;cookies.json&quot;</span>
+</span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">file_with_cookeis</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span> <span class="k">as</span> <span class="n">file</span><span class="p">:</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>        <span class="n">cookies</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="n">file</span><span class="p">)</span>
+</span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a>
+</span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>    <span class="n">parsera</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="n">model</span><span class="p">,</span> <span class="n">custom_cookies</span><span class="o">=</span><span class="n">cookies</span><span class="p">)</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a>    <span class="k">return</span> <span class="k">await</span> <span class="n">parsera</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a>        <span class="n">url</span><span class="o">=</span><span class="s2">&quot;https://www.reddit.com/settings/&quot;</span><span class="p">,</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a>        <span class="n">elements</span><span class="o">=</span><span class="p">{</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a>            <span class="s2">&quot;email address&quot;</span><span class="p">:</span> <span class="s2">&quot;value&quot;</span><span class="p">,</span>
+</span><span id="__span-0-10"><a id="__codelineno-0-10" name="__codelineno-0-10" href="#__codelineno-0-10"></a>        <span class="p">},</span>
 </span><span id="__span-0-11"><a id="__codelineno-0-11" name="__codelineno-0-11" href="#__codelineno-0-11"></a>    <span class="p">)</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
+<a href="https://github.com/raznem/parsera/tree/main/examples/cookie_usage.py">Try out full example</a></p>
 
 
 
