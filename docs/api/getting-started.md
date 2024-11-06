@@ -25,6 +25,8 @@ curl https://api.parsera.org/v1/extract \
 }'
 ```
 
+If some data is missing, you can retry with `precision_mode`, which does softer page reduction and can find data hidden in HTML tags. For details, see [Precision mode](api/precision-mode.md).
+
 By default, `proxy_country` is `UnitedStates`, it's recommended to set `proxy_country` parameter to a specific country in the request since a page could not be available from all locations. [Here](proxy.md) you can find a full list of proxy countries available.
 
 ## Parse endpoint
@@ -50,8 +52,19 @@ curl https://api.parsera.org/v1/parse \
 }'
 ```
 
+## Credits
+- Disabled `precision_mode` (Default) - **1 credit** per call
+- Enabled `precision_mode` - **10 credits** per call
+
 
 ## Swagger doc
 
 You can also explore Swagger doc of the API following this link: [https://api.parsera.org/docs#/](https://api.parsera.org/docs#/).
 
+## More features
+
+Check out further documentation to explore more features:
+
+- [Setting proxy](proxy.md)
+- [Setting cookies](cookies.md)
+- [Precision mode](precision-mode.md)
