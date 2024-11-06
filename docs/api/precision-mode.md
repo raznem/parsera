@@ -1,6 +1,6 @@
 # Precision Mode
 
-If regular Parsera mode is missing specific data, you can enable `precision_mode`. This mode minimizes page reduction, allowing the model to detect data hidden inside HTML tags. Keep in mind that `precision_mode` uses more credits due to its increased resource requirements.
+If regular Parsera mode is missing specific data, you can enable `precision_mode`. This mode minimizes page reduction, allowing the model to detect data hidden inside HTML tags. Keep in mind that `precision_mode` uses more [credits](getting-started.md#credits) due to its increased resource requirements. 
 
 ```bash
 curl https://api.parsera.org/v1/extract \
