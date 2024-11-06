@@ -691,7 +691,7 @@
 
 
 <h1 id="precision-mode">Precision Mode</h1>
-<p>If regular Parsera mode is missing specific data, you can enable <code>precision_mode</code>. This mode minimizes page reduction, allowing the model to detect data hidden inside HTML tags. Keep in mind that <code>precision_mode</code> uses more <a href="../getting-started/#credits">credits</a> due to its increased resource requirements. </p>
+<p>By default, Parsera works in <code>fast</code> mode. In case it's unable to extract some data, you can use <code>precision</code> mode instead. This mode minimizes page reduction, allowing the model to detect data hidden inside HTML tags. Keep in mind that <code>precision_mode</code> uses more <a href="../getting-started/#credits">credits</a> due to its increased resource requirements. </p>
 <div class="language-bash highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a>curl<span class="w"> </span>https://api.parsera.org/v1/extract<span class="w"> </span><span class="se">\</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>--header<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
 </span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a>--header<span class="w"> </span><span class="s1">&#39;X-API-KEY: &lt;YOUR_API_KEY&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
@@ -707,7 +707,7 @@
 </span><span id="__span-0-13"><a id="__codelineno-0-13" name="__codelineno-0-13" href="#__codelineno-0-13"></a><span class="s1">            &quot;description&quot;: &quot;Number of points&quot;</span>
 </span><span id="__span-0-14"><a id="__codelineno-0-14" name="__codelineno-0-14" href="#__codelineno-0-14"></a><span class="s1">        }</span>
 </span><span id="__span-0-15"><a id="__codelineno-0-15" name="__codelineno-0-15" href="#__codelineno-0-15"></a><span class="s1">    ],</span>
-</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="s1">    &quot;precision_mode&quot;: true</span>
+</span><span id="__span-0-16"><a id="__codelineno-0-16" name="__codelineno-0-16" href="#__codelineno-0-16"></a><span class="s1">    &quot;mode&quot;: &quot;precision&quot;</span>
 </span><span id="__span-0-17"><a id="__codelineno-0-17" name="__codelineno-0-17" href="#__codelineno-0-17"></a><span class="s1">}&#39;</span>
 </span></code></pre></div>
 
