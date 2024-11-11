@@ -11,6 +11,10 @@ class PageGotoError(Exception):
     pass
 
 
+class CookiesValidationException(Exception):
+    pass
+
+
 class ProxySettings(TypedDict, total=False):
     server: str
     bypass: str | None = None
@@ -50,7 +54,10 @@ class PageLoader:
             user_agent=user_agent, proxy=proxy_settings
         )
         if self.custom_cookies is not None:
-            await self.context.add_cookies(self.custom_cookies)
+            try:
+                await self.context.add_cookies(self.custom_cookies)
+            except Exception as exc:
+                raise CookiesValidationException(str(exc)) from exc
         page = await self.context.new_page()
         await stealth_async(page, config=StealthConfig(navigator_user_agent=False))
         return page
@@ -66,7 +73,10 @@ class PageLoader:
         self.context = await self.browser.new_context(proxy=proxy_settings)
 
         if self.custom_cookies is not None:
-            await self.context.add_cookies(self.custom_cookies)
+            try:
+                await self.context.add_cookies(self.custom_cookies)
+            except Exception as exc:
+                raise CookiesValidationException(str(exc)) from exc
         self.page = await self.context.new_page()
         if stealth:
             self.page = await self.stealth(
