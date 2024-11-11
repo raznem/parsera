@@ -53,7 +53,7 @@ curl https://api.parsera.org/v1/parse \
 ```
 
 ## Credits
-- `light` mode (Default) - **1 credit** per call
+- `standard` mode (Default) - **1 credit** per call
 - `precision` mode - **10 credits** per call
 
 
