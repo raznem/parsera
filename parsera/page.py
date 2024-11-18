@@ -172,5 +172,6 @@ class PageLoader:
 
     async def close(self) -> None:
         if self.playwright:
+            await self.context.close()
             await self.browser.close()
-            self.playwright.stop()
+            await self.playwright.stop()
