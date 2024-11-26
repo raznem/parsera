@@ -604,6 +604,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#extract-markdown-endpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extract markdown endpoint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#credits" class="md-nav__link">
     <span class="md-ellipsis">
       Credits
@@ -774,6 +783,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#extract-markdown-endpoint" class="md-nav__link">
+    <span class="md-ellipsis">
+      Extract markdown endpoint
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#credits" class="md-nav__link">
     <span class="md-ellipsis">
       Credits
@@ -862,6 +880,16 @@ There is a <code>content</code> attribute for passing data, which accepts both r
 </span><span id="__span-1-15"><a id="__codelineno-1-15" name="__codelineno-1-15" href="#__codelineno-1-15"></a><span class="s1">    ],</span>
 </span><span id="__span-1-16"><a id="__codelineno-1-16" name="__codelineno-1-16" href="#__codelineno-1-16"></a><span class="s1">}&#39;</span>
 </span></code></pre></div></p>
+<h2 id="extract-markdown-endpoint">Extract markdown endpoint</h2>
+<p>You can get a markdown from url with the <code>extract_markdown</code> endpoint. The interface is the same as <code>extract</code> except for the missing <code>attributes</code> field.</p>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>curl<span class="w"> </span>https://api.parsera.org/v1/extract_markdown<span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a>--header<span class="w"> </span><span class="s1">&#39;Content-Type: application/json&#39;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a>--header<span class="w"> </span><span class="s1">&#39;X-API-KEY: &lt;YOUR_API_KEY&gt;&#39;</span><span class="w"> </span><span class="se">\</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a>--data<span class="w"> </span><span class="s1">&#39;{</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="s1">    &quot;url&quot;: &quot;https://news.ycombinator.com/&quot;,</span>
+</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="s1">    &quot;proxy_country&quot;: &quot;UnitedStates&quot;</span>
+</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="s1">}&#39;</span>
+</span></code></pre></div>
 <h2 id="credits">Credits</h2>
 <ul>
 <li><code>standard</code> mode (Default) - <strong>1 credit</strong> per call</li>
