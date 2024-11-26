@@ -39,7 +39,8 @@ class PageLoader:
         if self.browser:
             await self.browser.close()
 
-        self.browser = await self.playwright.firefox.launch(headless=True)
+        # slow_mo mode is just only to deal with js rendering
+        self.browser = await self.playwright.firefox.launch(headless=True, slow_mo=3000)
 
     async def stealth(
         self,
@@ -59,7 +60,15 @@ class PageLoader:
             except Exception as exc:
                 raise CookiesValidationException(str(exc)) from exc
         page = await self.context.new_page()
-        await stealth_async(page, config=StealthConfig(navigator_user_agent=False))
+        await stealth_async(
+            page,
+            config=StealthConfig(
+                navigator_user_agent=False,
+                navigator_plugins=False,
+                navigator_vendor=False,
+            ),
+        )
+
         return page
 
     async def create_session(
@@ -172,5 +181,6 @@ class PageLoader:
 
     async def close(self) -> None:
         if self.playwright:
+            await self.context.close()
             await self.browser.close()
-            self.playwright.stop()
+            await self.playwright.stop()
