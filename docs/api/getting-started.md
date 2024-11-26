@@ -52,6 +52,20 @@ curl https://api.parsera.org/v1/parse \
 }'
 ```
 
+## Extract markdown endpoint
+
+You can get a markdown from url with the `extract_markdown` endpoint. The interface is the same as `extract` except for the missing `attributes` field.
+
+```bash
+curl https://api.parsera.org/v1/extract_markdown \
+--header 'Content-Type: application/json' \
+--header 'X-API-KEY: <YOUR_API_KEY>' \
+--data '{
+    "url": "https://news.ycombinator.com/",
+    "proxy_country": "UnitedStates"
+}'
+```
+
 ## Credits
 - `standard` mode (Default) - **1 credit** per call
 - `precision` mode - **10 credits** per call
