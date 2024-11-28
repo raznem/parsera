@@ -40,7 +40,7 @@ class PageLoader:
             await self.browser.close()
 
         # slow_mo mode is just only to deal with js rendering
-        self.browser = await self.playwright.firefox.launch(headless=True, slow_mo=3000)
+        self.browser = await self.playwright.firefox.launch(headless=True)
 
     async def stealth(
         self,
@@ -149,13 +149,38 @@ class PageLoader:
 
         return final_content
 
+    async def get_iframe_html(self, frame):
+        try:
+            if frame.is_detached():  # Skip detached frames
+                return None
+            return await frame.evaluate("document.documentElement.outerHTML")
+        except Exception as e:
+            print(f"Could not access iframe: {e}")
+            return None
+
+    async def get_full_html(self):
+        # Get main document HTML
+        main_html = await self.page.evaluate("document.documentElement.outerHTML")
+
+        # Fetch all iframe HTMLs in parallel
+        iframe_html_tasks = [self.get_iframe_html(frame) for frame in self.page.frames]
+        iframes_html = await asyncio.gather(*iframe_html_tasks)
+
+        # Filter out None values (failed iframe retrievals)
+        iframes_html = [html for html in iframes_html if html is not None]
+
+        # Combine main HTML and iframe HTML into one variable
+        combined_html = f"<!-- Main Page HTML -->\n{main_html}\n"
+        for idx, iframe_html in enumerate(iframes_html):
+            combined_html += f"\n<!-- Iframe {idx + 1} HTML -->\n{iframe_html}\n"
+
+        return combined_html
+
     async def fetch_page(
         self,
         url: str,
         scrolls_limit: int = 0,
-        load_state: Literal[
-            "domcontentloaded", "load", "networkidle"
-        ] = "domcontentloaded",
+        load_state: Literal["domcontentloaded", "load", "networkidle"] = "networkidle",
         playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
     ) -> None:
         # Navigate to the URL
@@ -175,7 +200,7 @@ class PageLoader:
         if scrolls_limit > 0:
             result = await self.scroll_page(scrolls_limit)
         else:
-            result = await self.page.content()
+            result = await self.get_full_html()
 
         return result
 
