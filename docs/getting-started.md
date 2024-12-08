@@ -3,6 +3,8 @@
 Parsera is a lightweight Python library for scraping websites with LLMs.  
 You can clone and run it locally or [use an API](api/getting-started.md), which provides more scalable way and some extra features like built-in proxy.
 
+If you want to use Parsera in your *TypeScipt* application - [check our Parsera SDK](https://www.npmjs.com/package/parsera-ts)
+
 ## Installation
 
 ```shell
