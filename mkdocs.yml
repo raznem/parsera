@@ -4,7 +4,7 @@ site_url: https://docs.parsera.org/
 
 theme:
   name: material
-  logo: parsera_open_logo_v2.png
+  logo: parsera_open_logo_v3_crop.png
   favicon: icon.ico
   palette:
     - media: "(prefers-color-scheme: light)"
