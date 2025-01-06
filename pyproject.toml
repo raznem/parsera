@@ -7,7 +7,7 @@ license = "GPL-2.0-or-later"
 readme = "README.md"
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = "^3.10"
 langchain = "^0.3.9"
 langchain-openai = "^0.2.8"
 playwright = "^1.44.0"
