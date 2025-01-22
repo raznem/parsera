@@ -1,4 +1,6 @@
-## Run with custom model
+Note that small local models tend to trim long outputs and could require more careful tuning of data description. 
+
+## Run custom langchain OpenAI model
 
 You can instantiate `Parsera` with any chat model supported by LangChain, for example, to run the model from Azure:  
 ```python
@@ -14,15 +16,47 @@ llm = AzureChatOpenAI(
     temperature=0.0,
 )
 
-url = "https://news.ycombinator.com/"
+url = "https://github.com/raznem/parsera"
 elements = {
-    "Title": "News title",
-    "Points": "Number of points",
-    "Comments": "Number of comments",
+    "Stars": "Number of stars",
+    "Fork": "Number of forks",
 }
 scrapper = Parsera(model=llm)
 result = scrapper.run(url=url, elements=elements)
 ```
+
+## Run local model with `Ollama`
+First, you should install and run `ollama` in your local environment: [official installation guide](https://github.com/ollama/ollama?tab=readme-ov-file#ollama).
+Additionally, you need to install `langchain_ollama` with:
+```shell
+pip install langchain-ollama
+```
+
+The next step is pulling the [model](https://ollama.com/search). For example, to pull Qwen2.5 14B run:
+```shell
+ollama pull qwen2.5:14b
+```
+
+After all the setup simply run:
+```python
+from parsera import Parsera
+from langchain_ollama import ChatOllama
+
+url = "https://github.com/raznem/parsera"
+elements = {
+    "Stars": "Number of stars",
+    "Fork": "Number of forks",
+}
+
+llm = ChatOllama(
+    model="qwen2.5:14b",
+    temperature=0,
+)
+
+scrapper = Parsera(model=llm)
+result = await scrapper.arun(url=url, elements=elements)
+```
+
 
 ## Run local model with `Trasformers`
 Currently, we only support models that include a `system` token
@@ -38,11 +72,10 @@ from parsera.engine.model import HuggingFaceModel
 from parsera import Parsera
 
 # Define the URL and elements to scrape
-url = "https://news.ycombinator.com/"
+url = "https://github.com/raznem/parsera"
 elements = {
-"Title": "News title",
-"Points": "Number of points",
-"Comments": "Number of comments",
+    "Stars": "Number of stars",
+    "Fork": "Number of forks",
 }
 
 # Initialize model with transformers pipeline
