@@ -29,6 +29,7 @@ jupyterlab = "^4.2.4"
 mkdocs = "^1.6.1"
 mkdocs-material = "^9.5.34"
 pytest-asyncio = "^0.24.0"
+langchain-ollama = "^0.2.2"
 
 [tool.poetry.group.transformers]
 optional = true

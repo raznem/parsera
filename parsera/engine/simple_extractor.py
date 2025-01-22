@@ -56,7 +56,8 @@ class Extractor:
 
 
 TABULAR_EXTRACTOR_SYSTEM_PROMPT = """
-Your goal is to find the elements from the webpage content and return them in json format.
+Your goal is to find the elements from the webpage content and return list of them in json format.
+Make sure to return list of all relevant elements from the page.
 For example if user asks:
 Return the following elements from the page content:
 ```
@@ -89,6 +90,7 @@ Output json:
     {"link": "https://example.com/link1"},
     {"link": "https://example.com/link2"},
     {"link": "https://example.com/link3"},
+    {"link": "https://example.com/link4"},
 ]
 ```
 
@@ -98,6 +100,8 @@ If value for the field is not found use `null` in the json:
     {"name": "name1", "price": "100"},
     {"name": "name2", "price": null},
     {"name": "name3", "price": "300"},
+    {"name": "name4", "price": "250"},
+    {"name": "name5", "price": "99"},
 ]
 ```
 
