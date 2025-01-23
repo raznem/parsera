@@ -196,7 +196,7 @@ class PageLoader:
         if playwright_script:
             self.page = await playwright_script(self.page)
 
-        # peform scrolling
+        # perform scrolling
         if scrolls_limit > 0:
             result = await self.scroll_page(scrolls_limit)
         else:
