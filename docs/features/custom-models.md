@@ -1,19 +1,19 @@
-Note that small local models tend to trim long outputs and could require more careful tuning of data description. 
+All custom models are run with [`ChunksTabularExtractor`](/features/extractors/#chunks-tabular-extractor),
+if you want custom extractor you need to initialize it with model of your choice.
 
-## Run custom langchain OpenAI model
+Note that small local models tend to trim long outputs and could require more careful tuning of data description.
 
-You can instantiate `Parsera` with any chat model supported by LangChain, for example, to run the model from Azure:  
+## Run custom model
+
+You can instantiate `Parsera` with any chat model supported by LangChain, for example, to run `gpt-4o-mini` from OpenAI API:  
 ```python
 import os
-from langchain_openai import AzureChatOpenAI
+from langchain_openai import ChatOpenAI
 
-llm = AzureChatOpenAI(
-    azure_endpoint=os.getenv("AZURE_GPT_BASE_URL"),
-    openai_api_version="2023-05-15",
-    deployment_name=os.getenv("AZURE_GPT_DEPLOYMENT_NAME"),
-    openai_api_key=os.getenv("AZURE_GPT_API_KEY"),
-    openai_api_type="azure",
+llm = ChatOpenAI(
+    model="gpt-4o-mini",
     temperature=0.0,
+    timeout=120,
 )
 
 url = "https://github.com/raznem/parsera"

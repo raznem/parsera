@@ -5,6 +5,8 @@ from langchain_core.messages import HumanMessage, SystemMessage
 from langchain_core.output_parsers import JsonOutputParser
 from markdownify import MarkdownConverter
 
+from parsera.engine.api_extractor import Extractor
+
 SIMPLE_EXTRACTOR_PROMPT_TEMPLATE = """
 Having following page content:
 ```
@@ -20,7 +22,7 @@ Output json:
 """
 
 
-class Extractor:
+class LocalExtractor(Extractor):
     system_prompt = None
     prompt_template = SIMPLE_EXTRACTOR_PROMPT_TEMPLATE
 
@@ -113,7 +115,7 @@ If no data is found return empty json:
 """
 
 
-class TabularExtractor(Extractor):
+class TabularExtractor(LocalExtractor):
     system_prompt = TABULAR_EXTRACTOR_SYSTEM_PROMPT
 
 
@@ -159,7 +161,7 @@ If no data is found return empty json:
 """
 
 
-class ListExtractor(Extractor):
+class ListExtractor(LocalExtractor):
     system_prompt = LIST_EXTRACTOR_SYSTEM_PROMPT
 
 
@@ -205,5 +207,5 @@ If no data is found return empty json:
 """
 
 
-class ItemExtractor(Extractor):
+class ItemExtractor(LocalExtractor):
     system_prompt = ITEM_EXTRACTOR_SYSTEM_PROMPT
