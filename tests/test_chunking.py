@@ -25,7 +25,7 @@ def values_to_strings(dicts_list: list[dict]):
 
 async def run_chunks_and_no_chunks(url: str, elements: dict, small_chunk_size: int):
     extractor = ChunksTabularExtractor(model=llm, chunk_size=100000)
-    scraper_long_chunk = Parsera(model=llm, extractor=extractor)
+    scraper_long_chunk = Parsera(extractor=extractor)
     result_no_chunks = await scraper_long_chunk.arun(
         url=url, elements=elements, proxy_settings=None
     )
@@ -33,7 +33,7 @@ async def run_chunks_and_no_chunks(url: str, elements: dict, small_chunk_size: i
     extractor_small_chunk = ChunksTabularExtractor(
         model=llm, chunk_size=small_chunk_size
     )
-    scraper_small_chunk = Parsera(model=llm, extractor=extractor_small_chunk)
+    scraper_small_chunk = Parsera(extractor=extractor_small_chunk)
     result_chunks = await scraper_small_chunk.arun(
         url=url, elements=elements, proxy_settings=None
     )

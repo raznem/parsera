@@ -4,9 +4,9 @@ from typing import Awaitable, Callable
 from langchain_core.language_models import BaseChatModel
 from playwright.async_api import Page
 
+from parsera.engine.api_extractor import APIExtractor, Extractor
 from parsera.engine.chunks_extractor import ChunksTabularExtractor
 from parsera.engine.model import GPT4oMiniModel
-from parsera.engine.simple_extractor import Extractor
 from parsera.page import PageLoader
 
 
@@ -32,15 +32,18 @@ class Parsera:
             custom_cookies (list[dict] | None, optional): List of custom cookies to be added to the
                 browser context. Defaults to None.
         """
-        if model is None:
-            self.model = GPT4oMiniModel()
-        else:
+        if model is None and extractor is None:
+            self.extractor = APIExtractor()
+        elif model and extractor is None:
             self.model = model
-
-        if extractor is None:
             self.extractor = ChunksTabularExtractor(model=self.model)
-        else:
+        elif model is None and extractor:
+            self.model = GPT4oMiniModel()
             self.extractor = extractor
+        else:
+            raise ValueError(
+                "Either model or extractor should be provided, but not both"
+            )
         self.initial_script = initial_script
         self.stealth = stealth
         self.loader = PageLoader(custom_cookies=custom_cookies)

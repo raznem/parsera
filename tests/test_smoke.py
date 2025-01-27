@@ -13,18 +13,25 @@ llm = AzureChatOpenAI(
     openai_api_type="azure",
     temperature=0.0,
 )
+url = "https://news.ycombinator.com/"
+elements = {
+    "Title": "News title",
+    "Points": "Number of points",
+    "Comments": "Number of comments",
+}
 
 
 @pytest.mark.asyncio
 async def test_smoke():
-    url = "https://news.ycombinator.com/"
-    elements = {
-        "Title": "News title",
-        "Points": "Number of points",
-        "Comments": "Number of comments",
-    }
-
     scraper = Parsera(model=llm)
+    result = await scraper.arun(url=url, elements=elements, proxy_settings=None)
+
+    assert result
+
+
+@pytest.mark.asyncio
+async def test_smoke_api():
+    scraper = Parsera()
     result = await scraper.arun(url=url, elements=elements, proxy_settings=None)
 
     assert result
