@@ -59,7 +59,9 @@ class LocalExtractor(Extractor):
 
 TABULAR_EXTRACTOR_SYSTEM_PROMPT = """
 Your goal is to find the elements from the webpage content and return list of them in json format.
-Make sure to return list of all relevant elements from the page.
+Make sure to return list of all relevant elements from the page. 
+Make sure to return exact values as in the page, without any modifications or similar values.
+
 For example if user asks:
 Return the following elements from the page content:
 ```

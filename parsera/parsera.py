@@ -6,7 +6,6 @@ from playwright.async_api import Page
 
 from parsera.engine.api_extractor import APIExtractor, Extractor
 from parsera.engine.chunks_extractor import ChunksTabularExtractor
-from parsera.engine.model import GPT4oMiniModel
 from parsera.page import PageLoader
 
 
@@ -38,7 +37,6 @@ class Parsera:
             self.model = model
             self.extractor = ChunksTabularExtractor(model=self.model)
         elif model is None and extractor:
-            self.model = GPT4oMiniModel()
             self.extractor = extractor
         else:
             raise ValueError(
