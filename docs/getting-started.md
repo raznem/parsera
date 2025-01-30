@@ -14,15 +14,15 @@ playwright install
 
 ## Basic usage
 
-If you want to use OpenAI, remember to set up `OPENAI_API_KEY` env variable.
+First, set up `PARSERA_API_KEY` env variable (If you want to run custom LLM see [Custom Models](/features/custom-models/)).
 You can do this from python with:
 ```python
 import os
 
-os.environ["OPENAI_API_KEY"] = "YOUR_OPENAI_API_KEY_HERE"
+os.environ["PARSERA_API_KEY"] = "YOUR_PARSERA_API_KEY_HERE"
 ```
 
-Next, you can run a basic version that uses `gpt-4o-mini`
+Next, you can run a basic version:
 ```python
 from parsera import Parsera
 
