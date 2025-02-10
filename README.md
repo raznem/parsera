@@ -2,7 +2,7 @@
 
 [![Discord](https://img.shields.io/badge/Discord-7289da?style=for-the-badge)](https://discord.gg/gYXwgQaT7p)
 [![Downloads](https://img.shields.io/pepy/dt/parsera?style=for-the-badge)](https://pepy.tech/project/parsera)
-[![Apify](https://img.shields.io/badge/Run_on_Apify-blue?style=for-the-badge)](https://apify.com/actor-badge?actor=parsera-labs/parsera)
+[![Apify](https://img.shields.io/badge/Run_on_Apify-blue?style=for-the-badge)](https://apify.com/parsera-labs/parsera?fpr=czveg)
 
 Lightweight Python library for scraping websites with LLMs. 
 You can test it on [Parsera website](https://parsera.org).
