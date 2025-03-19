@@ -80,7 +80,6 @@ Here is the list of countries available:
 - Hungary - `Hungary`
 - India - `India`
 - Indonesia - `Indonesia`
-- Iran - `Iran`
 - Iraq - `Iraq`
 - Ireland - `Ireland`
 - Israel - `Israel`
@@ -89,7 +88,6 @@ Here is the list of countries available:
 - Japan - `Japan`
 - Kazakhstan - `Kazakhstan`
 - Kenya - `Kenya`
-- Kosovo - `Kosovo`
 - Kuwait - `Kuwait`
 - Latvia - `Latvia`
 - Liechtenstein - `Liechtenstein`
@@ -111,7 +109,6 @@ Here is the list of countries available:
 - Norway - `Norway`
 - Oman - `Oman`
 - Pakistan - `Pakistan`
-- Palestine - `Palestine`
 - Panama - `Panama`
 - Papua New Guinea - `PapuaNewGuinea`
 - Paraguay - `Paraguay`
