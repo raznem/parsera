@@ -68,4 +68,4 @@ async def test_chunking_egen_ai():
     result_no_chunks, result_chunks = await run_chunks_and_no_chunks(
         url, elements, small_chunk_size=1500
     )
-    assert result_no_chunks != result_chunks
+    assert result_no_chunks == result_chunks

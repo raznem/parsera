@@ -4,6 +4,7 @@ import pytest
 from langchain_openai import AzureChatOpenAI
 
 from parsera import Parsera
+from parsera.engine.structured_extractor import StructuredExtractor
 
 llm = AzureChatOpenAI(
     azure_endpoint=os.getenv("AZURE_GPT_BASE_URL"),
@@ -33,5 +34,28 @@ async def test_smoke():
 async def test_smoke_api():
     scraper = Parsera()
     result = await scraper.arun(url=url, elements=elements, proxy_settings=None)
+
+    assert result
+
+
+@pytest.mark.asyncio
+async def test_smoke_structured():
+    extractor = StructuredExtractor(model=llm)
+    scraper = Parsera(extractor=extractor)
+    elements_typed = {
+        "Title": {
+            "type": "string",
+            "description": "News title",
+        },
+        "Points": {
+            "type": "integer",
+            "description": "Number of points",
+        },
+        "Comments": {
+            "type": "integer",
+            "description": "Number of comments",
+        },
+    }
+    result = await scraper.arun(url=url, elements=elements_typed, proxy_settings=None)
 
     assert result
