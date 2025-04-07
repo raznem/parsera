@@ -107,7 +107,7 @@ class StructuredExtractor(ChunksTabularExtractor):
         )
 
         class ListSchemaModel(BaseModel):
-            data: List[RecordModel]
+            data: List[RecordModel] = Field(default_factory=list)
 
         return ListSchemaModel
 
