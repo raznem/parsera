@@ -6,6 +6,7 @@ from playwright.async_api import Page
 
 from parsera.engine.api_extractor import APIExtractor, Extractor
 from parsera.engine.chunks_extractor import ChunksTabularExtractor
+from parsera.engine.structured_extractor import StructuredExtractor
 from parsera.page import PageLoader
 
 
@@ -17,6 +18,7 @@ class Parsera:
         initial_script: Callable[[Page], Awaitable[Page]] | None = None,
         stealth: bool = True,
         custom_cookies: list[dict] | None = None,
+        typed: bool = False,
     ):
         """Initialize Parsera
 
@@ -35,7 +37,10 @@ class Parsera:
             self.extractor = APIExtractor()
         elif model and extractor is None:
             self.model = model
-            self.extractor = ChunksTabularExtractor(model=self.model)
+            if typed:
+                self.extractor = StructuredExtractor(model=self.model)
+            else:
+                self.extractor = ChunksTabularExtractor(model=self.model)
         elif model is None and extractor:
             self.extractor = extractor
         else:
