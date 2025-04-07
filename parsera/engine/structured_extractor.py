@@ -1,18 +1,18 @@
 import json
 import math
-from typing import Any, Callable, Literal, Optional, Type
+from typing import Any, Callable, List, Literal, Optional, Type
 
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import HumanMessage, SystemMessage
 from markdownify import MarkdownConverter
-from pydantic import BaseModel, Field, create_model
+from pydantic import BaseModel, Field, RootModel, create_model
 
 from parsera.engine.chunks_extractor import ChunksTabularExtractor
 
 
 class AttributeData(BaseModel):
     description: str
-    type: Literal["string", "integer", "number", "bool", "list", "object"]
+    type: Literal["string", "integer", "number", "bool", "list", "object", "any"]
 
 
 type_mapping: dict[str, Type[Any]] = {
@@ -22,6 +22,7 @@ type_mapping: dict[str, Type[Any]] = {
     "boolean": bool,
     "array": list,
     "object": dict,
+    "any": Any,
 }
 
 
@@ -64,7 +65,7 @@ class StructuredExtractor(ChunksTabularExtractor):
         ]
         structured_output = await self.structured_model.ainvoke(messages)
         output_dict = structured_output.model_dump(mode="json")
-        return output_dict
+        return output_dict["data"]
 
     async def merge_all_data(
         self, all_data: list[list[dict]], attributes: dict[str, str]
@@ -83,9 +84,9 @@ class StructuredExtractor(ChunksTabularExtractor):
         ]
         structured_output = await self.structured_model.ainvoke(messages)
         output_dict = structured_output.model_dump(mode="json")
-        return output_dict
+        return output_dict["data"]
 
-    def create_schema(self, attributes: dict[str, Any]) -> Type[BaseModel]:
+    def create_schema(self, attributes: dict[str, dict[str, Any]]) -> Type[BaseModel]:
         pydantic_fields: dict[str, Any] = {}
         for field_name, field_info in attributes.items():
             field_type = type_mapping.get(field_info["type"])
@@ -97,12 +98,16 @@ class StructuredExtractor(ChunksTabularExtractor):
 
             pydantic_fields[field_name] = (field_type, Field(**field_args))
 
-        AttributesFormatter = create_model(
+        RecordModel = create_model(
             "AttributesFormatter",
             __base__=BaseModel,
             **pydantic_fields,
         )
-        return AttributesFormatter
+
+        class ListSchemaModel(BaseModel):
+            data: List[RecordModel]
+
+        return ListSchemaModel
 
     async def run(
         self,
