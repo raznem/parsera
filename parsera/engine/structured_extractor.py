@@ -8,6 +8,7 @@ from markdownify import MarkdownConverter
 from pydantic import BaseModel, Field, create_model
 
 from parsera.engine.chunks_extractor import ChunksTabularExtractor
+from parsera.utils import has_any_non_none_values
 
 
 class AttributeData(BaseModel):
@@ -67,7 +68,10 @@ class StructuredExtractor(ChunksTabularExtractor):
         ]
         structured_output = await self.structured_model.ainvoke(messages)
         output_dict = structured_output.model_dump(mode="json")
-        return output_dict["data"]
+        if has_any_non_none_values(output_dict["data"]):
+            return output_dict["data"]
+        else:
+            return []
 
     async def merge_all_data(
         self, all_data: list[list[dict]], attributes: dict[str, str]
