@@ -5,14 +5,16 @@ from typing import Any, Callable, List, Literal, Optional, Type
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import HumanMessage, SystemMessage
 from markdownify import MarkdownConverter
-from pydantic import BaseModel, Field, RootModel, create_model
+from pydantic import BaseModel, Field, create_model
 
 from parsera.engine.chunks_extractor import ChunksTabularExtractor
 
 
 class AttributeData(BaseModel):
-    description: str
-    type: Literal["string", "integer", "number", "bool", "list", "object", "any"]
+    description: str = ""
+    type: Literal["string", "integer", "number", "bool", "list", "object", "any"] = (
+        "any"
+    )
 
 
 type_mapping: dict[str, Type[Any]] = {
