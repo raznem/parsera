@@ -16,7 +16,7 @@
         <link rel="prev" href="..">
       
       
-        <link rel="next" href="../features/custom-browser/">
+        <link rel="next" href="../features/custom-models/">
       
       
       <link rel="icon" href="../icon.ico">
@@ -337,6 +337,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#specify-output-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Specify output types
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#running-with-cli" class="md-nav__link">
     <span class="md-ellipsis">
       Running with CLI
@@ -419,6 +428,69 @@
   
   
     <li class="md-nav__item">
+      <a href="../features/custom-models/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom models
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/extractors/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Extractors
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../features/proxy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Proxy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
       <a href="../features/custom-browser/" class="md-nav__link">
         
   
@@ -482,74 +554,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../features/custom-models/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Custom models
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../features/proxy/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Proxy
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../features/scrolling/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     Scrolling
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../features/extractors/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Extractors
   </span>
   
 
@@ -778,6 +787,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#specify-output-types" class="md-nav__link">
+    <span class="md-ellipsis">
+      Specify output types
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#running-with-cli" class="md-nav__link">
     <span class="md-ellipsis">
       Running with CLI
@@ -869,12 +887,36 @@ You can do this from python with:
 <p>There is also <code>arun</code> async method available:
 <div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="n">result</span> <span class="o">=</span> <span class="k">await</span> <span class="n">scrapper</span><span class="o">.</span><span class="n">arun</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">elements</span><span class="o">=</span><span class="n">elements</span><span class="p">)</span>
 </span></code></pre></div></p>
+<h2 id="specify-output-types">Specify output types</h2>
+<p>You can specify the output types using the following schema:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">parsera</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parsera</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://news.ycombinator.com/&quot;</span>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">elements</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a>    <span class="s2">&quot;Title&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-5-6"><a id="__codelineno-5-6" name="__codelineno-5-6" href="#__codelineno-5-6"></a>        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;News title&quot;</span><span class="p">,</span>
+</span><span id="__span-5-7"><a id="__codelineno-5-7" name="__codelineno-5-7" href="#__codelineno-5-7"></a>        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+</span><span id="__span-5-8"><a id="__codelineno-5-8" name="__codelineno-5-8" href="#__codelineno-5-8"></a>    <span class="p">},</span>
+</span><span id="__span-5-9"><a id="__codelineno-5-9" name="__codelineno-5-9" href="#__codelineno-5-9"></a>    <span class="s2">&quot;Points&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-5-10"><a id="__codelineno-5-10" name="__codelineno-5-10" href="#__codelineno-5-10"></a>        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Number of points&quot;</span><span class="p">,</span>
+</span><span id="__span-5-11"><a id="__codelineno-5-11" name="__codelineno-5-11" href="#__codelineno-5-11"></a>        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+</span><span id="__span-5-12"><a id="__codelineno-5-12" name="__codelineno-5-12" href="#__codelineno-5-12"></a>    <span class="p">}</span>
+</span><span id="__span-5-13"><a id="__codelineno-5-13" name="__codelineno-5-13" href="#__codelineno-5-13"></a>    <span class="s2">&quot;Comments&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-5-14"><a id="__codelineno-5-14" name="__codelineno-5-14" href="#__codelineno-5-14"></a>        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Number of comments&quot;</span><span class="p">,</span>
+</span><span id="__span-5-15"><a id="__codelineno-5-15" name="__codelineno-5-15" href="#__codelineno-5-15"></a>        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+</span><span id="__span-5-16"><a id="__codelineno-5-16" name="__codelineno-5-16" href="#__codelineno-5-16"></a>    <span class="p">}</span>
+</span><span id="__span-5-17"><a id="__codelineno-5-17" name="__codelineno-5-17" href="#__codelineno-5-17"></a><span class="p">}</span>
+</span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
+</span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="n">scraper</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">(</span><span class="n">typed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="n">result</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">elements</span><span class="o">=</span><span class="n">elements</span><span class="p">)</span>
+</span></code></pre></div></p>
+<p>When <code>typed</code> set to <code>True</code>, <code>Parsera</code> switches to <a href="/features/extractors/#structured-extractor">Structured Extractor</a>.</p>
 <h2 id="running-with-cli">Running with CLI</h2>
 <p>Before you run <code>Parsera</code> as command line tool don't forget to put your <code>OPENAI_API_KEY</code> to env variables or <code>.env</code> file</p>
 <h3 id="usage">Usage</h3>
 <p>You can configure elements to parse using <code>JSON string</code> or <code>FILE</code>.
 Optionally, you can provide <code>FILE</code> to write output.</p>
-<div class="language-sh highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>python<span class="w"> </span>-m<span class="w"> </span>parsera.main<span class="w"> </span>URL<span class="w"> </span><span class="o">{</span>--scheme<span class="w"> </span><span class="s1">&#39;{&quot;title&quot;:&quot;h1&quot;}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>--file<span class="w"> </span>FILENAME<span class="o">}</span><span class="w"> </span><span class="o">[</span>--output<span class="w"> </span>FILENAME<span class="o">]</span>
+<div class="language-sh highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>python<span class="w"> </span>-m<span class="w"> </span>parsera.main<span class="w"> </span>URL<span class="w"> </span><span class="o">{</span>--scheme<span class="w"> </span><span class="s1">&#39;{&quot;title&quot;:&quot;h1&quot;}&#39;</span><span class="w"> </span><span class="p">|</span><span class="w"> </span>--file<span class="w"> </span>FILENAME<span class="o">}</span><span class="w"> </span><span class="o">[</span>--output<span class="w"> </span>FILENAME<span class="o">]</span>
 </span></code></pre></div>
 <h2 id="more-features">More features</h2>
 <p>Check out further documentation to explore more features:</p>

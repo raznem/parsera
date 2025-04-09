@@ -13,10 +13,10 @@
         <link rel="canonical" href="https://docs.parsera.org/features/extractors/">
       
       
-        <link rel="prev" href="../scrolling/">
+        <link rel="prev" href="../custom-models/">
       
       
-        <link rel="next" href="../docker/">
+        <link rel="next" href="../proxy/">
       
       
       <link rel="icon" href="../../icon.ico">
@@ -330,116 +330,11 @@
   
   
     <li class="md-nav__item">
-      <a href="../custom-browser/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Custom browser
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../custom-cookies/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Custom cookies
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../custom-playwright/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Custom playwright
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
       <a href="../custom-models/" class="md-nav__link">
         
   
   <span class="md-ellipsis">
     Custom models
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../proxy/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Proxy
-  </span>
-  
-
-      </a>
-    </li>
-  
-
-              
-            
-              
-                
-  
-  
-  
-  
-    <li class="md-nav__item">
-      <a href="../scrolling/" class="md-nav__link">
-        
-  
-  <span class="md-ellipsis">
-    Scrolling
   </span>
   
 
@@ -525,6 +420,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#structured-extractor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Structured Extractor
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#list-extractor" class="md-nav__link">
     <span class="md-ellipsis">
       List Extractor
@@ -546,6 +450,111 @@
   
 </nav>
       
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../proxy/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Proxy
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom-browser/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom browser
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom-cookies/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom cookies
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../custom-playwright/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Custom playwright
+  </span>
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../scrolling/" class="md-nav__link">
+        
+  
+  <span class="md-ellipsis">
+    Scrolling
+  </span>
+  
+
+      </a>
     </li>
   
 
@@ -777,6 +786,15 @@
 </li>
       
         <li class="md-nav__item">
+  <a href="#structured-extractor" class="md-nav__link">
+    <span class="md-ellipsis">
+      Structured Extractor
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
   <a href="#list-extractor" class="md-nav__link">
     <span class="md-ellipsis">
       List Extractor
@@ -863,31 +881,58 @@ function for counting tokens:</p>
 </span><span id="__span-3-10"><a id="__codelineno-3-10" name="__codelineno-3-10" href="#__codelineno-3-10"></a>
 </span><span id="__span-3-11"><a id="__codelineno-3-11" name="__codelineno-3-11" href="#__codelineno-3-11"></a><span class="n">scraper</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">(</span><span class="n">extractor</span><span class="o">=</span><span class="n">ExtractorType</span><span class="o">.</span><span class="n">CHUNKS_TABULAR</span><span class="p">,</span> <span class="n">chunk_size</span><span class="o">=</span><span class="mi">12000</span><span class="p">,</span> <span class="n">token_counter</span><span class="o">=</span><span class="n">count_tokens</span><span class="p">)</span>
 </span></code></pre></div>
-<h2 id="list-extractor">List Extractor</h2>
-<p><div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">parsera</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parsera</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">parsera.engine.simple_extractor</span><span class="w"> </span><span class="kn">import</span> <span class="n">ListExtractor</span>
+<h2 id="structured-extractor">Structured Extractor</h2>
+<p>Extension of <code>ChunksTabularExtractor</code>, which uses structured output to get the output of specified type:
+<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">parsera</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parsera</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">parsera.engine.chunks_extractor</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChunksTabularExtractor</span>
 </span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a>
-</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">extractor</span> <span class="o">=</span> <span class="n">ListExtractor</span><span class="p">()</span>
-</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">scraper</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">(</span><span class="n">extractor</span><span class="o">=</span><span class="n">extractor</span><span class="p">)</span>
+</span><span id="__span-4-4"><a id="__codelineno-4-4" name="__codelineno-4-4" href="#__codelineno-4-4"></a><span class="n">url</span> <span class="o">=</span> <span class="s2">&quot;https://news.ycombinator.com/&quot;</span>
+</span><span id="__span-4-5"><a id="__codelineno-4-5" name="__codelineno-4-5" href="#__codelineno-4-5"></a><span class="n">elements</span> <span class="o">=</span> <span class="p">{</span>
+</span><span id="__span-4-6"><a id="__codelineno-4-6" name="__codelineno-4-6" href="#__codelineno-4-6"></a>    <span class="s2">&quot;Title&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-4-7"><a id="__codelineno-4-7" name="__codelineno-4-7" href="#__codelineno-4-7"></a>        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;News title&quot;</span><span class="p">,</span>
+</span><span id="__span-4-8"><a id="__codelineno-4-8" name="__codelineno-4-8" href="#__codelineno-4-8"></a>        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;string&quot;</span><span class="p">,</span>
+</span><span id="__span-4-9"><a id="__codelineno-4-9" name="__codelineno-4-9" href="#__codelineno-4-9"></a>    <span class="p">},</span>
+</span><span id="__span-4-10"><a id="__codelineno-4-10" name="__codelineno-4-10" href="#__codelineno-4-10"></a>    <span class="s2">&quot;Points&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-4-11"><a id="__codelineno-4-11" name="__codelineno-4-11" href="#__codelineno-4-11"></a>        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Number of points&quot;</span><span class="p">,</span>
+</span><span id="__span-4-12"><a id="__codelineno-4-12" name="__codelineno-4-12" href="#__codelineno-4-12"></a>        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+</span><span id="__span-4-13"><a id="__codelineno-4-13" name="__codelineno-4-13" href="#__codelineno-4-13"></a>    <span class="p">}</span>
+</span><span id="__span-4-14"><a id="__codelineno-4-14" name="__codelineno-4-14" href="#__codelineno-4-14"></a>    <span class="s2">&quot;Comments&quot;</span><span class="p">:</span> <span class="p">{</span>
+</span><span id="__span-4-15"><a id="__codelineno-4-15" name="__codelineno-4-15" href="#__codelineno-4-15"></a>        <span class="s2">&quot;description&quot;</span><span class="p">:</span> <span class="s2">&quot;Number of comments&quot;</span><span class="p">,</span>
+</span><span id="__span-4-16"><a id="__codelineno-4-16" name="__codelineno-4-16" href="#__codelineno-4-16"></a>        <span class="s2">&quot;type&quot;</span><span class="p">:</span> <span class="s2">&quot;integer&quot;</span><span class="p">,</span>
+</span><span id="__span-4-17"><a id="__codelineno-4-17" name="__codelineno-4-17" href="#__codelineno-4-17"></a>    <span class="p">}</span>
+</span><span id="__span-4-18"><a id="__codelineno-4-18" name="__codelineno-4-18" href="#__codelineno-4-18"></a><span class="p">}</span>
+</span><span id="__span-4-19"><a id="__codelineno-4-19" name="__codelineno-4-19" href="#__codelineno-4-19"></a>
+</span><span id="__span-4-20"><a id="__codelineno-4-20" name="__codelineno-4-20" href="#__codelineno-4-20"></a><span class="n">extractor</span> <span class="o">=</span> <span class="n">StructuredExtractor</span><span class="p">()</span>
+</span><span id="__span-4-21"><a id="__codelineno-4-21" name="__codelineno-4-21" href="#__codelineno-4-21"></a><span class="n">scraper</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">(</span><span class="n">extractor</span><span class="o">=</span><span class="n">extractor</span><span class="p">)</span>  <span class="c1"># With elements input structured as above, will be used by default.</span>
+</span><span id="__span-4-22"><a id="__codelineno-4-22" name="__codelineno-4-22" href="#__codelineno-4-22"></a>
+</span><span id="__span-4-23"><a id="__codelineno-4-23" name="__codelineno-4-23" href="#__codelineno-4-23"></a><span class="n">result</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">elements</span><span class="o">=</span><span class="n">elements</span><span class="p">)</span>
+</span></code></pre></div></p>
+<p>Note: use this extractor only with models supporting Structured Outputs.</p>
+<h2 id="list-extractor">List Extractor</h2>
+<p><div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">parsera</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parsera</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">parsera.engine.simple_extractor</span><span class="w"> </span><span class="kn">import</span> <span class="n">ListExtractor</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">extractor</span> <span class="o">=</span> <span class="n">ListExtractor</span><span class="p">()</span>
+</span><span id="__span-5-5"><a id="__codelineno-5-5" name="__codelineno-5-5" href="#__codelineno-5-5"></a><span class="n">scraper</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">(</span><span class="n">extractor</span><span class="o">=</span><span class="n">extractor</span><span class="p">)</span>
 </span></code></pre></div>
 The list extractor is used to find lists of different values and has output of the form:
-<div class="language-json highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="p">{</span>
-</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;name1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;name2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;name3&quot;</span><span class="p">],</span>
-</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a><span class="w">    </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;100&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;150&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;300&quot;</span><span class="p">]</span>
-</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="p">{</span>
+</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;name1&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;name2&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;name3&quot;</span><span class="p">],</span>
+</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a><span class="w">    </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;100&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;150&quot;</span><span class="p">,</span><span class="w"> </span><span class="s2">&quot;300&quot;</span><span class="p">]</span>
+</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="p">}</span>
 </span></code></pre></div></p>
 <h2 id="item-extractor">Item Extractor</h2>
-<p><div class="language-python highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">parsera</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parsera</span>
-</span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">parsera.engine.simple_extractor</span><span class="w"> </span><span class="kn">import</span> <span class="n">ItemExtractor</span>
-</span><span id="__span-6-3"><a id="__codelineno-6-3" name="__codelineno-6-3" href="#__codelineno-6-3"></a>
-</span><span id="__span-6-4"><a id="__codelineno-6-4" name="__codelineno-6-4" href="#__codelineno-6-4"></a><span class="n">extractor</span> <span class="o">=</span> <span class="n">ItemExtractor</span><span class="p">()</span>
-</span><span id="__span-6-5"><a id="__codelineno-6-5" name="__codelineno-6-5" href="#__codelineno-6-5"></a><span class="n">scraper</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">(</span><span class="n">extractor</span><span class="o">=</span><span class="n">extractor</span><span class="p">)</span>
+<p><div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">parsera</span><span class="w"> </span><span class="kn">import</span> <span class="n">Parsera</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">parsera.engine.simple_extractor</span><span class="w"> </span><span class="kn">import</span> <span class="n">ItemExtractor</span>
+</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a>
+</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="n">extractor</span> <span class="o">=</span> <span class="n">ItemExtractor</span><span class="p">()</span>
+</span><span id="__span-7-5"><a id="__codelineno-7-5" name="__codelineno-7-5" href="#__codelineno-7-5"></a><span class="n">scraper</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">(</span><span class="n">extractor</span><span class="o">=</span><span class="n">extractor</span><span class="p">)</span>
 </span></code></pre></div>
 The item extractor is used to get singular items from a page like a title or price and has output of the form:
-<div class="language-json highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="p">{</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;name1&quot;</span><span class="p">,</span>
-</span><span id="__span-7-3"><a id="__codelineno-7-3" name="__codelineno-7-3" href="#__codelineno-7-3"></a><span class="w">    </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100&quot;</span>
-</span><span id="__span-7-4"><a id="__codelineno-7-4" name="__codelineno-7-4" href="#__codelineno-7-4"></a><span class="p">}</span>
+<div class="language-json highlight"><pre><span></span><code><span id="__span-8-1"><a id="__codelineno-8-1" name="__codelineno-8-1" href="#__codelineno-8-1"></a><span class="p">{</span>
+</span><span id="__span-8-2"><a id="__codelineno-8-2" name="__codelineno-8-2" href="#__codelineno-8-2"></a><span class="w">    </span><span class="nt">&quot;name&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;name1&quot;</span><span class="p">,</span>
+</span><span id="__span-8-3"><a id="__codelineno-8-3" name="__codelineno-8-3" href="#__codelineno-8-3"></a><span class="w">    </span><span class="nt">&quot;price&quot;</span><span class="p">:</span><span class="w"> </span><span class="s2">&quot;100&quot;</span>
+</span><span id="__span-8-4"><a id="__codelineno-8-4" name="__codelineno-8-4" href="#__codelineno-8-4"></a><span class="p">}</span>
 </span></code></pre></div></p>
 
 
