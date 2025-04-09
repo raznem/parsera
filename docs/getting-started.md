@@ -79,6 +79,17 @@ elements = {
 scraper = Parsera(typed=True)
 result = scraper.run(url=url, elements=elements)
 ```
+List of the supported types:
+
+| Schema Type | Python Type |
+|------|-------------|
+| `string` | `string` |
+| `integer` | `int` |
+| `number` | `float` |
+| `bool` | `bool` |
+| `list` | `list` |
+| `object` | `dict` |
+| `any` | Model can return any type |
 
 When `typed` set to `True`, `Parsera` switches to [Structured Extractor](/features/extractors/#structured-extractor).
 
