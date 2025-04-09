@@ -109,7 +109,7 @@ If value for the field is not found use `null` in the json:
 ]
 ```
 
-If no data is found return empty json:
+If no data is found return empty list:
 ```json
 []
 ```
