@@ -909,7 +909,46 @@ You can do this from python with:
 </span><span id="__span-5-18"><a id="__codelineno-5-18" name="__codelineno-5-18" href="#__codelineno-5-18"></a>
 </span><span id="__span-5-19"><a id="__codelineno-5-19" name="__codelineno-5-19" href="#__codelineno-5-19"></a><span class="n">scraper</span> <span class="o">=</span> <span class="n">Parsera</span><span class="p">(</span><span class="n">typed</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 </span><span id="__span-5-20"><a id="__codelineno-5-20" name="__codelineno-5-20" href="#__codelineno-5-20"></a><span class="n">result</span> <span class="o">=</span> <span class="n">scraper</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">url</span><span class="o">=</span><span class="n">url</span><span class="p">,</span> <span class="n">elements</span><span class="o">=</span><span class="n">elements</span><span class="p">)</span>
-</span></code></pre></div></p>
+</span></code></pre></div>
+List of the supported types:</p>
+<table>
+<thead>
+<tr>
+<th>Schema Type</th>
+<th>Python Type</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>string</code></td>
+<td><code>string</code></td>
+</tr>
+<tr>
+<td><code>integer</code></td>
+<td><code>int</code></td>
+</tr>
+<tr>
+<td><code>number</code></td>
+<td><code>float</code></td>
+</tr>
+<tr>
+<td><code>bool</code></td>
+<td><code>bool</code></td>
+</tr>
+<tr>
+<td><code>list</code></td>
+<td><code>list</code></td>
+</tr>
+<tr>
+<td><code>object</code></td>
+<td><code>dict</code></td>
+</tr>
+<tr>
+<td><code>any</code></td>
+<td>Model can return any type</td>
+</tr>
+</tbody>
+</table>
 <p>When <code>typed</code> set to <code>True</code>, <code>Parsera</code> switches to <a href="/features/extractors/#structured-extractor">Structured Extractor</a>.</p>
 <h2 id="running-with-cli">Running with CLI</h2>
 <p>Before you run <code>Parsera</code> as command line tool don't forget to put your <code>OPENAI_API_KEY</code> to env variables or <code>.env</code> file</p>
