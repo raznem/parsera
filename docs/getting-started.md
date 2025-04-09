@@ -76,11 +76,11 @@ elements = {
     }
 }
 
-scraper = Parsera()
+scraper = Parsera(typed=True)
 result = scraper.run(url=url, elements=elements)
 ```
 
-When schema with types is used, `Parsera` switches to [Structured Extractor](/features/extractors/#structured-extractor).
+When `typed` set to `True`, `Parsera` switches to [Structured Extractor](/features/extractors/#structured-extractor).
 
 ## Running with CLI
 

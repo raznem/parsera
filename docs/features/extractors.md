@@ -55,8 +55,7 @@ scraper = Parsera(extractor=ExtractorType.CHUNKS_TABULAR, chunk_size=12000, toke
 ```
 
 ## Structured Extractor
-Extension of `ChunksTabularExtractor`, which uses structured output to get the output of specified type.  
-Used by default inside `Parsera` when extended elements schema is provided:
+Extension of `ChunksTabularExtractor`, which uses structured output to get the output of specified type:
 ```python
 from parsera import Parsera
 from parsera.engine.chunks_extractor import ChunksTabularExtractor
