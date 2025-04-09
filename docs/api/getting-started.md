@@ -31,7 +31,7 @@ curl https://agents.parsera.org/v1/generate \
 |----------------|----------|--------------|--------------------------------------------|
 | `name`         | `string` | -            | Name of the agent                           |
 | `url`          | `string` | -            | Website URL                                |
-| `attributes`   | `array`  | -            | A map of `name` - `description` pairs of data fields to extract from the webpage |
+| `attributes`   | `object`  | -            | A map of `name` - `description` pairs of data fields to extract from the webpage |
 | `proxy_country` | `string` | `UnitedStates` | Proxy country, see [Proxy Countries](proxy.md)    |
 | `cookies`      | `array`  | Empty        | Cookies to use during extraction, see [Cookies](cookies.md) |
 
@@ -109,7 +109,7 @@ It's recommended to set the `proxy_country` parameter to a specific country sinc
 | Parameter      | Type     | Default      | Description                                      |
 |----------------|----------|--------------|--------------------------------------------------|
 | `url`          | `string` | -            | URL of the webpage to extract data from          |
-| `attributes`   | `array`  | -            | A map of `name` - `description` pairs of data fields to extract from the webpage |
+| `attributes`   | `object`  | -            | A map of `name` - `description` pairs of data fields to extract from the webpage |
 | `mode`         | `string` | `standard`    | Mode of the extractor, `standard` or `precision`. For details, see [Precision mode](precision-mode.md) |
 | `proxy_country`| `string` | `UnitedStates`| Proxy country, see [Proxy Countries](proxy.md)    |
 | `cookies`      | `array`  | Empty        | Cookies to use during extraction, see [Cookies](cookies.md) |
@@ -136,7 +136,7 @@ curl https://api.parsera.org/v1/parse \
 | Parameter      | Type     | Default      | Description                                      |
 |----------------|----------|--------------|--------------------------------------------------|
 | `content`          | `string` | -        | Raw HTML or text content to extract data from |
-| `attributes`   | `array`  | -            | A map of `name` - `description` pairs of data fields to extract from the webpage |
+| `attributes`   | `object`  | -            | A map of `name` - `description` pairs of data fields to extract from the webpage |
 | `mode`         | `string` | `standard`    | Mode of the extractor, `standard` or `precision`. For details, see [Precision mode](precision-mode.md) |
 
 

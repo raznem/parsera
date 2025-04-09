@@ -54,6 +54,37 @@ def count_tokens(text):
 scraper = Parsera(extractor=ExtractorType.CHUNKS_TABULAR, chunk_size=12000, token_counter=count_tokens)
 ```
 
+## Structured Extractor
+Extension of `ChunksTabularExtractor`, which uses structured output to get the output of specified type.  
+Used by default inside `Parsera` when extended elements schema is provided:
+```python
+from parsera import Parsera
+from parsera.engine.chunks_extractor import ChunksTabularExtractor
+
+url = "https://news.ycombinator.com/"
+elements = {
+    "Title": {
+        "description": "News title",
+        "type": "string",
+    },
+    "Points": {
+        "description": "Number of points",
+        "type": "integer",
+    }
+    "Comments": {
+        "description": "Number of comments",
+        "type": "integer",
+    }
+}
+
+extractor = StructuredExtractor()
+scraper = Parsera(extractor=extractor)  # With elements input structured as above, will be used by default.
+
+result = scraper.run(url=url, elements=elements)
+```
+
+Note: use this extractor only with models supporting Structured Outputs.
+
 
 ## List Extractor
 ```python

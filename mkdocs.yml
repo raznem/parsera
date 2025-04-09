@@ -27,13 +27,13 @@ nav:
   - Home: index.md
   - Getting started: getting-started.md
   - Features:
+    - Custom models: features/custom-models.md
+    - Extractors: features/extractors.md
+    - Proxy: features/proxy.md
     - Custom browser: features/custom-browser.md
     - Custom cookies: features/custom-cookies.md
     - Custom playwright: features/custom-playwright.md
-    - Custom models: features/custom-models.md
-    - Proxy: features/proxy.md
     - Scrolling: features/scrolling.md
-    - Extractors: features/extractors.md
     - Docker: features/docker.md
   - API:
     - Getting started: api/getting-started.md

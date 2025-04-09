@@ -54,6 +54,34 @@ There is also `arun` async method available:
 result = await scrapper.arun(url=url, elements=elements)
 ```
 
+## Specify output types
+
+You can specify the output types using the following schema:
+```python
+from parsera import Parsera
+
+url = "https://news.ycombinator.com/"
+elements = {
+    "Title": {
+        "description": "News title",
+        "type": "string",
+    },
+    "Points": {
+        "description": "Number of points",
+        "type": "integer",
+    }
+    "Comments": {
+        "description": "Number of comments",
+        "type": "integer",
+    }
+}
+
+scraper = Parsera()
+result = scraper.run(url=url, elements=elements)
+```
+
+When schema with types is used, `Parsera` switches to [Structured Extractor](/features/extractors/#structured-extractor).
+
 ## Running with CLI
 
 Before you run `Parsera` as command line tool don't forget to put your `OPENAI_API_KEY` to env variables or `.env` file
