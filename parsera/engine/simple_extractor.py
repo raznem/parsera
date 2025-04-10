@@ -109,6 +109,13 @@ If value for the field is not found use `null` in the json:
 ]
 ```
 
+If user request for multiple fields, but there are only one value per each field, return one row:
+```json
+[
+    {"name": "name1", "price": 100, "image": "<link_to_the_image>"}
+]
+```
+
 If no data is found return empty list:
 ```json
 []
