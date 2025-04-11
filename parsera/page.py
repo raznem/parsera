@@ -6,13 +6,7 @@ from playwright.async_api import TimeoutError as PlaywrightTimeoutError
 from playwright.async_api import async_playwright
 from playwright_stealth import StealthConfig, stealth_async
 
-
-class PageGotoError(Exception):
-    pass
-
-
-class CookiesValidationException(Exception):
-    pass
+from parsera.exceptions import CookiesValidationException, PageGotoError
 
 
 class ProxySettings(TypedDict, total=False):
@@ -163,7 +157,9 @@ class PageLoader:
         main_html = await self.page.evaluate("document.documentElement.outerHTML")
 
         # Fetch all iframe HTMLs in parallel
-        iframe_html_tasks = [self.get_iframe_html(frame) for frame in self.page.frames[1:]]
+        iframe_html_tasks = [
+            self.get_iframe_html(frame) for frame in self.page.frames[1:]
+        ]
         iframes_html = await asyncio.gather(*iframe_html_tasks)
 
         # Filter out None values (failed iframe retrievals)

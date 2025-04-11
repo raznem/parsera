@@ -10,6 +10,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from markdownify import MarkdownConverter
 
 from parsera.engine.simple_extractor import TabularExtractor
+from parsera.exceptions import PageContentError
 
 SYSTEM_MERGE_PROMPT_TEMPLATE = """
 Your goal is to merge data extracted from different parts of the page into one json.
@@ -300,7 +301,9 @@ class ChunksTabularExtractor(TabularExtractor):
             output_dict = await self.merge_all_data(
                 all_data=self.chunks_data, attributes=attributes
             )
-        else:
+        elif len(chunks) == 1:
             output_dict = await self.extract(markdown=chunks[0], attributes=attributes)
+        else:
+            raise PageContentError("Page content is empty")
 
         return output_dict

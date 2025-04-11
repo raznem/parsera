@@ -111,7 +111,10 @@ class StructuredExtractor(ChunksTabularExtractor):
         )
 
         class ListSchemaModel(BaseModel):
-            data: List[RecordModel] = Field(default_factory=list)
+            data: List[RecordModel] = Field(
+                default_factory=list,
+                description="Return list with one row, if there is only one value per each field.",
+            )
 
         return ListSchemaModel
 
