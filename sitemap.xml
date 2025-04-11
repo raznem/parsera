@@ -2,62 +2,66 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     <url>
          <loc>https://docs.parsera.org/</loc>
-         <lastmod>2025-04-09</lastmod>
+         <lastmod>2025-04-11</lastmod>
     </url>
     <url>
          <loc>https://docs.parsera.org/contributing/</loc>
-         <lastmod>2025-04-09</lastmod>
+         <lastmod>2025-04-11</lastmod>
     </url>
     <url>
          <loc>https://docs.parsera.org/getting-started/</loc>
-         <lastmod>2025-04-09</lastmod>
+         <lastmod>2025-04-11</lastmod>
     </url>
     <url>
          <loc>https://docs.parsera.org/api/cookies/</loc>
-         <lastmod>2025-04-09</lastmod>
+         <lastmod>2025-04-11</lastmod>
     </url>
     <url>
          <loc>https://docs.parsera.org/api/getting-started/</loc>
-         <lastmod>2025-04-09</lastmod>
+         <lastmod>2025-04-11</lastmod>
+    </url>
+    <url>
+         <loc>https://docs.parsera.org/api/output-types/</loc>
+         <lastmod>2025-04-11</lastmod>
     </url>
     <url>
          <loc>https://docs.parsera.org/api/precision-mode/</loc>
-         <lastmod>2025-04-09</lastmod>
+         <lastmod>2025-04-11</lastmod>
     </url>
     <url>
          <loc>https://docs.parsera.org/api/proxy/</loc>
-         <lastmod>2025-04-09</lastmod>
+         <lastmod>2025-04-11</lastmod>
     </url>
     <url>
          <loc>https://docs.parsera.org/features/custom-browser/</loc>
-         <lastmod>2025-04-09</lastmod>
+         <lastmod>2025-04-11</lastmod>
     </url>
     <url>
          <loc>https://docs.parsera.org/features/custom-cookies/</loc>
-         <lastmod>2025-04-09</lastmod>
+         <lastmod>2025-04-11</lastmod>
     </url>
     <url>
          <loc>https://docs.parsera.org/features/custom-models/</loc>
-         <lastmod>2025-04-09</lastmod>
+         <lastmod>2025-04-11</lastmod>
     </url>
     <url>
          <loc>https://docs.parsera.org/features/custom-playwright/</loc>
-         <lastmod>2025-04-09</lastmod>
+         <lastmod>2025-04-11</lastmod>
     </url>
     <url>
          <loc>https://docs.parsera.org/features/docker/</loc>
-         <lastmod>2025-04-09</lastmod>
+         <lastmod>2025-04-11</lastmod>
     </url>
     <url>
          <loc>https://docs.parsera.org/features/extractors/</loc>
-         <lastmod>2025-04-09</lastmod>
+         <lastmod>2025-04-11</lastmod>
     </url>
     <url>
          <loc>https://docs.parsera.org/features/proxy/</loc>
-         <lastmod>2025-04-09</lastmod>
+         <lastmod>2025-04-11</lastmod>
     </url>
     <url>
          <loc>https://docs.parsera.org/features/scrolling/</loc>
-         <lastmod>2025-04-09</lastmod>
+         <lastmod>2025-04-11</lastmod>
     </url>
 </urlset>
