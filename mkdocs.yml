@@ -37,6 +37,7 @@ nav:
     - Docker: features/docker.md
   - API:
     - Getting started: api/getting-started.md
+    - Output types: api/output-types.md
     - Proxy: api/proxy.md
     - Cookies: api/cookies.md
     - Precision mode: api/precision-mode.md

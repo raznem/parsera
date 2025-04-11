@@ -31,7 +31,7 @@ curl https://agents.parsera.org/v1/generate \
 |----------------|----------|--------------|--------------------------------------------|
 | `name`         | `string` | -            | Name of the agent                           |
 | `url`          | `string` | -            | Website URL                                |
-| `attributes`   | `object`  | -            | A map of `name` - `description` pairs of data fields to extract from the webpage |
+| `attributes`   | `object`  | -            | A map of `name` - `description` pairs of data fields to extract from the webpage. Also, you can specify [Output Types](output-types.md). |
 | `proxy_country` | `string` | `UnitedStates` | Proxy country, see [Proxy Countries](proxy.md)    |
 | `cookies`      | `array`  | Empty        | Cookies to use during extraction, see [Cookies](cookies.md) |
 
@@ -109,7 +109,7 @@ It's recommended to set the `proxy_country` parameter to a specific country sinc
 | Parameter      | Type     | Default      | Description                                      |
 |----------------|----------|--------------|--------------------------------------------------|
 | `url`          | `string` | -            | URL of the webpage to extract data from          |
-| `attributes`   | `object`  | -            | A map of `name` - `description` pairs of data fields to extract from the webpage |
+| `attributes`   | `object`  | -            | A map of `name` - `description` pairs of data fields to extract from the webpage. Also, you can specify [Output Types](output-types.md) |
 | `mode`         | `string` | `standard`    | Mode of the extractor, `standard` or `precision`. For details, see [Precision mode](precision-mode.md) |
 | `proxy_country`| `string` | `UnitedStates`| Proxy country, see [Proxy Countries](proxy.md)    |
 | `cookies`      | `array`  | Empty        | Cookies to use during extraction, see [Cookies](cookies.md) |
@@ -136,7 +136,7 @@ curl https://api.parsera.org/v1/parse \
 | Parameter      | Type     | Default      | Description                                      |
 |----------------|----------|--------------|--------------------------------------------------|
 | `content`          | `string` | -        | Raw HTML or text content to extract data from |
-| `attributes`   | `object`  | -            | A map of `name` - `description` pairs of data fields to extract from the webpage |
+| `attributes`   | `object`  | -            | A map of `name` - `description` pairs of data fields to extract from the webpage. Also, you can specify [Output Types](output-types.md) |
 | `mode`         | `string` | `standard`    | Mode of the extractor, `standard` or `precision`. For details, see [Precision mode](precision-mode.md) |
 
 
@@ -175,6 +175,7 @@ You can also explore the Swagger doc of the Extractor API: [https://api.parsera.
 
 Check out further documentation to explore more features:
 
+- [Specify Output Types](output-types.md)
 - [Setting proxy](proxy.md)
 - [Setting cookies](cookies.md)
 - [Precision mode](precision-mode.md)
