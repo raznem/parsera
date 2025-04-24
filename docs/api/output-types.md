@@ -1,6 +1,6 @@
 # Output Types
 
-API allows you to specify output types via alternative schema of `attributes` in all endpoints. 
+API allows you to specify output types via alternative schema of `attributes` in all endpoints.
 
 ## New Schema
 Simply replace old attributes values:
@@ -42,10 +42,32 @@ You can use one of the following data types:
 ## Example
 Full request example for extract:
 ```bash
+curl https://agents.parsera.org/v1/extract \
+--header 'Content-Type: application/json' \
+--header 'X-API-KEY: <YOUR_API_KEY>' \
+--data '{
+    "url": "https://news.ycombinator.com/",
+    "attributes": {
+        "title": {
+            "description": "Title of the article",
+            "type": "string"
+        },
+        "points": {
+            "description": "Number of points",
+            "type": "integer"
+        }
+    }
+}'
+```
+
+Note, that you also can use `output types` with agents. In order to do this, add `output types` for **agent generation** request. Here's an example how to do this:
+
+```bash
 curl https://agents.parsera.org/v1/generate \
 --header 'Content-Type: application/json' \
 --header 'X-API-KEY: <YOUR_API_KEY>' \
 --data '{
+    "name" : "ycombinator",
     "url": "https://news.ycombinator.com/",
     "attributes": {
         "title": {
