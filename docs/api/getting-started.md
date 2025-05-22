@@ -36,7 +36,7 @@ curl https://agents.parsera.org/v1/generate \
 | `cookies`      | `array`  | Empty        | Cookies to use during extraction, see [Cookies](cookies.md) |
 
 ### `scrape`
-Use an existing scraper on the webpage:
+Apply an existing scraper to the webpage:
 ```bash
 curl https://agents.parsera.org/v1/scrape \
 --header 'Content-Type: application/json' \
@@ -46,6 +46,9 @@ curl https://agents.parsera.org/v1/scrape \
     "url": "https://news.ycombinator.com/front?day=2024-09-11",
 }'
 ```
+
+You can access pre-built agents by appending `public/` to the name, for example `public/crunchbase` to access `crunchbase` agent.
+
 **Parameters:**
 
 | Parameter      | Type     | Default      | Description                                                              |
