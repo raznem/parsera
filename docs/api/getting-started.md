@@ -69,7 +69,7 @@ curl --location 'https://agents.parsera.org/v1/list' \
 ### `remove`
 Remove existing agent:
 ```bash
-curl --location --request DELETE 'https://agents.parsera.org/v1/remove' \
+curl --location 'https://agents.parsera.org/v1/remove' \
 --header 'Content-Type: application/json' \
 --header 'X-API-KEY: <YOUR_API_KEY>' \
 --data '{
