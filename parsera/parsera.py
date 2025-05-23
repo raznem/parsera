@@ -54,9 +54,9 @@ class Parsera:
     async def _run(
         self,
         url: str,
-        elements: dict,
+        elements: dict | None,
         prompt: str,
-        proxy_settings: dict | None = None,
+        proxy_settings: dict | None,
         scrolls_limit: int = 0,
         playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
     ) -> dict:
@@ -79,7 +79,7 @@ class Parsera:
     def run(
         self,
         url: str,
-        elements: dict,
+        elements: dict | None = None,
         prompt: str = "",
         proxy_settings: dict | None = None,
         scrolls_limit: int = 0,
@@ -99,7 +99,7 @@ class Parsera:
     async def arun(
         self,
         url: str,
-        elements: dict,
+        elements: dict | None = None,
         prompt: str = "",
         proxy_settings: dict | None = None,
         scrolls_limit: int = 0,

@@ -11,7 +11,7 @@ PARSERA_API_KEY = os.getenv("PARSERA_API_KEY")
 class Extractor(ABC):
     @abstractmethod
     async def run(
-        self, content: str, attributes: dict[str, str], prompt: str
+        self, content: str, attributes: dict[str, str] | None, prompt: str
     ) -> list[dict]:
         pass
 
@@ -20,21 +20,25 @@ class APIExtractor(Extractor):
     async def run(
         self,
         content: str,
-        attributes: dict[str, str],
+        attributes: dict[str, str] | None = None,
         prompt: str = "",
         mode: str = "standard",
     ) -> list[dict]:
-        api_attributes = []
-        for key, value in attributes.items():
-            api_attributes.append({"name": key, "description": value})
+        if attributes is None and len(prompt) == 0:
+            raise ValueError("At least prompt or attributes has to be provided")
         data = {
             "content": content,
             "prompt": prompt,
-            "attributes": api_attributes,
             "mode": mode,
         }
+
+        if attributes:
+            api_attributes = []
+            for key, value in attributes.items():
+                api_attributes.append({"name": key, "description": value})
+            data["attributes"] = api_attributes
         headers = {"Content-Type": "application/json", "X-API-KEY": PARSERA_API_KEY}
-        # try:
+
         response = requests.post(API_ENDPOINT, headers=headers, json=data)
         response.raise_for_status()
 
@@ -44,6 +48,3 @@ class APIExtractor(Extractor):
             warnings.warn(response_json["detail"])
 
         return response_json.get("data", [])
-        # except requests.exceptions.RequestException as e:
-        #     error_details = response.text if response is not None else str(e)
-        #     return None, (e, error_details)

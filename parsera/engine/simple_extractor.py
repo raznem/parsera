@@ -7,6 +7,18 @@ from markdownify import MarkdownConverter
 
 from parsera.engine.api_extractor import Extractor
 
+SIMPLE_EXTRACTOR_PROMPT_ONLY_TEMPLATE = """
+Having following page content:
+```
+{markdown}
+```
+
+Prompt:
+{prompt}
+
+Output json:
+"""
+
 SIMPLE_EXTRACTOR_PROMPT_TEMPLATE = """
 Having following page content:
 ```
@@ -27,6 +39,7 @@ Output json:
 class LocalExtractor(Extractor):
     system_prompt = None
     prompt_template = SIMPLE_EXTRACTOR_PROMPT_TEMPLATE
+    prompt_only_template = SIMPLE_EXTRACTOR_PROMPT_ONLY_TEMPLATE
 
     def __init__(
         self,
@@ -42,19 +55,26 @@ class LocalExtractor(Extractor):
     async def run(
         self,
         content: str,
-        attributes: dict[str, str],
+        attributes: dict[str, str] | None = None,
         prompt: str = "",
     ) -> list[dict]:
         if self.system_prompt is None:
             raise ValueError("system_prompt is not defined for this extractor")
         if self.prompt_template is None:
             raise ValueError("prompt_template is not defined for this extractor")
+        if not attributes and len(prompt) == 0:
+            raise ValueError("At least prompt or attributes has to be provided")
 
         markdown = self.converter.convert(content)
-        elements = json.dumps(attributes)
-        human_msg = self.prompt_template.format(
-            markdown=markdown, elements=elements, prompt=prompt
-        )
+        if not attributes:
+            human_msg = self.prompt_only_template.format(
+                markdown=markdown, prompt=prompt
+            )
+        else:
+            elements = json.dumps(attributes)
+            human_msg = self.prompt_template.format(
+                markdown=markdown, elements=elements, prompt=prompt
+            )
         messages = [
             SystemMessage(self.system_prompt),
             HumanMessage(human_msg),

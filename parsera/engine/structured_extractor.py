@@ -52,7 +52,7 @@ class StructuredExtractor(ChunksTabularExtractor):
         prompt: str,
         previous_data: list[dict] | None = None,
     ) -> list[dict]:
-        elements = json.dumps(attributes)
+        elements = self.elements_to_string(attributes)
         if not previous_data:
             human_msg = self.prompt_template.format(
                 markdown=markdown,
@@ -82,7 +82,7 @@ class StructuredExtractor(ChunksTabularExtractor):
     async def merge_all_data(
         self, all_data: list[list[dict]], attributes: dict[str, str], prompt: str
     ) -> dict:
-        elements = json.dumps(attributes)
+        elements = self.elements_to_string(attributes)
         json_list = ""
         for data in all_data:
             json_list += "``` \n" + json.dumps(data) + "\n ```\n"

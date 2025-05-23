@@ -89,9 +89,7 @@ EXTRACTOR_MERGE_PROMPT_TEMPLATE = """
 Elements requested by user:
 {prompt}
 
-```
 {elements}
-```
 
 All jsons from different parts of the page:
 {jsons_list}
@@ -177,10 +175,7 @@ The current truncated page chunk:
 You are looking for the following elements from the truncated page chunk:
 {prompt}
 
-Elements:
-```
 {elements}
-```
 
 Output json with fixed previous sequence and new rows:
 """
@@ -236,14 +231,19 @@ class ChunksTabularExtractor(TabularExtractor):
         )
         self.chunks_data = None
 
+    def elements_to_string(self, elements: dict[str, str] | None) -> str:
+        if not elements:
+            return ""
+        return "```\n" + json.dumps(elements) + "\n```"
+
     async def extract(
         self,
         markdown: str,
-        attributes: dict[str, str],
+        attributes: dict[str, str] | None,
         prompt: str,
         previous_data: list[dict] | None = None,
     ) -> list[dict]:
-        elements = json.dumps(attributes)
+        elements = self.elements_to_string(attributes)
         if not previous_data:
             human_msg = self.prompt_template.format(
                 markdown=markdown, prompt=prompt, elements=elements
@@ -267,9 +267,9 @@ class ChunksTabularExtractor(TabularExtractor):
         return output_dict
 
     async def merge_all_data(
-        self, all_data: list[list[dict]], attributes: dict[str, str], prompt: str
+        self, all_data: list[list[dict]], attributes: dict[str, str] | None, prompt: str
     ) -> dict:
-        elements = json.dumps(attributes)
+        elements = self.elements_to_string(attributes)
         json_list = ""
         for data in all_data:
             json_list += "``` \n" + json.dumps(data) + "\n ```\n"
@@ -289,13 +289,15 @@ class ChunksTabularExtractor(TabularExtractor):
     async def run(
         self,
         content: str,
-        attributes: dict[str, str],
+        attributes: dict[str, str] | None = None,
         prompt: str = "",
     ) -> dict:
         if self.system_prompt is None:
             raise ValueError("system_prompt is not defined for this extractor")
         if self.prompt_template is None:
             raise ValueError("prompt_template is not defined for this extractor")
+        if not attributes and len(prompt) == 0:
+            raise ValueError("At least prompt or attributes has to be provided")
 
         markdown = self.converter.convert(content)
         chunks = self.text_splitter.create_documents([markdown])
