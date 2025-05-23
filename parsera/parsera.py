@@ -55,6 +55,7 @@ class Parsera:
         self,
         url: str,
         elements: dict,
+        prompt: str,
         proxy_settings: dict | None = None,
         scrolls_limit: int = 0,
         playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
@@ -70,13 +71,16 @@ class Parsera:
             url=url, scrolls_limit=scrolls_limit, playwright_script=playwright_script
         )
 
-        result = await self.extractor.run(content=content, attributes=elements)
+        result = await self.extractor.run(
+            content=content, prompt=prompt, attributes=elements
+        )
         return result
 
     def run(
         self,
         url: str,
         elements: dict,
+        prompt: str = "",
         proxy_settings: dict | None = None,
         scrolls_limit: int = 0,
         playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
@@ -85,6 +89,7 @@ class Parsera:
             self._run(
                 url=url,
                 elements=elements,
+                prompt=prompt,
                 scrolls_limit=scrolls_limit,
                 proxy_settings=proxy_settings,
                 playwright_script=playwright_script,
@@ -95,6 +100,7 @@ class Parsera:
         self,
         url: str,
         elements: dict,
+        prompt: str = "",
         proxy_settings: dict | None = None,
         scrolls_limit: int = 0,
         playwright_script: Callable[[Page], Awaitable[Page]] | None = None,
@@ -102,6 +108,7 @@ class Parsera:
         return await self._run(
             url=url,
             elements=elements,
+            prompt=prompt,
             scrolls_limit=scrolls_limit,
             proxy_settings=proxy_settings,
             playwright_script=playwright_script,

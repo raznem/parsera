@@ -10,18 +10,29 @@ PARSERA_API_KEY = os.getenv("PARSERA_API_KEY")
 
 class Extractor(ABC):
     @abstractmethod
-    async def run(self, content: str, attributes: dict[str, str]) -> list[dict]:
+    async def run(
+        self, content: str, attributes: dict[str, str], prompt: str
+    ) -> list[dict]:
         pass
 
 
 class APIExtractor(Extractor):
     async def run(
-        self, content: str, attributes: dict[str, str], mode: str = "standard"
+        self,
+        content: str,
+        attributes: dict[str, str],
+        prompt: str = "",
+        mode: str = "standard",
     ) -> list[dict]:
         api_attributes = []
         for key, value in attributes.items():
             api_attributes.append({"name": key, "description": value})
-        data = {"content": content, "attributes": api_attributes, "mode": mode}
+        data = {
+            "content": content,
+            "prompt": prompt,
+            "attributes": api_attributes,
+            "mode": mode,
+        }
         headers = {"Content-Type": "application/json", "X-API-KEY": PARSERA_API_KEY}
         # try:
         response = requests.post(API_ENDPOINT, headers=headers, json=data)

@@ -87,6 +87,8 @@ Merged json:
 
 EXTRACTOR_MERGE_PROMPT_TEMPLATE = """
 Elements requested by user:
+{prompt}
+
 ```
 {elements}
 ```
@@ -173,6 +175,9 @@ The current truncated page chunk:
 ---
 
 You are looking for the following elements from the truncated page chunk:
+{prompt}
+
+Elements:
 ```
 {elements}
 ```
@@ -235,18 +240,22 @@ class ChunksTabularExtractor(TabularExtractor):
         self,
         markdown: str,
         attributes: dict[str, str],
+        prompt: str,
         previous_data: list[dict] | None = None,
     ) -> list[dict]:
         elements = json.dumps(attributes)
         if not previous_data:
             human_msg = self.prompt_template.format(
-                markdown=markdown, elements=elements
+                markdown=markdown, prompt=prompt, elements=elements
             )
         else:
             cutoff = math.ceil(len(previous_data) / self.overlap_factor)
             previous_tail = json.dumps(previous_data[cutoff:])
             human_msg = self.append_prompt_template.format(
-                markdown=markdown, elements=elements, previous_data=previous_tail
+                markdown=markdown,
+                prompt=prompt,
+                elements=elements,
+                previous_data=previous_tail,
             )
         messages = [
             SystemMessage(self.system_prompt),
@@ -258,7 +267,7 @@ class ChunksTabularExtractor(TabularExtractor):
         return output_dict
 
     async def merge_all_data(
-        self, all_data: list[list[dict]], attributes: dict[str, str]
+        self, all_data: list[list[dict]], attributes: dict[str, str], prompt: str
     ) -> dict:
         elements = json.dumps(attributes)
         json_list = ""
@@ -266,7 +275,7 @@ class ChunksTabularExtractor(TabularExtractor):
             json_list += "``` \n" + json.dumps(data) + "\n ```\n"
 
         human_msg = self.prompt_merge_template.format(
-            elements=elements, jsons_list=json_list
+            elements=elements, jsons_list=json_list, prompt=prompt
         )
         messages = [
             SystemMessage(self.system_merge_prompt),
@@ -281,6 +290,7 @@ class ChunksTabularExtractor(TabularExtractor):
         self,
         content: str,
         attributes: dict[str, str],
+        prompt: str = "",
     ) -> dict:
         if self.system_prompt is None:
             raise ValueError("system_prompt is not defined for this extractor")
@@ -294,15 +304,20 @@ class ChunksTabularExtractor(TabularExtractor):
             chunk_data = None
             for _, element in enumerate(chunks):
                 chunk_data = await self.extract(
-                    markdown=element, previous_data=chunk_data, attributes=attributes
+                    markdown=element,
+                    previous_data=chunk_data,
+                    attributes=attributes,
+                    prompt=prompt,
                 )
                 self.chunks_data.append(chunk_data)
 
             output_dict = await self.merge_all_data(
-                all_data=self.chunks_data, attributes=attributes
+                all_data=self.chunks_data, attributes=attributes, prompt=prompt
             )
         elif len(chunks) == 1:
-            output_dict = await self.extract(markdown=chunks[0], attributes=attributes)
+            output_dict = await self.extract(
+                markdown=chunks[0], attributes=attributes, prompt=prompt
+            )
         else:
             raise PageContentError("Page content is empty")
 

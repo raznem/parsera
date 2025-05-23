@@ -13,6 +13,8 @@ Having following page content:
 {markdown}
 ```
 
+{prompt}
+
 Return the following elements from the page content:
 ```
 {elements}
@@ -37,7 +39,12 @@ class LocalExtractor(Extractor):
         else:
             self.converter = converter
 
-    async def run(self, content: str, attributes: dict[str, str]) -> list[dict]:
+    async def run(
+        self,
+        content: str,
+        attributes: dict[str, str],
+        prompt: str = "",
+    ) -> list[dict]:
         if self.system_prompt is None:
             raise ValueError("system_prompt is not defined for this extractor")
         if self.prompt_template is None:
@@ -45,7 +52,9 @@ class LocalExtractor(Extractor):
 
         markdown = self.converter.convert(content)
         elements = json.dumps(attributes)
-        human_msg = self.prompt_template.format(markdown=markdown, elements=elements)
+        human_msg = self.prompt_template.format(
+            markdown=markdown, elements=elements, prompt=prompt
+        )
         messages = [
             SystemMessage(self.system_prompt),
             HumanMessage(human_msg),

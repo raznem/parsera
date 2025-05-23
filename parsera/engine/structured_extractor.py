@@ -49,18 +49,24 @@ class StructuredExtractor(ChunksTabularExtractor):
         self,
         markdown: str,
         attributes: dict[str, str],
+        prompt: str,
         previous_data: list[dict] | None = None,
     ) -> list[dict]:
         elements = json.dumps(attributes)
         if not previous_data:
             human_msg = self.prompt_template.format(
-                markdown=markdown, elements=elements
+                markdown=markdown,
+                prompt=prompt,
+                elements=elements,
             )
         else:
             cutoff = math.ceil(len(previous_data) / self.overlap_factor)
             previous_tail = json.dumps(previous_data[cutoff:])
             human_msg = self.append_prompt_template.format(
-                markdown=markdown, elements=elements, previous_data=previous_tail
+                markdown=markdown,
+                prompt=prompt,
+                elements=elements,
+                previous_data=previous_tail,
             )
         messages = [
             SystemMessage(self.system_prompt),
@@ -74,7 +80,7 @@ class StructuredExtractor(ChunksTabularExtractor):
             return []
 
     async def merge_all_data(
-        self, all_data: list[list[dict]], attributes: dict[str, str]
+        self, all_data: list[list[dict]], attributes: dict[str, str], prompt: str
     ) -> dict:
         elements = json.dumps(attributes)
         json_list = ""
@@ -82,7 +88,7 @@ class StructuredExtractor(ChunksTabularExtractor):
             json_list += "``` \n" + json.dumps(data) + "\n ```\n"
 
         human_msg = self.prompt_merge_template.format(
-            elements=elements, jsons_list=json_list
+            elements=elements, jsons_list=json_list, prompt=prompt
         )
         messages = [
             SystemMessage(self.system_merge_prompt),
@@ -122,10 +128,13 @@ class StructuredExtractor(ChunksTabularExtractor):
         self,
         content: str,
         attributes: dict[str, dict[str, Any]],
+        prompt: str = "",
     ) -> dict:
         for value in attributes.values():
             AttributeData.model_validate(value)
         OutputSchema = self.create_schema(attributes)
         self.structured_model = self.model.with_structured_output(schema=OutputSchema)
-        output = await super().run(content=content, attributes=attributes)
+        output = await super().run(
+            content=content, attributes=attributes, prompt=prompt
+        )
         return output
