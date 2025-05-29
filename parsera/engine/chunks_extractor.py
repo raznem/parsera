@@ -245,9 +245,14 @@ class ChunksTabularExtractor(TabularExtractor):
     ) -> list[dict]:
         elements = self.elements_to_string(attributes)
         if not previous_data:
-            human_msg = self.prompt_template.format(
-                markdown=markdown, prompt=prompt, elements=elements
-            )
+            if attributes:
+                human_msg = self.prompt_template.format(
+                    markdown=markdown, prompt=prompt, elements=elements
+                )
+            else:
+                human_msg = self.prompt_only_template.format(
+                    markdown=markdown, prompt=prompt
+                )
         else:
             cutoff = math.ceil(len(previous_data) / self.overlap_factor)
             previous_tail = json.dumps(previous_data[cutoff:])
