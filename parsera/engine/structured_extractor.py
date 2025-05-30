@@ -23,7 +23,7 @@ type_mapping: dict[str, Type[Any]] = {
     "integer": int,
     "number": float,
     "boolean": bool,
-    "array": list,
+    "list": list,
     "object": dict,
     "any": Any,
 }
