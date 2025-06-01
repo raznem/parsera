@@ -117,6 +117,11 @@ class StructuredExtractor(ChunksTabularExtractor):
         )
 
         class ListSchemaModel(BaseModel):
+            reasoning: str = Field(
+                ...,
+                description="Explain the step-by-step thought process behind the provided values. "
+                + "Include key considerations and how they influenced the final decisions.",
+            )
             data: List[RecordModel] = Field(
                 default_factory=list,
                 description="Return list with one row, if there is only one value per each field.",
