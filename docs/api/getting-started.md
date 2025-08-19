@@ -165,10 +165,6 @@ curl https://api.parsera.org/v1/extract_markdown \
 | `proxy_country`| `string` | `UnitedStates`| Proxy country, see [Proxy Countries](proxy.md)    |
 | `cookies`      | `array`  | Empty        | Cookies to use during extraction, see [Cookies](cookies.md) |
 
-### Credits
-- `standard` mode (Default) - **1 Extract** per call
-- `precision` mode - **10 Extracts** per call
-
 
 ### Swagger doc
 
