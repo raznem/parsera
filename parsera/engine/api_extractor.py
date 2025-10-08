@@ -5,7 +5,6 @@ from abc import ABC, abstractmethod
 import requests
 
 API_ENDPOINT = "https://api.parsera.org/v1/parse"
-PARSERA_API_KEY = os.getenv("PARSERA_API_KEY")
 
 
 class Extractor(ABC):
@@ -37,9 +36,11 @@ class APIExtractor(Extractor):
             for key, value in attributes.items():
                 api_attributes.append({"name": key, "description": value})
             data["attributes"] = api_attributes
-        headers = {"Content-Type": "application/json", "X-API-KEY": PARSERA_API_KEY}
 
-        response = requests.post(API_ENDPOINT, headers=headers, json=data)
+        parsera_api_key = os.getenv("PARSERA_API_KEY")
+        headers = {"Content-Type": "application/json", "X-API-KEY": parsera_api_key}
+
+        response = requests.post(API_ENDPOINT, headers=headers, json=data, timeout=180)
         response.raise_for_status()
 
         # Extract data from the response JSON
