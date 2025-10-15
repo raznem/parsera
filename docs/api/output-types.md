@@ -37,7 +37,6 @@ You can use one of the following data types:
 | `number` | Floating point number | `1.23` |
 | `bool` | Boolean value (`true` or `false`) | `true` |
 | `list` | List of values | `["hello", "world"]` |
-| `object` | Nested structure with map of keys and values. | `{ name: "John Doe" }` |
 
 ## Example
 Full request example for extract:
