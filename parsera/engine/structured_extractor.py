@@ -5,10 +5,9 @@ from typing import Any, Callable, List, Literal, Optional, Type
 from langchain_core.language_models import BaseChatModel
 from langchain_core.messages import HumanMessage, SystemMessage
 from markdownify import MarkdownConverter
-from pydantic import BaseModel, Field, create_model
-
 from parsera.engine.chunks_extractor import ChunksTabularExtractor
 from parsera.utils import has_any_non_none_values
+from pydantic import BaseModel, Field, create_model
 
 
 class AttributeData(BaseModel):
@@ -73,6 +72,8 @@ class StructuredExtractor(ChunksTabularExtractor):
             HumanMessage(human_msg),
         ]
         structured_output = await self.structured_model.ainvoke(messages)
+        if structured_output is None:
+            return []
         output_dict = structured_output.model_dump(mode="json")
         if has_any_non_none_values(output_dict["data"]):
             return output_dict["data"]
